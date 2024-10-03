@@ -1,0 +1,27 @@
+/.metadata/
+
+# Eclipse 설정 파일
+.classpath
+.project
+.settings/
+.metadata/
+
+# 빌드 아티팩트
+bin/
+target/
+build/
+
+# Maven 및 Gradle 관련
+.mvn/
+.gradle/
+build/
+
+# 운영체제 별로 불필요한 파일
+.DS_Store
+Thumbs.db
+
+# 로그 파일
+*.log
+
+# 환경 파일
+.env
