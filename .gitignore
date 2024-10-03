@@ -25,3 +25,6 @@ Thumbs.db
 
 # 환경 파일
 .env
+
+# Tomcat 서버 설정 파일 무시
+Servers/
