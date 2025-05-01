@@ -1,0 +1,16 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default" style="height: 10px">
+    </div>
+    <div class="tabs">
+		<div id='tabs_div'>
+			<ul id='idtab'>
+				<li id="{{ tab.id }}" class="tab" ng-repeat="tab in tabs" >
+					<a ng-class="{'selected' : tab.isSelected}" ui-sref="{{ tab.key }}">{{ tab.value }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <div ui-view ></div>
+	</div>
+	</div>
+</section>

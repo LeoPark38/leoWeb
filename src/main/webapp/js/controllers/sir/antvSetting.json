@@ -1,0 +1,808 @@
+
+ [
+	{
+		"type": "주석용",
+		"content": " type 으로 구분 ",
+		"content2": " label / image / path / testpng"
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#00B700",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "내부 데이터",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#00B700",
+		        "text": "Elastic",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"style":{},
+		     	"class":""
+		     }
+		},
+		"data":{
+			"d_type":"elastic"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#00D8FF",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "연동 데이터",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "fontWeight":800
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#00D8FF",
+		        "text": "IceBerg",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"d_type":"trino"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#FF007F",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "참고 데이터",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#FF007F",
+		        "text": "Reference",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"style":{},
+		     	"class":""
+		     }
+		},
+		"data":{
+			"d_type":"reference"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#9536FF",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "사용자 확인",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "fontWeight":800
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#9536FF",
+		        "text": "Userwork",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"d_type":"userwork"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#5F95FF",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "분석 완료",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#5F95FF",
+		        "text": "Completion",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"d_type":"complete"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "org-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#FF5E00",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "사고 등록",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#FF5E00",
+		        "text": "Register",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"d_type":"resist"
+		}
+	},
+	
+	{
+		"type": "textNode",
+		"shape": "custom-rect",
+		"label": "text",
+		"width": 66,
+		"height": 36,
+		"attrs": {
+			"body": {
+				"strokeWidth": 0,
+				"stroke": "#5F95FF",
+				"fill": "#EFF4FF"
+			},
+			"text": {
+				"fontSize": 12,
+				"fill": "#262626"
+			}
+		},
+		"data": {
+			"d_type":""
+		}
+	},
+	{
+		"type": "dns",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/dns01.png"
+	},
+	{
+		"type": "dns",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/dns02.png"
+	},
+	{
+		"type": "dns",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/dns03.png"
+
+	},
+	{
+		"type": "dns",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/dns04.png"
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/cloud01.png"
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/cloud02.png"
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/network01.png"
+
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/network02.png"
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/network03.png"
+	},
+	{
+		"type": "cloud",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/network04.png"
+	},
+	
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange01.png"
+
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange02.png"
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange03.png"
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange04.png"
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange05.png"
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange06.png"
+	},
+	{
+		"type": "dataManage",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/datamange07.png"
+	},	
+	
+	
+	
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall01.png"
+
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall02.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall03.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall04.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall05.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall06.png"
+	},		{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall07.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall08.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall09.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall10.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall11.png"
+	},	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall12.png"
+	},
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall13.png"
+	},	
+	{
+		"type": "firewall",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/soar/firewall14.png"
+	},		
+	
+	
+	
+	{
+		"type": "testpng",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/antV/free-icon-cloud-computing-1348523.png"
+
+	},
+	{
+		"type": "testpng",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../s/icon/antV/free-icon-cloud-network-3855097.png"
+
+	},
+	{
+		"type": "testpng",
+		"shape": "image",
+		"label": "",
+		"width": 76,
+		"height": 56,
+		"imageUrl": "../s/icon/antV/free-icon-switch-4152829.png"
+
+	},
+	{
+		"type": "image",
+		"label": "etc",
+		"image": "../s/icon/antV/cloud.png"
+	},
+	{
+		"type": "group",
+		"shape": "group-node",
+		"width": 62,
+		"height": 62,
+		"label": "board1",
+		"attrs": {
+			"body": {
+				"fill": "#FBFDEA",
+				"stroke": "#5F95FF",
+				"strokeWidth": 1
+			},
+			"label": {
+				"refX": 0.5,
+				"refY": 8,
+				"textAnchor": "middle",
+				"textVerticalAnchor": "top"
+			}
+		}
+	},
+	{
+		"type": "group",
+		"shape": "group-node",
+		"width": 62,
+		"height": 62,
+		"label": "board2",
+		"attrs": {
+			"body": {
+				"rx": 16,
+				"ry": 16,
+				"fill": "#FBFDEA",
+				"stroke": "#5F95FF",
+				"strokeWidth": 1
+			},
+			"label": {
+				"refX": 0.5,
+				"refY": 8,
+				"textAnchor": "middle",
+				"textVerticalAnchor": "top"
+			}
+		}
+	},
+	{
+		"type": "path_사용 X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"label": "",
+		"path": "M344.381,143.771C254.765,56.017,102.37,103.776,79.825,227.7c-31.849,4.598-59.138,25.445-72.018,55.076 c-0.016,0.035-0.032,0.07-0.047,0.107c-26.687,61.602,18.784,130.232,85.51,130.232h282.267 c75.246,0,136.463-61.216,136.463-136.462C512,189.241,430.314,123.682,344.381,143.771z M375.537,381.12H93.271 c-69.246,0-84.534-98.263-18.714-119.456c14.753-4.65,43.01-7.348,74.38,21.892c6.464,6.024,16.586,5.667,22.61-0.794 c6.024-6.464,5.668-16.586-0.794-22.61c-17.93-16.712-38.071-27.33-58.484-31.453c22.034-99.077,147.374-131.851,215.247-56.305 c4.189,4.661,10.714,6.451,16.693,4.57c67.272-21.117,135.795,29.374,135.795,99.69 C480.005,334.256,433.141,381.12,375.537,381.12z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "black",
+				"strokeWidth": 1
+			},
+			"text": {
+				"fontSize": 12,
+				"fill": "black"
+			}
+		},
+		"data": {
+			
+		}
+	},
+	{
+		"type": "path",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"label": "net",
+		"path": "m455.53 5c-54.49 0.3699-108.24 25.142-126.91 70.094-91.25-121.18-291.95-7.455-233.71 113.82-138.11-25.64-106.39 197.57 22.47 175.81 55.32 57.59 140.17 67.01 232 26.28h0.06c111.01 40.42 207.56 10.29 251.09-20.56 261.28 68.17 167.31-349.25-4.15-240.35-1.34-86.727-71.69-125.56-140.85-125.09z",
+		"attrs": {
+			"body": {
+				"fill": "#EFF4FF",
+				"stroke": "#5F95FF",
+				"strokeWidth": "1"
+			}
+		}
+	},
+	{
+		"type": "path_사용 X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m113.52 50.638a31.8 31.8 0 0 0-31.239 26.113 30.032 30.032 0 0 0-5.5159-0.51728 30.032 30.032 0 0 0-23.347 11.225 35.868 35.868 0 0 0-6.1128-0.53072 35.868 35.868 0 0 0-35.868 35.868 35.868 35.868 0 0 0 8.4057 23.013c2.1543 8.773 9.7482 15.22 18.837 15.22h142.11c10.775 0 19.448-9.0614 19.448-20.317 0-6.3242-2.7385-11.955-7.0492-15.676a25.08 25.08 0 0 0 0.2682-3.6256 25.08 25.08 0 0 0-25.08-25.08 25.08 25.08 0 0 0-9.6759 1.9477 31.296 31.296 0 0 0-13.607-12.118 31.8 31.8 0 0 0 0.22738-3.7223 31.8 31.8 0 0 0-31.801-31.801z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_사용 X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m236.59 248.91c-2.5379 0.0276-5.0944 0.11586-7.6562 0.28125-31.909 2.06-61.293 15.146-84.094 35.344-27.23-21.14-61.571-33.03-98.215-30.66-57.647 3.7216-107.11 43.383-124.28 96.062-45.291 17.229-78.914 60.865-82.406 111.41-2.3671 34.259 8.8416 66.355 28.75 91.688-0.19478 1.7483-0.34673 3.5153-0.46875 5.2812-5.2262 75.64 55.705 140.8 130.41 145.62 16.458 1.0625 32.465-0.73018 47.562-4.9688 22.451 19.026 50.938 31.292 81.75 33.281 39.631 2.5585 76.588-11.588 104.75-36.031 23.43 22.872 54.854 37.846 89.188 40.062 46.559 3.0058 89.435-17.03 118.69-49.75 15.707 7.5138 32.975 12.209 51.031 13.375 81.98 5.2925 152.49-60.835 157.41-141.88 1.6875-27.799-4.2928-54.734-16.156-78.625 2.0713-7.7483 3.465-15.743 4.0312-23.938 4.149-60.049-33.407-113.51-86.438-135.41-29.268-33.248-72.488-53.689-119.47-50.656-30.387 1.9617-58.509 13.891-80.812 32.469-27.715-32.597-68.624-53.457-113.56-52.969z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_사용X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "M386.9822,244.063h-0.427   c1.0198-5.7538,1.5816-11.6659,1.5816-17.7125c0-55.7172-45.1673-100.8848-100.8845-100.8848   c-47.2678,0-86.9282,32.5128-97.8747,76.391c-8.9497-8.3622-21.1893-13.2496-34.5981-12.37   c-23.0932,1.515-41.7268,20.3117-43.0368,43.4174c-0.2339,4.1261,0.0748,8.1424,0.86,11.9854   c-35.9846,5.2468-63.4988,37.5643-60.8257,75.4938c2.6396,37.4548,34.4974,66.1508,72.0451,66.1508h262.2768   c37.6125,0,69.425-28.8426,71.9543-66.3699C460.8407,278.8084,427.7719,244.063,386.9822,244.063z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_사용 X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m320.64 121.45c-18.59 10.55-30.9 26.45-33.42 42.49-12.84 0.12-26.38 2.4-39.8 7.03-48.81 16.86-77.8 58.71-64.72 93.44 1.5 3.99 3.52 7.71 5.95 11.15-19.67 14.94-29.27 36.34-22.26 54.95 7.57 20.09 32.19 30.88 59.82 28.37-4.13 9.67-4.86 19.84-1.31 29.28 9.55 25.34 46.19 35.92 81.81 23.62 8.25-2.85 15.72-6.69 22.22-11.21 23.65 18.54 63.15 23.54 101.82 10.19 51.98-17.95 82.99-62.36 69.65-99.44 4.04-1 8.1-2.17 12.14-3.57 52.34-18.07 83.41-62.96 69.38-100.18-8.11-21.54-29.57-35.79-56.35-40.5 1.67-7.62 1.33-15.34-1.42-22.64-10.25-27.22-49.64-38.56-87.9-25.35-8.26 2.85-15.78 6.61-22.42 11.04-13.56-19.47-45.97-26.59-77.6-15.67-5.56 1.92-10.79 4.28-15.59 7z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "black",
+				"strokeWidth": "1"
+			}
+		}
+	},
+	{
+		"type": "path_사용 X",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m412.39 1983.1c5.6919-3.6744 7.3274-11.286 3.673-16.994-1.91-2.9836-4.8805-4.8516-8.1042-5.4369 0.44985-2.3055 0.0541-4.7899-1.3101-6.9209-2.0842-3.2559-5.8288-4.7775-9.409-4.1962 0.15414-1.5673-0.18447-3.2128-1.0979-4.6397-2.1555-3.3671-6.6291-4.3408-9.9863-2.1735-0.99584 0.6429-1.7748 1.5113-2.3317 2.4725-2.6051-2.7462-6.8758-3.3564-10.175-1.2268-2.419 1.5615-3.7006 4.2067-3.6714 6.8936-3.5272-1.3738-7.6329-1.104-11.062 1.1096-5.6919 3.6744-7.3403 11.265-3.6859 16.974 3.2601 5.0928 9.6376 6.9385 15.018 4.672 0.28324 1.2504 0.78235 2.4629 1.5126 3.6038 3.3756 5.273 10.365 6.7941 15.622 3.4 1.1057-0.7138 2.0386-1.5928 2.8033-2.5778 1.4423 0.6064 3.0829 0.6679 4.6089 0.1542 0.20129 0.408 0.40333 0.8072 0.65423 1.1992 3.6545 5.7087 11.249 7.3615 16.941 3.687z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_현재 안씀 주석 처리용...",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m-284.41 138.12c11.57-4.63 34.58-4.52 41.52 9.48 1.03 18.75 7.82 18.78 14.06 30.63 9.23 20.69-2.86 46.91-24.46 53.67-10.17 0.34-15.95 4.86-14.57 15.56-1.7 14.12-13.57 24.52-27.2 26.91-13.52 5.72-27.68 1.26-40.52-3.88-4.77 6.84-8.78 19.1-17.41 24.93-12.1 11.33-32.32 8.15-41.85-4.93-6.24-7.79-9.53-19.25-20.2-10.41-16.31 7.03-36.13-2.69-45.44-16.7-6.26-10.64-1.46-26.64 11.28-29.57-6.81-11.95-13.06-31.6-0.66-44.9 10.25-15.48 29.76-23.55 47.96-20.27-0.37-13.88 10.81-23.07 21.83-29.28 15.19-11.11 38.88-18 54.2-3.52 7.3 3.7 13.78 22.39 20.63 18.48 3.81-8.1 12.77-13.19 20.83-16.2zm5.01 13.08c-11.49 4.34-20.16 18.31-18.88 30.36-0.88 15.71-23.68 8.69-18.89-5.39-3.89-12.61-8-28.45-19.72-35.7-13.72-3.4-26.79 5.69-38.56 11.54-13.65 6.06-9.07 20.44-7.71 31.01-9.39 7.81-24.14-8.08-36.08 0.52-15.38 4.61-29.08 22.9-20.6 38.66 5.67 6.25 28.31 12.61 11.34 20.82-13.92-0.87-28.09 14.73-11.81 24.37 13.86 8.97 27.81-4.05 37.18-13.37 19.51-3.67 8.72 22.09 19.08 31.34 7.66 10.85 22.97 2.3 27.39-7.3 10.88-7.87-2.43-37.59 17.1-30.52 8.37 9.72 20.25 19.17 33.94 15.72 15.36-1.06 29.46-17.36 20.88-32.28-3.22-14.8 22.05-5.74 29.26-14.77 11.7-5.72 20.24-21.8 13.2-33.91-10.02-5-19.38-11.09-14.98-24.18-0.31-13.89-13.26-12.4-22.14-6.92",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_현재 안씀 주석 처리용...",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m731.5 347.09c-40.1 0-73.29 29.18-78.72 67.07-0.75-0.04-1.52-0.07-2.28-0.07-13.73 0-26.2 5.35-35.44 14.03-6.58-6.2-15.61-10.03-25.56-10.03-13.78 0-25.79 7.34-32 18.16-3.33-3.78-8.02-6.16-13.25-6.16-10.07 0-18.25 8.74-18.25 19.5 0 10.77 8.18 19.5 18.25 19.5 4.13 0 7.91-1.49 10.97-3.97 5.12 13.4 18.54 22.97 34.28 22.97 4.89 0 9.55-0.91 13.81-2.59 7.96 18 26.09 30.59 47.19 30.59 17.82 0 33.5-8.99 42.75-22.62 11.35 6.13 24.38 9.62 38.25 9.62 17.54 0 33.75-5.6 46.91-15.06 8.33 9.85 20.52 16.06 34.09 16.06 25.12 0 45.5-21.28 45.5-47.5s-20.38-47.5-45.5-47.5c-1.06 0-2.11 0.05-3.16 0.13-7.47-35.46-39.5-62.13-77.84-62.13z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_현재 안씀 주석 처리용...",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m219.64 630.81c-17.93-2.06-38.75-8.72-60.5-19.35-31.43-15.36-55.67-34.93-72.734-58.7-2.92-4.07-9.676-15.94-15.013-26.36-9.751-19.06-12.848-23.62-28.75-42.38-13.64-16.09-21.758-31.93-25.672-50.1-1.398-6.49-1.813-12.61-1.766-25.99 0.058-16.07 0.364-18.98 3.753-35.73 2.137-10.56 4.33-25.49 5.211-35.5 3.97-45.05 10.721-60.5 44.913-102.77 27.651-34.18 38.068-43.15 60.238-51.89 12.22-4.82 19.33-6.06 40.82-7.15 34.1-1.73 34.75-1.91 58-16.33 23.11-14.32 41.19-22.21 59.7-26.03 28.44-5.88 52.27-4.16 83.06 5.99 20.17 6.65 24.65 6.81 45.87 1.59 22.73-5.58 31.1-6.54 51.37-5.87 29.25 0.96 43.78 5.32 85.5 25.65 15.68 7.64 34.57 16.63 41.99 19.97 32.35 14.57 55.03 32.57 71.09 56.4 13.92 20.68 21.03 41.7 29.63 87.67 3.44 18.38 4.3 47.28 1.85 61.95-3.11 18.59-9.11 32.86-22.2 52.79-10.36 15.77-13.59 21.97-18.88 36.26-9.31 25.16-16.74 37.35-31 50.89-16.95 16.1-38.89 26.44-64.82 30.55-5.04 0.8-13.99 2.16-19.89 3.02-15.34 2.23-24.43 6.08-34.77 14.72-29.1 24.33-64.49 41.79-100.15 49.41-10.81 2.31-15.33 2.69-36.35 3.11-21.2 0.42-25.63 0.22-38-1.7-31.71-4.93-29.71-4.94-50.03 0.27-9.88 2.54-21.78 5.09-26.44 5.67-9.73 1.22-25.13 1.19-36.03-0.06z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	},
+	{
+		"type": "path_현재 안씀 주석 처리용...",
+		"shape": "path",
+		"width": 60,
+		"height": 50,
+		"path": "m 100.54182,51.693707 c -17.117546,0 -29.482446,12.0148 -29.482443,26.83609 0,0.2401 0.0041,0.47919 0.01137,0.71778 -10.056383,1.51077 -16.642393,9.476997 -16.642393,18.824176 0,0.84453 0.05184,1.67222 0.144177,2.484077 -0.413804,-0.0155 -0.829939,-0.0248 -1.250053,-0.0248 -15.861983,0 -26.619046,11.48394 -26.619046,25.2181 0,2.79987 0.389042,5.47717 1.142565,7.9654 H 177.63324 c 2.71215,-3.24256 4.17339,-7.49413 4.17339,-12.20855 0,-10.39416 -8.14104,-19.08514 -20.14554,-19.08514 -0.68779,0 -1.36341,0.0306 -2.0283,0.0847 0.16413,-1.17761 0.25114,-2.387 0.25114,-3.624057 0,-12.511479 -9.79928,-22.973276 -24.24916,-22.973276 -2.2601,0 -4.42242,0.24869 -6.46162,0.7152 -1.12594,-13.78852 -12.4014,-24.9297 -28.63133,-24.9297 z",
+		"attrs": {
+			"body": {
+				"fill": "#5F95FF",
+				"stroke": "none"
+			}
+		}
+	}
+]

@@ -1,0 +1,113 @@
+<section id="main-content" class="animated fadeIn" style="padding: 0 !important;">
+	<div class="panel panel-default mrgB0">
+		<div class="panel-heading">
+			<h3 class="panel-title">Trino</h3>
+			<div class="actions pull-right">
+				<i fullscreen-widget class="fa fa-expand" style="display: none;"></i>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div id="data_body" class="animated fadeIn">
+				<div id="term_header">
+<!--					<div ng-click="" id="btn_csv_download"-->
+<!--						class="btn btn-sm btn-bu wd120 ">-->
+<!--						<i class="fa fa-download"></i> CSV 내려받기-->
+<!--					</div>-->
+<!--					<div ng-click="" id="node_stat"-->
+<!--						class="btn btn-sm btn-primary wd120 ">-->
+<!--						<i class="fas fa-server"></i> node 상태-->
+<!--					</div>-->
+<!--					<div ng-click="" id="node_search"-->
+<!--						class="btn btn-sm btn-primary wd120 ">-->
+<!--						<i class="fas fa-server"></i> node 서치-->
+<!--					</div>-->
+<!--					<div ng-click="" id="cluster_set"-->
+<!--						class="btn btn-sm btn-primary wd120 ">-->
+<!--						<i class="fas fa-server"></i> 클러스터 셋팅-->
+<!--					</div>-->
+					<div class="search table">
+						<table style="width: 100%;">
+							<caption></caption>
+							<colgroup>
+								<col width="665">
+								<col width="30">
+								<col>
+								<col width="30%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>
+<!--										<div id="mode_list_div" class="inline">-->
+<!--											<select id="mode_list" class="wd120">-->
+<!--												<option value="json">JSON query 검색</option>-->
+<!--												<option value="sql">SQL query 검색</option>-->
+<!--											</select>-->
+<!--										</div>-->
+<!--										<button class="inline btn btn-sm btn-bu_gray wd40 mrgL5"-->
+<!--											id="btn_toggle_list">-->
+<!--											<i class="fa fa-toggle-on"></i>-->
+<!--										</button>-->
+<!--										<div id="query_list_div" class="inline">-->
+<!--											<select id="query_list" class="wd380">-->
+<!--												<option value="">new query</option>-->
+<!--											</select>-->
+<!--										</div>-->
+										<div id="prev_list_div" class="inline trino_prev_list_div" >
+											<select id="prev_list" class="wd380">
+												<option value="">최근 검색 쿼리</option>
+											</select>
+										</div>
+									</td>
+									<td>
+<!--										<div id="btn_del_query"-->
+<!--											class="inline btn btn-sm btn-bu_gray wd25 mrgL5">-->
+<!--											<i class="fa fa-trash"></i> <input type="hidden" id="del_id" />-->
+<!--										</div>-->
+<!--										<div id="btn_reset_query"-->
+<!--											class="inline btn btn-sm btn-bu_gray wd25 mrgL5">-->
+<!--											<i class="glyphicon glyphicon-repeat"></i>-->
+<!--										</div>-->
+									</td>
+									<td>
+<!--										<div id="btn_query_save"-->
+<!--											class="inline btn btn-sm btn-bu_gray wd25">-->
+<!--											<i class="fa fa-check"></i>저장-->
+<!--										</div>-->
+									</td>
+									<td class="fr">
+<!--										<select id="auto_cycle" class="mrgR10">-->
+<!--											<option value="">없음</option>-->
+<!--											<option value="1">1초</option>-->
+<!--											<option value="3">3초</option>-->
+<!--											<option value="10">10초</option>-->
+<!--											<option value="60">1분</option>-->
+<!--											<option value="600">10분</option>-->
+<!--									</select>-->
+
+										<div id="btn_search" class="btn btn-sm btn-primary wd120">
+											<i class="glyphicon glyphicon-search"></i> 검색
+										</div></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<div id="resizable1" style="display: inline-block; width: 49%;">
+						<pre id="query_editor" style="width: 100%; line-height: 15px;"></pre>
+					</div>
+					<div id="resizable2" style="display: inline-block; width: 50%;">
+						<pre id="rt_view" style="width: 100%; line-height: 15px;"></pre>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.trino_prev_list_div .ms-drop {
+		   z-index: 10;
+	}	
+</style>

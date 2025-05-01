@@ -1,0 +1,305 @@
+<section id="main-content" class="animated fadeIn">
+	<div id="dv_loading" class="hide">
+		<img src="../s/css/img/big_loader2.gif" />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data loading
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="anal_title">
+				<i class="fas fa-chart-bar mrgR5"></i> 통계 정책 분석
+			</h3>
+			<div class="actions pull-right">
+				<i fullscreen-widget class="fa fa-expand"></i>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div id="data_list">
+				<div class="search table">
+					<table style="width: 100%;">
+						<caption></caption>
+						<colgroup>
+							<col width="90" />
+							<col width="" />
+							<col width="25%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>키워드</th>
+								<td><input type="text" id="text_filter"
+									class="form-control" maxlength="50" placeholder="내용을 입력해 주세요.">
+								</td>
+
+								<td style="display: flex; justify-content: flex-end;">
+									<div class="stableToggleGroup">
+										<input ng-click="stableToggle_btn()" type="checkbox" checked
+											id="toggle-one" data-toggle="toggle"
+											data-on=" On"
+											data-on=" Off" data-style="ios">
+										<p class="arrow_box">검색 조건을 저장 합니다</p>
+									</div>
+									<div style="order: 2;">
+										<button id="search_btn"
+											class="btn btn-sm btn-primary mrgL5 wd80">
+											<i class="glyphicon glyphicon-search"></i> 검색
+										</button>
+										<button id="search_reset" class="btn btn-sm btn-gr wd80">
+											<i class="glyphicon glyphicon-repeat"></i> 초기화
+										</button>
+									</div>
+								</td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<column-setting table-id="data_table"></column-setting>
+				<table id="data_table" class="table table-striped table-bordered"
+					cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>통계 정책명</th>
+							<th>통계 정책 설명</th>
+							<th>통계 종류</th>
+							<th>반복 주기</th>
+							<th>생성일시</th>
+							<th>작성자</th>
+							<th>수정일시</th>
+							<th>수정자</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+
+			<div id="data_edit" class="hide animated fadeIn">
+				<div class="btn_fl inline">
+					<button id="csvDownload" ng-click="csvDownload()"
+						class="btn btn-sm btn-bu wd120">
+						<i class="fa fa-download"></i> CSV 저장
+					</button>
+				</div>
+				<div class="btn_fr inline">
+					<button id="addWidget" ng-click="wg_add()"
+						class="btn btn-sm btn-bu fr wd120">
+						<i class="glyphicon glyphicon-plus"></i>화면 위젯 추가
+					</button>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="search table">
+					<table style="width: 100%;">
+						<caption></caption>
+						<colgroup>
+							<col width="10%" />
+							<col width="" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th></th>
+								<!-- 										<td class="fr"> -->
+								<!-- 											<button id="csvDownload" ng-click="csvDownload()" class="btn btn-sm btn-gr wd120"><i class="fa fa-download"></i> CSV 저장</button> -->
+								<!-- 										</td> -->
+							</tr>
+							<tr>
+								<th class="paddB5">시간 조회 방식</th>
+								<td>
+									<div class="fl wd620">
+										<select id="time_type" class="form-control wd150 inline"
+											style="">
+											<option value="unit_time">단일 시간 조회</option>
+											<option value="range_time">범위 기간 조회</option>
+										</select>
+										<div class="btn-group paddL10">
+											<span id="a_datetimeLeft"
+												class="calendar-back unit_time  pull-left hide"
+												style="cursor: pointer;"><i
+												class="glyphicon glyphicon-chevron-left"></i></span> <label>
+												<span class="calendar-back range_time hide"><i
+													class="fa fa-calendar"></i></span> <input id="_datetime"
+												class="input-sm search-date" style="border-radius: 0;"
+												type="text" />
+											</label> <span id="a_datetimeRight"
+												class="calendar-back-right  unit_time pull-right hide"
+												style="margin-left: -1px; cursor: pointer;"><i
+												class="glyphicon glyphicon-chevron-right"></i></span> <label
+												class="range_time hide"> ~ </label> <label
+												class="range_time hide"> <span class="calendar-back"><i
+													class="fa fa-calendar"></i></span> <input id="_datetime_range"
+												class="input-sm search-date" style="border-radius: 0;"
+												type="text" />
+											</label>
+										</div>
+									</div>
+								<td class="fr">
+									<!-- 												<button id="csvDownload" ng-click="csvDownload()" class="btn btn-sm btn-gr wd120"><i class="fa fa-download"></i> CSV 저장</button> -->
+									<button id="searchBtn" class="btn btn-sm btn-primary wd120">
+										<i class="fa fa-search"></i> 검색
+									</button>
+								</td>
+								<!-- 											<div class="tr"> -->
+								<!-- 												<button id="addWidget" ng-click="wg_add()" class="btn btn-sm btn-gr wd120 pull-right"><i class="glyphicon glyphicon-plus"></i> 위젯 추가</button> -->
+								<!-- 											</div> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div>
+					<button id="deleteTab" ng-click="tab_delete()"
+						class="btn btn-sm btn-gr wd100 hide">
+						<i class="fa fa-trash"></i>분석 삭제
+					</button>
+					<button id="tab_add" ng-click="add_tab()"
+						class="btn btn-sm btn-bu wd100">
+						<i class="glyphicon glyphicon-plus"></i>분석 생성
+					</button>
+					<span id="notice_is_use" class="mrgL5" style="font-size: 11px;"></span>
+				</div>
+				<div class="mrgT10"></div>
+
+				<div role="tabpanel" style="height: 444px;" id="tabpanel">
+					<ul id="tabList" class="nav nav-tabs mrg0"></ul>
+
+					<div class="widget gradient"
+						style="display: block; width: 100%; height: 400px;">
+						<!--<div class="wg_d_move"></div>-->
+						<div id="wg_content" class="" style="width: 100%; height: 400px;">
+							<div id="wg_title" class="title hide"></div>
+							<!--<div id="eqTable_{{wid}}" class="mrgL0" style="width: 100%; height: 450px;"></div>-->
+						</div>
+					</div>
+
+				</div>
+
+				<div class="mrgT10"></div>
+				<div class="form-group">
+					<!-- 							<div class="fl"> -->
+					<!-- 								<button id="deleteTab" ng-click="tab_delete()" class="btn btn-gr wd120 pull-left"><i class="fa fa-trash-o"/>탭 삭제</button> -->
+					<!-- 							</div> -->
+					<div class="fr">
+						<button type="submit" ng-click="pop_close()"
+							class="btn btn-bu wd120 pull-right">
+							<i class="fa fa-times" />닫기
+						</button>
+					</div>
+				</div>
+
+				<div id="wg_pop" class="panel panel-success reveal-modal">
+					<div class="panel-heading">
+						<h3 class="pop-title">위젯 추가</h3>
+						<div class="actions pull-right"></div>
+					</div>
+					<div class="panel-body">
+						<div class="box_bu_03 mrgT10">
+							<p>현재 탭 화면을 대시보드에 추가합니다.</p>
+							<table class="table-th table table-bordered text-center ">
+								<caption></caption>
+								<colgroup>
+									<col width="20%">
+									<col width="80%">
+								</colgroup>
+								<tbody>
+									<tr class="tb_l">
+										<th class="center">그래프 유형</th>
+										<td><input class="form-control" id="g_type" readonly>
+										</td>
+									</tr>
+									<tr class="center">
+										<th>위젯 탭</th>
+										<td><select id="tab_id" class="form-control"></select></td>
+									</tr>
+									<tr class="center">
+										<th>위젯 명칭</th>
+										<td><input class="form-control" id="wg_name"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="fr">
+							<!-- 									<button type="submit" ng-click="wg_save()" class="btn btn-gr wd80"><i class="fa fa-check"/>추가</button> -->
+							<button type="submit" ng-click="wg_save()"
+								class="btn btn-gr wd80">
+								<i class="fa fa-laptop-medical" style="font-size: 12px;" />추가
+							</button>
+							<button ng-click="wg_close()" class="btn btn-bu wd80">
+								<i class="fa fa-times" />닫기
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div id="tab_pop" class="panel panel-success reveal-modal">
+					<div class="panel-heading">
+						<h3 class="pop-title">탭 생성</h3>
+						<div class="actions pull-right"></div>
+					</div>
+					<div class="panel-body">
+						<div class="box_bu_03 mrgT10">
+							<form class="form-horizontal ng-pristine ng-valid" role="form">
+								<table class="table-th table table-bordered text-center ">
+									<caption></caption>
+									<colgroup>
+										<col width="20%">
+										<col width="80%">
+									</colgroup>
+									<tbody>
+										<tr class="tb_l">
+											<th>탭 명칭*</th>
+											<td><input class="form-control" id="tab_title"
+												nochar="1" maxlength="100"></td>
+										</tr>
+										<tr>
+											<th>그래프 유형</th>
+											<td><select id="gh_type" class="form-control">
+													<option value="pie">파이 그래프</option>
+													<!--<option value="chord">chord</option>-->
+													<option value="treemap">트리맵 그래프</option>
+													<option value="vertical_bar">세로 바 그래프</option>
+													<option value="horizontal_bar">가로 바 그래프</option>
+													<option value="line">라인[흐름도] 그래프</option>
+													<option value="diffValue">비교 그래프</option>
+													<!--<option value="topology">토폴로지</option>-->
+											</select></td>
+										</tr>
+										<tr>
+											<th>구분자</th>
+											<td><select id="j_key_1" class="form-control"></select></td>
+										</tr>
+										<tr id="j_key_2_box">
+											<th>구분자2</th>
+											<td><select id="j_key_2" class="form-control"></select></td>
+										</tr>
+										<tr>
+											<th>지표값</th>
+											<td><select id="j_val_1" class="form-control"></select></td>
+										</tr>
+										<tr id="j_val_2_box">
+											<th>자표값2</th>
+											<td><select id="j_val_2" class="form-control"></select></td>
+										</tr>
+										<tr id="j_val_3_box">
+											<th>지표값 단위</th>
+											<td><input class="form-control" id="j_val_3" engOnly="1"
+												maxlength="10"></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						<div id="tab_info" class="alert alert-info">그래프 유형에 대한 설명
+							공간입니다.</div>
+						<div class="fr">
+							<button type="submit" ng-click="tab_save()"
+								class="btn btn-primary wd80">
+								<i class="fa fa-check" />생성
+							</button>
+							<button ng-click="tab_close()" class="btn btn-bu wd80">
+								<i class="fa fa-times" />닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

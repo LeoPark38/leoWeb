@@ -1,0 +1,161 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="anal_title">
+				<i class="wd15 fab fas fa-bezier-curve mrgR10" css3animate
+					data-animated="wobble"></i>SIR 참조데이터
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div id="listDiv">
+				<div class="form-group">
+					<div class="btn_fr">
+						<button class="btn btn-sm btn-bu fr mrgR10 wd120"
+							ng-click="enterRegist()">
+							<i class="fa fa-plus"></i>데이터 등록
+						</button>
+					</div>
+					<div class="search table">
+						<table style="width: 100%;">
+							<colgroup>
+								<col width="10%">
+								<col width="60%">
+								<col width="30%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>데이터 검색</th>
+									<td><input type="text" class="form-control" maxlength="50"
+										placeholder="데이터타입/ 데이터명을 입력해 주세요."
+										ng-model="searchParam.keyword"></td>
+
+									<td style="display: flex; justify-content: flex-end;">
+
+										<div style="order: 2;">
+											<button ng-click="search()" id="search_btn"
+												class="btn btn-sm btn-primary mrgL5 wd80">
+												<i class="fa fa-search"></i>&nbsp;검색
+											</button>
+											<button id="search_reset" class="btn btn-sm btn-gr wd80"
+												ng-click="reset_btn()">
+												<i class="fas fa-redo-alt"></i>초기화
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!--  밑에 테이블 표 생성 -->
+
+				<table id="listTable" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th id="seletedDelete"></th>
+							<th>사용여부</th>
+							<th>데이터타입</th>
+							<th>데이터코드</th>
+							<th>데이터명</th>
+							<th>생성날짜</th>
+							<th>업데이트날짜</th>
+						</tr>
+					</thead>
+				</table>
+
+
+				<!--  데이터 등록을 눌렀을 때 나오는 팝업창 표출 -->
+				<div id="detailModal" class="panel panel-success reveal-modal">
+					<div class="panel-heading">
+						<h3 class="pop-title">기본 설정</h3>
+					</div>
+					<div id="scrollModal" class="panel-body"
+						style="height: 380px; overflow-y: auto; min-height: 300px">
+						<form class="form-horizontal ng-pristine ng-valid" role="form">
+							<div class="box_bul">
+								<div class="box_bul_bg">
+									<div class="box_bul_ti">기본 설정</div>
+								</div>
+								<div class="box_bul_con">
+									<table class="table_bor">
+										<colgroup>
+											<col width="15%">
+											<col width="85%">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>사용여부&nbsp;<span class="org">*</span></th>
+												<td><input type="checkbox" id="dtISUSE"
+													ng-model="detail.is_use" class="form-control"
+													maxlength="100"></td>
+											</tr>
+											<tr>
+												<th>데이터타입&nbsp;<span class="org">*</span></th>
+												<td><input id="dtTYPE" ng-model="detail.dt_type"
+													class="form-control" maxlength="100"></td>
+											</tr>
+											<tr>
+												<th>데이터명&nbsp;<span class="org">*</span></th>
+												<td><input id="dtNAME" ng-model="detail.dt_name"
+													class="form-control" maxlength="100"></td>
+											</tr>
+											<tr>
+												<th>데이터코드<span class="org"></span></th>
+												<td><input id="dtCODE" ng-model="detail.dt_code"
+													class="form-control" maxlength="100" readonly></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="box_bul mrgT20">
+								<div class="box_bul_bg">
+									<div class="box_bul_ti">데이터 list</div>
+								</div>
+								<div class="text-right" style="padding: 5px 15px 10px 0px">
+									<button ng-click="collectAdd()" ng-show="linkTable === false"
+										class="btn btn-sm btn-gr fr wd90">
+										<i class="fa fa-plus"></i>&nbsp;추가
+									</button>
+								</div>
+								<div class="box_bul_con">
+									<table id="data_listTable"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>데이터 코드</th>
+												<th>데이터 타입</th>
+												<th>데이터 IP</th>
+												<th>작업</th>
+
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer col-sm-12 text-right paddT5"
+						style="padding-right: 25px; background-color: #fff;">
+						<button ng-show="state === 'update' && linkTable === false "
+							type="submit" ng-click="delete()"
+							class="btn btn-gr wd120 pull-left">
+							<i class="fa fa-trash"></i>&nbsp;삭제
+						</button>
+						<button type="submit" ng-click="save()"
+							ng-show="linkTable === false" class="btn btn-primary wd120">
+							<i class="fa fa-check" />&nbsp;저장
+						</button>
+						<button type="button" ng-click="closeDetail()"
+							class="btn btn-bu wd120">
+							<i class="fa fa-times" />&nbsp;닫기
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>

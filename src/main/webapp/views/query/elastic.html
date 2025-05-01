@@ -1,0 +1,94 @@
+<section id="main-content" style="padding: 0 !important;">
+	<div class="panel panel-default mrgB0">
+		<div class="panel-heading" style="display: flex;">
+			<div id="elastic_sts" style="height: 16px; width: 16px; border-radius: 20px;"></div>
+			<h3 class="panel-title">Elastic</h3>	
+		</div>
+		<div class="panel-body">
+			<div id="data_body" class="animated fadeIn">
+		        <!-- 버튼 영역 -->
+		        <div class="mb-3 d-flex flex-wrap gap-2">
+		          <button ng-click="nodeStat()" class="btn btn-sm btn-primary">
+		            <i class="fas fa-server"></i> node 상태
+		          </button>
+		          <button ng-click="nodeSearch()" class="btn btn-sm btn-primary">
+		            <i class="fas fa-server"></i> node 서치
+		          </button>
+		          <button ng-click="clusetSet()" class="btn btn-sm btn-primary">
+		            <i class="fas fa-server"></i> 클러스터 셋팅
+		          </button>
+		          <button ng-click="queryMange()" class="btn btn-sm btn-primary">
+		            <i class="fas fa-server"></i> 저장된 쿼리
+		          </button>
+		        </div>
+				<div class="querySearch">
+					<div id="mode_list_div" class="inline">
+						<select id="method_list" class="wd120" ng-model="method_type">
+							<option value="GET">GET</option>
+							<option value="POST">POST</option>
+							<option value="PUT">PUT</option>
+							<option value="Delete">Delete</option>
+						</select>
+					</div>
+					<div id="prev_list_div" class="inline">
+						<select id="prev_list" class="wd380">
+							<option value="">최근 검색 쿼리</option>
+						</select>
+					</div>
+					<div style="float: right">
+						<div ng-click="btnResetQuery()" class="btn btn-sm btn-primary wd60">
+							<i class="glyphicon glyphicon-repeat"></i>
+						</div>
+						<div ng-click="btnQuerySave()" id="btn_query_save" class="btn btn-sm btn-primary wd80">
+							<i class="fa fa-check"></i>저장
+						</div>
+						<div ng-click="btnSearch()" id="btn_search" class="btn btn-sm btn-primary wd120">
+							<i class="glyphicon glyphicon-search"></i> 검색
+						</div>
+					</div>
+				</div>
+				<div>
+					<div id="editor1" style="display: inline-block; width: 49%;">
+						<pre id="query_editor" style="width: 100%; line-height: 15px;"></pre>
+					</div>
+					<div id="editor2" style="display: inline-block; width: 50%;">
+						<pre id="rt_view" style="width: 100%; line-height: 15px;"></pre>
+					</div>
+				</div>
+				<div id="queryModal" class="panel panel-success reveal-modal">
+					<div class="panel-heading">
+						<h3 class="pop-title">쿼리 관리</h3>
+						<div class="actions pull-right"></div>
+					</div>
+					<div class="" style="padding:10px"> 
+						<div class="btn_fr" style="height: auto;">
+							<div style="padding-bottom: 5px">
+								<table id="query_table" class="table table-striped table-bordered"
+									cellspacing="0" width="100%">
+									<thead>
+										<tr style="border-top: 1px solid #ddd !important;">
+											<th>METHOD</th>
+											<th>TITLE</th>
+											<th>USER_ID</th>
+											<th>MK_DATE</th>
+											<th>-</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>	
+					</div>
+					<div class="mrg15">
+						<button type="submit" ng-click="queryModal_close()"
+							class="btn btn-gr fr wd90">
+							<i class="fa fa-times"></i>&nbsp;닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+
+</style>

@@ -1,0 +1,53 @@
+/* 쿼리검색관련 */
+.querySearch{
+	margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    width:96.5%;
+}
+
+/* DataTable 관련 */
+
+/* .dataTables_paginate {
+    text-align: center !important;
+    margin-top: 20px !important;
+}
+
+.dataTables_paginate .paginate_button {
+    background: none !important;
+    border: none !important;
+    margin: 0 4px !important;
+    color: black !important;
+    font-size: 16px !important;
+    font-weight: normal !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+    color: red !important;
+    font-weight: bold  !important;
+    text-decoration: underline !important;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    color: darkred!important;
+} */
+
+/* 기타 */
+.uploardform {
+	background-color: #eee;
+    width: 220px;
+    opacity: 1;
+    border: 1px solid #DDD;
+    padding: 8px 12px 9px 12px;
+    height: 28px;
+    vertical-align:middle;
+    padding-left: 4px;
+    font-size: 12px;
+    color: #555;
+}
+
+.maxWd90{
+	max-width: 90%;
+}

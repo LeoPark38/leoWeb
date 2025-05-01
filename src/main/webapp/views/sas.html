@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko" class="{{$state.current.name}}" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS App</title>
+    <!-- plugin 로드 -->
+   	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome.min.css">
+	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome-animation.min.css">
+	<link rel="stylesheet" href="../plugin/font-awesome/flaticon.css">
+	<link rel="stylesheet" href="../plugin/bootstrap-toggle/bootstrap-toggle.css"/> 
+	
+	<script src="../plugin/ace/ace.js"></script>
+	<script src="../plugin/ace/ext-language_tools.js"></script>
+	<script src="../plugin/ace/ext-beautify.js"></script>
+		
+	<script src="../plugin/jquery.js"></script>  
+	<script src="../plugin/jquery-ui.js"></script>  
+	<script src="../plugin/multiple-select/multiple-select.js"></script>  
+	<script src="../plugin/reveal.js"></script>  
+	
+	<script src="../plugin/antv/x6.js"></script> 
+	<script src="../plugin/antv/transform.js"></script> 
+	<script src="../plugin/antv/stencil.js"></script> 
+	<script src="../plugin/antv/snapline.js"></script> 
+	<script src="../plugin/antv/selection.js"></script> 
+	<script src="../plugin/antv/keyboard.js"></script> 
+	<script src="../plugin/antv/history.js"></script> 
+	<script src="../plugin/antv/clipboard.js"></script> 
+
+	<script src="../plugin/antv/minimap.js"></script> 
+	<!-- css 로드 -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/_main.css"/>		
+    <link rel="stylesheet" href="../css/components.css"/>
+    <link rel="stylesheet" href="../css/sir/sir.css"/>
+    <link rel="stylesheet" href="../css/sub.css"/>
+    <!-- css 임시  -->
+   	<link rel="stylesheet" href="../css/v1/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/v1/components.css">
+	<link rel="stylesheet" href="../css/v1/slick.css">
+	<link rel="stylesheet" href="../css/v1/widgetSlick.css">
+	<link rel="stylesheet" href="../css/v1/datetimepicker.css">	
+	<link rel="stylesheet" href="../css/v1/multiple-select.css">
+	<link rel="stylesheet" href="../css/v1/dashWidget.css">
+	<link rel="stylesheet" href="../css/v1/sirReport.css">
+	<link rel="stylesheet" href="../css/v1/dynatree.css">
+	<link rel="stylesheet" href="../css/v1/_main.css">
+	<link rel="stylesheet" href="../css/v1/ng-custom.css">
+	<link rel="stylesheet" href="../css/v1/antv.css">
+ 	<link rel="stylesheet" href="../plugin/bootstrap-toggle/bootstrap-toggle.css"> 
+	<link rel="stylesheet" href="../css/v1/sir.css">
+	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome.min.css">
+	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome-animation.min.css">
+	<link rel="stylesheet" href="../plugin/font-awesome/flaticon.css">
+	<link rel="stylesheet" href="../plugin/animate/animate.css">
+
+	<link rel="stylesheet" href="../plugin/perfect-scrollbar/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="../plugin/waitMe/waitMe.min.css">
+	<link rel="stylesheet" href="../plugin/fullcalendar/fullcalendar.css">
+	
+	<!-- dataTable 관련 -->
+ 	<script src="../plugin/dataTables/jquery.dataTables.min.js"></script>
+ 	<script src="../plugin/dataTables/fnPagingType.js"></script>
+	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.min.css">	
+	<link rel="stylesheet" href="../plugin/dataTables/jquery.treeTable.css">
+	<link rel="stylesheet" href="../plugin/dataTables/dataTables.colReorder.min.css">
+	<link rel="stylesheet" href="../plugin/dataTables/dataTables.rowReorder.css">
+	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.colResize.css">
+	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.colResize.css">
+		
+	<!-- js 로드 -->
+	<!-- <script src="../js/test.js" defer></script> -->
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/angular/angular-animate.min.js"></script>
+    <script src="../js/angular/angular-cookies.min.js"></script>
+    <script src="../js/angular/angular-route.min.js"></script>
+    <script src="../js/angular/angular-ui-router.min.js"></script>
+    
+    <script src="../js/app.js"></script>
+	<script src="../js/controller.js"></script>
+<!-- 페이지별 js 로드 -->
+    <script src="../js/controllers/test.js"></script>
+	<script src="../js/controllers/HomeController.js"></script>
+	<!-- sir관련 -->
+ 	<script src="../js/controllers/sir/sirManage.js"></script>
+ 	<!-- 게시판 -->
+ 	<script src="../js/controllers/board/board.js"></script>
+ 	<!-- 유저 -->
+ 	<script src="../js/controllers/user/user.js"></script>
+	<!-- 유틸 -->
+	<script src="../js/controllers/util/utils.js"></script>
+	<!-- 검색 -->
+	<script src="../js/controllers/query/editor.js"></script>
+	<script src="../js/controllers/query/elastic.js"></script>
+
+
+
+</head>
+	<body>
+		<section id="main-wrapper" class="theme-default sidebar-mini">       
+			<aside class="sidebar sidebar-left" id="left_aside" ng-include="'./sas-left.html'"></aside>
+			<section class="main-content-wrapper">                      
+				<div id="header" ng-include="'./sas-header.html'"></div>                      
+				<ui-view/>			 
+			</section>
+		</section>
+	</body>
+	<script>
+		
+	</script>
+	
+</html>

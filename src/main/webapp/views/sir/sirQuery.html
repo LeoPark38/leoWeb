@@ -1,0 +1,102 @@
+<!-- SIR 쿼리설정 모달 -->			
+			<div id="sirQueryModal" class="panel panel-success reveal-modal">
+				<div class="panel-heading">
+					<h3 class="pop-title">SIR 쿼리 설정</h3>
+					<div class="actions pull-right"></div>
+				</div>
+				<div class="animated fadeIn">
+					<div class="panel-body">
+						<form class="form-horizontal ng-pristine ng-valid" role="form">
+							<div class="box_bul">
+								<div class="box_bul_bg">
+									<div class="box_bul_ti">{{queryTitle}}</div>
+								</div>
+								<div class="box_bul_con">					
+									<div class="box_bu_03 mrgT10">
+										<table class="table-th table table-bordered text-center ">
+											<caption></caption>
+											<colgroup>
+												<col width="110px">
+											</colgroup>
+											<tbody>
+										<tr class="tb_l" style="height: 48.5px;">
+													<th>테이블 선택</th>
+													<td>
+														<select id="tableList" style="width:640px;"></select>
+													</td>
+												</tr>		
+											<tr class="tb_l" style="height: 48.5px;">
+													<th>검색 조건 추가</th>
+													<td>
+														<div id="search_box2">
+															<div class="">
+																<div class="con_data indirect_box" style="display: flex;">
+																	<select id="col_field" class="wd150"></select>
+																	<select id="opt_field" class="wd80 hide"></select>
+																	<select id="value_type_field" class="wd150 hide"></select>
+																</div>
+																<div style="display: flex;">
+																	<div id="detail_opt_field" class="mrgR10" style="display: flex;"></div>
+																	<button id="term_add_btn" class="btn btn-sm btn-bu wd70 indirect_box hide"><i class="fas fa-plus"></i> 추가</button>	
+																</div>
+																
+															</div>
+														</div>
+													</td>
+												</tr>	
+												<tr class="tb_l" style="height: 48.5px;">
+													<th>검색 조건 목록</th>
+													<td>
+														<div id="searchList" style="display: none; max-height: 139px; overflow-y: auto;" >
+															<div id="columnList" style="display: flex; flex-wrap: wrap; gap:5px;"></div>
+														</div>		
+													</td>
+												</tr>																												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>	
+						    <div class="mrg15">
+								<button type="submit" ng-click="sirQueryCreate()" class="btn btn-gr fr wd90" style="margin-right: -10px;">
+									쿼리생성
+								</button>
+							</div>								
+							<div class="box_bul" style="margin-top: 70px;">
+								<div class="box_bul_bg">
+									<div class="box_bul_ti">생성 Query</div>
+								</div>
+								<div class="box_bul_con">					
+									<div class="box_bu_03 mrgT10">
+										<table class="table-th table table-bordered text-center ">
+											<caption></caption>
+											<colgroup>
+												<col width="110px">
+											</colgroup>
+											<tbody>									
+												<tr class="tb_l">
+													<th>d_query</th>
+													<td><input class="form-control" id="dQuery" style="width:640px;"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>										
+						
+						</form>
+					</div>
+				</div>
+				<div class="mrg15">
+					<button type="submit" ng-click="sirQueryModal_close()" class="btn btn-gr fr wd90">
+						<i class="fa fa-times"></i>&nbsp;닫기
+					</button>
+				</div>
+			</div>
+			
+<style>
+	#columnList .term_content {
+		background-color:#4a67b3;
+	}
+	
+</style>

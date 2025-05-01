@@ -1,0 +1,1720 @@
+<div id="dv_loading" class="hidden"
+	style="position: fixed; z-index: 10000; width: 100%; height: 100%"></div>
+<section id="main-content" class="animated fadeIn"
+	ng-controller="sirMonitoringCtrl">
+	<ul id="myMenu" class="contextMenu">
+		<li class="menu">&nbsp;&nbsp;메뉴</li>
+	</ul>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="anal_title">
+				<i class="wd15 fab fas fa-bezier-curve mrgR10" css3animate
+					data-animated="wobble"></i>SIR 모니터링
+			</h3>
+			<div class="actions pull-right">
+				<i fullscreen-widget class="fa fa-expand"></i>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div id="data_list">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<div class="pull-left btn_fr">
+								<button id="view_load" class="btn btn-sm btn-gr wd90"
+									ng-click="view_load()">
+									<span class="glyphicon top02 flaticon-settings46 animated"></span>
+									컬럼설정
+								</button>
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-sm btn-bu fr mrgL5 wd30 btn-insert"
+									ng-click="filter_refresh()" id="filter_reset">
+									<span class="glyphicon glyphicon-refresh"></span>
+								</button>
+								<button ng-click="threat_search_term()" id="threat_search_term"
+									class="btn btn-sm btn-bu fr mrgL5 wd120">
+									<i class="fas fa-save"></i>검색조건 저장
+								</button>
+								<button class="btn btn-sm btn-gr fr mrgL5 wd120 btn-insert"
+									ng-click="filter_reset()" id="filter_reset">
+									<span class="glyphicon glyphicon-filter"></span> 검색조건 초기화
+								</button>
+								<button id="collect_stop"
+									class="btn btn-sm btn-gr fr mrgL5 wd70"
+									ng-click="collect_stop()">
+									<span class="glyphicon glyphicon-pause"></span> 정지
+								</button>
+								<button id="collect_start"
+									class="btn btn-sm btn-gr fr mrgL5 wd70 hide"
+									ng-click="collect_start()">
+									<span class="glyphicon glyphicon-play"></span> 시작
+								</button>
+								<button id="pressing_false"
+									class="btn btn-sm btn-gr fr mrgL5 wd110 hide"
+									ng-click="pressing_false()">
+									<span class="glyphicon glyphicon-search"></span> 전체보기
+								</button>
+							</div>
+							<div class="pull-right col-sm-3" style="margin: 1px -10px 1px 0;">
+								<select id="risk_filter">
+									<option value="all" selected="selected">sir 상태 전체</option>
+									<option value="0">작업 대기</option>
+									<option value="1">작업 시작</option>
+									<option value="2">사용자 작업 등록</option>
+									<!-- <option value="3">(미정)</option> -->
+									<option value="4">사용자 작업 대기</option>
+									<!-- <option value="5">(미정)</option> -->
+									<option value="6">작업 완료</option>
+									<!-- <option value="7">(미정)</option> -->
+									<!-- <option value="8">(미정)</option> -->
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div id="now_filter" class="hide info_gb">검색조건 ></div>
+					<div id="info_filter" class="info_gb">
+						마우스 오른쪽 버튼으로 검색조건 지정 <b>[검색창에 값 미입력 후 검색 시 검색창 위에 있는 데이터로
+							검색조건이 선택됩니다.]</b>
+					</div>
+<!--					<div id="threat_list" class="oneTable" style="height: 650px;"></div>-->
+					<div id="sir_list" class="oneTable" style="height: 650px;"></div>
+
+					<div class="fr">
+						<button type="submit" ng-click="threat_select()"
+							class="btn btn-primary wd140 fwb">
+							<i class="fa fa-check"></i>위협경보 선택
+						</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div id="data_edit" class="hide animated fadeIn">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2 class="panel-title">분석대상 위협경보</h2>
+							<br>
+							<div style="padding: 0 60px;">
+								<input type="hidden" id="_id"> <input type="hidden"
+									id="INST_CODE">
+								<table class="table table-striped table-bordered text-center">
+									<tr class="tb_l">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">수집일시</th>
+										<td colspan="5" id="_datetime"></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">탐지일시</th>
+										<td colspan="5" id="TW_COLLECT_DT"></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">위험도</th>
+										<td colspan="2" id="TW_RISK"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">장비유형</th>
+										<td colspan="2" id="GEAR_TYPE"></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">기관명</th>
+										<td colspan="2" id="INST_NM"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">공격유형</th>
+										<td colspan="2" id="DRULE_ATT_TYPE_CODE1"></td>
+									</tr>
+									<tr class="ooec_show">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">상세기관명</th>
+										<td colspan="2" id="INST_DETAIL_NM"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;"></th>
+										<td colspan="2" id=""></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">공격명</th>
+										<td colspan="5"><a href="javascript:;" id="DRULE_NM"
+											class="show_threat ng-scope" ng-click="rule_detail()"
+											style="color: #337ab7;"></a></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">위협경보
+											ID</th>
+										<td colspan="5" id="TW_ID"></td>
+									</tr>
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">출발지IP</th>
+										<td colspan="2" id="TW_ATT_IP"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">출발지
+											포트</th>
+										<td colspan="2" id="TW_ATT_PORT"></td>
+									</tr>
+									<!-- 출발지IP 조회 결과 -->
+									<tr id="search_data">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">출발지IP
+											기관</th>
+										<td colspan="2" id="SC_INST_NM"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">출발지IP
+											상위기관</th>
+										<td colspan="2" id="SC_INST_HIGH_NM"></td>
+									</tr>
+
+									<!--<tr class="TW_NTM">-->
+									<tr>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">목적지IP</th>
+										<td colspan="2" id="TW_DMG_IP"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">목적지
+											포트</th>
+										<td colspan="2" id="TW_DMG_PORT"></td>
+									</tr>
+									<tr class="TW_NTM">
+										<!--<tr>-->
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">프로토콜</th>
+										<td colspan="2" id="TW_PROTO_NM"></td>
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">탐지건수</th>
+										<td colspan="2" id="TW_DETECT_CNT"></td>
+									</tr>
+									<tr class="TW_NTM">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">패턴문자열
+											<button ng-click="highlight_click()" id="highlight_btn"
+												class="btn-bu"
+												style="width: 70px; font-size: 11px; height: 19px;">하이라이트</button>
+											<select id="pattern_type" class="btn-bu"
+											style="width: 70px; font-size: 11px; height: 19px;"><option
+													value="UTF-8" selected="selected">UTF-8</option>
+												<option value="EUC-KR">EUC-KR</option></select> <br>
+											<button id="coding_pop_btn" ng-click="coding_pop()"
+												class="btn-bu"
+												style="width: 70px; font-size: 11px; height: 19px; transform: translateX(33px)">인코딩</button>
+											<button id="font_setting_btn" ng-click="font_setting()"
+												class="btn-bu"
+												style="width: 70px; font-size: 11px; height: 19px; transform: translateX(32px); margin-top: 4px">
+												<i class="glyphicon glyphicon-text-color"></i> 설정
+											</button>
+										</th>
+										<td colspan="5" align="center"><textarea rows="3"
+												id="TW_PATTERN_STR"
+												style="width: 100%; height: 130px; resize: none;"
+												class="hide" readonly></textarea> <textarea rows="3"
+												id="TW_PATTERN_STR_str" class="form-control hide"
+												style="width: 49%; height: auto; min-height: 130px; resize: none; float: left;"
+												readonly></textarea> <pre id="TW_PATTERN_STR_string"
+												class="form-control"
+												style="white-space: pre-wrap; width: 49%; max-width: 600px; height: 200px; resize: none; float: left; text-align: left; word-break: break-all;"></pre>
+											<pre id="TW_PATTERN_STR_hex" class="form-control"
+												style="white-space: pre-wrap; width: 49%; height: 200px; resize: none; float: left; text-align: left; word-break: break-word; margin-left: 15px;"></pre>
+										</td>
+									</tr>
+									<tr class="TW_NTM syslog_box">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">연동
+											데이터</th>
+										<td colspan="5" style="text-align: left">
+											<button id="btn_metadata" ng-click="openSyslogTable()"
+												class="btn btn-gr wd140" style="margin-left: 9px">
+												<i class=" fa fa-search" /> 검색
+											</button>
+											</button>
+											<button id="btn_metadata" ng-click="openComposition()"
+												class="btn btn-gr wd140" style="margin-left: 9px">
+												<i class=" fa fa-search" /> 구성도 확인
+											</button>
+										</td>
+									</tr>
+									<tr class="ecsc_ntm_show">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">DPI
+											검색</th>
+										<td colspan="5" style="text-align: left">
+											<button id="btn_metadata" ng-click="btn_metadata()"
+												class="btn btn-gr wd140" style="margin-left: 9px">
+												<i class="fa fa-search" /> 검색
+											</button>
+										</td>
+									</tr>
+									<tr class="TW_MTM">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">악성의심
+											파일명</th>
+										<td colspan="5" style="vertical-align: middle;">
+											<div class="fl">
+												<div id="TW_MALIG_FILE_NM" style="margin-top: 5px;"></div>
+											</div>
+											<div class="fr">
+												<button ng-click="analyze_btn()" id="analyze_btn"
+													class="btn btn-sm btn-primary wd100">
+													<i class="glyphicon glyphicon-search"></i> AX분석요청
+												</button>
+												<button ng-click="analyze_refresh_btn()"
+													id="analyze_refresh_btn"
+													class="btn btn-sm btn-primary wd120 hide">
+													<i class="glyphicon glyphicon-refresh"></i> 분석 새로고침
+												</button>
+											</div>
+										</td>
+									</tr>
+									<tr class="TW_MTM">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">악성의심
+											파일 분석결과 (AX)</th>
+										<td colspan="5" style="vertical-align: middle;">
+											<div class="fl" style="width: 80%;">
+												<pre id="TW_MALIG_FILE_RESULT_AX"
+													style="min-height: 200px; max-height: 600px; overflow: auto; white-space: pre-wrap;"></pre>
+											</div>
+											<div class="fr" style="width: 20%; height: 150px;">
+												<button ng-click="go_ax()" id="go_ax_btn"
+													class="btn btn-sm btn-primary wd90">
+													<i class="glyphicon glyphicon-search"></i>AX 확인
+												</button>
+											</div>
+										</td>
+									</tr>
+									<tr class="TW_MTM">
+										<th
+											style="text-align: center; width: 20%; vertical-align: middle;">악성의심
+											파일 분석결과 (FX)</th>
+										<td colspan="5" style="vertical-align: middle;">
+											<div class="fl" style="width: 80%;">
+												<!-- <textarea rows="3" id="TW_MALIG_FILE_RESULT_FX" style="width:100%; height:100%; resize:none;" readonly></textarea> -->
+												<pre id="TW_MALIG_FILE_RESULT_FX"
+													style="min-height: 200px; max-height: 600px; overflow: auto; white-space: pre-wrap;"></pre>
+											</div>
+											<div class="fr" style="width: 20%; height: 150px;">
+												<button ng-click="go_fx()" id="go_fx_btn"
+													class="btn btn-sm btn-primary wd90">
+													<i class="glyphicon glyphicon-search"></i>FX 확인
+												</button>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title" class="paddB10">Sir 정보</h3>
+							<div id="sirMainDiv" class=" ">
+								<div id="sirFlow">
+									<div class="box_bul_bg" style="background-color:#f9f9f9; border-bottom: 1px solid #dfe3e8 !important;">
+										<div class="box_bul_ti" style="float: left;">Work_List</div>
+									</div>
+									<div class="file-tree box_bul_con" id="timelineDiv" style="position: relative; overflow: hidden; height: 410px;">
+									    <div class="timeline"></div>
+									</div>
+								</div>
+								<div style="width: 100%;">
+									<div id="sirDetail" style="">
+										<!-- <div class="box_bul"> -->
+											<div class="box_bul_bg" style="background-color:#f9f9f9; border-bottom: 1px solid #dfe3e8 !important;">
+												<div class="box_bul_ti" style="float: left;">상세보기</div>
+											</div>
+											<div class="file-tree box_bul_con" id="" style="overflow-y: auto; height: 410px;">
+												<table class="table_bor">
+													<colgroup>
+														<col width="15%">
+														<col width="85%">
+													</colgroup>
+													<tbody>
+														<tr >
+															<th>NODE_ID</th>
+															<td id="nodeId"></td>
+														</tr>
+														<tr>
+															<th>NODE_NAME</th>
+															<td id="nodeName"></td>
+														</tr>
+														<tr>
+															<th>NODE_TYPE</th>
+															<td id="nodeType"></td>
+														</tr>
+														<tr>
+															<th>S_DATE</th>
+															<td id="nodeSdate"></td>
+														</tr>
+														<tr>
+															<th>E_DATE</th>
+															<td id="nodeEdate"></td>
+														</tr>
+														<tr>
+															<th>소요시간</th>
+															<td id="nodeDuration"></td>
+														</tr>
+														<tr id="selectTR">
+															<th>방향 여부</th>
+															<td>
+																<select id="selectYN" class="btn-bu wd90" >
+																	<option value="Y" selected="selected">Y</option>
+																	<option value="N">N</option>
+																</select>
+															</td>
+														</tr>
+														<tr>
+															<th>설명</th>
+															<td>
+																<textarea class="form-control" id="sirDesc" name="editor" style="resize: none ; height: 100px;" disabled></textarea>
+															</td>
+														</tr>
+													</tbody>
+												</table>			
+											    <div class=" col-sm-12 text-right" style=" padding: 10px 0px 0px 0px; background-color: #fff; display: flex;">
+											    	<button type="button" ng-click="saveUserWork()" class="btn btn-bu wd90" id="saveuserWork">
+														<i class="fa fa-times" />저장
+													</button>
+													<button type="button" ng-click="sirFlowDetailClose()" class="btn btn-bu wd90" style="margin-left: auto;">
+														<i class="fa fa-times" />닫기
+													</button>
+												</div>
+											</div>
+										<!-- </div> -->
+									</div>
+									<div id="container" style="">
+										<!-- graph disabled 처리를 위하여 만든 div -->
+										<div id="overlay" style="display: none"></div> 
+									</div>								
+								</div>
+						
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">위험도 산정 정보</h3>
+								<br>
+								<div style="padding: 0 60px;">
+									<table class="table table-striped table-bordered text-center">
+										<tr class="tb_l">
+											<td
+												style="text-align: center; width: 20%; vertical-align: middle;">위험도</td>
+											<td><input class="form-control" id="risk_val_0"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+									</table>
+
+									<table class="table table-striped table-bordered text-center">
+										<tr class="tb_l">
+											<td
+												style="text-align: center; width: 20%; vertical-align: middle;">내부자원
+												위험지수</td>
+											<td colspan="7"><input class="form-control"
+												id="risk_val_1"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled> <input type="hidden" class="form-control"
+												id="risk_val_nm"></td>
+										</tr>
+										<tr>
+											<td rowspan="2"
+												style="text-align: center; width: 20%; vertical-align: middle;">공격의도</td>
+											<td>파괴</td>
+											<td>유출</td>
+											<td>지연</td>
+											<td>잠복</td>
+											<td>침입시도</td>
+											<td>MD5</td>
+											<td>기타</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="intent_val_1"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_2"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_3"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_4"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_5"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_6"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="intent_val_0"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<!-- ##################################################################################################################### -->
+										<tr>
+											<td rowspan="8"
+												style="text-align: center; width: 20%; vertical-align: middle;">
+												<div class="offset3 col-sm-12">
+													자산
+													<button ng-click="search_vicip_btn()" id="search_vicip_btn"
+														class="btn btn-xs btn-bu" style="width: 24px;">
+														<i class="glyphicon glyphicon-search" style="padding: 0;"></i>
+													</button>
+												</div>
+											</td>
+											<td rowspan="4"
+												style="text-align: center; vertical-align: middle;">공인IP</td>
+											<td>전체IP대역(유선)</td>
+											<td>전체IP대역(무선)</td>
+											<td>WEB 서버</td>
+											<td>내부응용 서버</td>
+											<td>DB 서버</td>
+											<td>패치서버</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="assets_val_1"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_2"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_3"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_4"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_5"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_6"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr>
+											<td>네트워크</td>
+											<td>보안</td>
+											<td>업무용 PC</td>
+											<td>비업무용 PC</td>
+											<td colspan="2">기타</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="assets_val_7"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_8"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_9"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_10"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"><input class="form-control"
+												id="assets_val_11"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr>
+											<td rowspan="4"
+												style="text-align: center; vertical-align: middle;">사설IP</td>
+											<td>전체IP대역(유선)</td>
+											<td>전체IP대역(무선)</td>
+											<td>WEB 서버</td>
+											<td>내부응용 서버</td>
+											<td>DB 서버</td>
+											<td>패치서버</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="assets_val_12"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_13"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_14"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_15"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_16"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_17"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr>
+											<td>네트워크</td>
+											<td>보안</td>
+											<td>업무용 PC</td>
+											<td>비업무용 PC</td>
+											<td colspan="2">기타</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="assets_val_18"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_19"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_20"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="assets_val_21"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"><input class="form-control"
+												id="assets_val_22"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<!-- ##################################################################################################################### -->
+										<tr>
+											<td rowspan="2"
+												style="text-align: center; width: 20%; vertical-align: middle;">IP/URL</td>
+											<td>북한 IP</td>
+											<td colspan="2">유해 IP(NCSC)</td>
+											<td colspan="2">유해 IP(ECSC)</td>
+											<td>유해 URL(NCSC)</td>
+											<td>유해 URL(ECSC)</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="source_val_1"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"><input class="form-control"
+												id="source_val_2"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"><input class="form-control"
+												id="source_val_3"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="source_val_4"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="source_val_5"
+												style="width: 60px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+									</table>
+
+									<table class="table table-striped table-bordered text-center">
+										<tr class="tb_l">
+											<td
+												style="text-align: center; width: 20%; vertical-align: middle;">내부전문지식
+												위험지수</td>
+											<td colspan="4"><input class="form-control"
+												id="risk_val_2"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_old">
+											<td
+												style="text-align: center; width: 20%; vertical-align: middle;">탐지규칙
+												위험지수</td>
+											<td colspan="4"><input class="form-control"
+												id="in_spec_1"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_old">
+											<td rowspan="2"
+												style="text-align: center; width: 20%; vertical-align: middle;">가중치</td>
+											<td style="width: 20%">신규탐지</td>
+											<td style="width: 20%">취약점</td>
+											<td style="width: 20%">관제모니터링</td>
+											<td style="width: 20%">시나리오</td>
+										</tr>
+										<tr class="risk_old">
+											<td><input type="hidden" class="form-control"
+												id="in_spec_2"> <input class="form-control"
+												id="in_spec_2_1"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="in_spec_2_2"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="in_spec_2_3"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="in_spec_2_4"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>탐지규칙 중요도</td>
+											<td colspan="4"><input class="form-control"
+												id="detect_rule_val_1"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td rowspan="10">취약점 점검 이력</td>
+											<td>Injection</td>
+											<td><input class="form-control" id="weekness_val_1"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>크로스 사이트 스크립트(XSS)</td>
+											<td><input class="form-control" id="weekness_val_2"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>크로스 사이트 리퀘스트 변조(CSRF)</td>
+											<td><input class="form-control" id="weekness_val_3"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>검증되지 않은 리다이렉트 및 포워드</td>
+											<td><input class="form-control" id="weekness_val_4"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>파일 업로드</td>
+											<td><input class="form-control" id="weekness_val_5"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>관리자 페이지 노출</td>
+											<td><input class="form-control" id="weekness_val_6"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>자동화 공격</td>
+											<td><input class="form-control" id="weekness_val_7"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>경로추적 및 파일 다운로드</td>
+											<td><input class="form-control" id="weekness_val_8"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>URL/파라미터 변조</td>
+											<td><input class="form-control" id="weekness_val_9"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>불충분한 세션 관리</td>
+											<td><input class="form-control" id="weekness_val_10"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>쿠키변조</td>
+											<td><input class="form-control" id="weekness_val_11"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>디폴트/취약한 계정 사용</td>
+											<td><input class="form-control" id="weekness_val_12"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>부적절한 에러메시지 노출</td>
+											<td><input class="form-control" id="weekness_val_13"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>소스코드 내 중요 정보 노출</td>
+											<td><input class="form-control" id="weekness_val_14"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>중요 정보 비 암호화 통신</td>
+											<td><input class="form-control" id="weekness_val_15"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>디렉터리 인덱싱</td>
+											<td><input class="form-control" id="weekness_val_16"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>취약한 파일 존재</td>
+											<td><input class="form-control" id="weekness_val_17"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>불필요한 Method 지원</td>
+											<td><input class="form-control" id="weekness_val_18"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>히든필드 조작</td>
+											<td><input class="form-control" id="weekness_val_19"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td>알려진 취약점이 있는 구성요소 사용</td>
+											<td><input class="form-control" id="weekness_val_20"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<!-- 2020 고도화로 추가된 위험도 -->
+										<tr class="risk_v2">
+											<td rowspan="3">시나리오 적중률</td>
+											<td>T형 1개</td>
+											<td><input class="form-control" id="scen_hit_val_1"
+												" style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>T형 2개</td>
+											<td><input class="form-control" id="scen_hit_val_2"
+												" style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"></td>
+										</tr>
+										<tr class="risk_v2">
+											<td>T형 3개 이상</td>
+											<td><input class="form-control" id="scen_hit_val_3"
+												" style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td colspan="2"></td>
+										</tr>
+										<!-- 2020 고도화로 침해사고 이력을 더이상 사용하지 않기로해서 일단 주석처리 -->
+										<!-- <tr class="risk_v2">
+												<td rowspan="3">침해사고 이력</td>
+												<td>침입시도</td>
+												<td><input class="form-control" id="accd_hist_val_1" style="width:100px; text-align: center; display: unset;" disabled></td>
+												<td>해킹메일</td>
+												<td><input class="form-control" id="accd_hist_val_2" style="width:100px; text-align: center; display: unset;" disabled></td>
+											</tr>
+											<tr class="risk_v2">
+												<td>악성코드</td>
+												<td><input class="form-control" id="accd_hist_val_3" style="width:100px; text-align: center; display: unset;" disabled></td>
+												<td>웹해킹</td>
+												<td><input class="form-control" id="accd_hist_val_4" style="width:100px; text-align: center; display: unset;" disabled></td>
+											</tr>
+											<tr class="risk_v2">
+												<td>경유지악용</td>
+												<td><input class="form-control" id="accd_hist_val_5" style="width:100px; text-align: center; display: unset;" disabled></td>
+												<td>서비스거부</td>
+												<td><input class="form-control" id="accd_hist_val_6" style="width:100px; text-align: center; display: unset;" disabled></td>
+											</tr> -->
+									</table>
+
+									<table class="table table-striped table-bordered text-center">
+										<tr class="tb_l">
+											<td
+												style="text-align: center; width: 20%; vertical-align: middle;">외부전문지식
+												위험지수</td>
+											<td colspan="4"><input class="form-control"
+												id="risk_val_3"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+										<tr>
+											<td rowspan="2"
+												style="text-align: center; width: 20%; vertical-align: middle;">글로벌
+												인텔리전스</td>
+											<td style="width: 20%">CRITICAL</td>
+											<td style="width: 20%">HIGH</td>
+											<td style="width: 20%">MEDIUM</td>
+											<td style="width: 20%">LOW</td>
+										</tr>
+										<tr>
+											<td><input class="form-control" id="global_val_critical"
+												value="-"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="global_val_high"
+												value="-"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="global_val_medium"
+												value="-"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+											<td><input class="form-control" id="global_val_low"
+												value="-"
+												style="width: 100px; text-align: center; display: unset;"
+												disabled></td>
+										</tr>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--							<div class="panel panel-default" id="assets_infos">
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<h3 class="panel-title">위험도 자산 정보</h3><br>
+																<table class="table table-bordered" width="100%" >
+																	<thead>
+																		<tr>
+																			<th rowspan="2">1.구분<br/>(교육청:산하기관)<br/>(대학:건물)</th>
+																			<th rowspan="2">2.구분<br/>(초,중,고)</th>
+																			<th colspan="2">3.자산IP</th>
+																			<th rowspan="2">4.IP구분</th>         
+																			<th rowspan="2">5.자산구분</th>
+																			<th rowspan="2">6.자산설명</th>
+																		</tr>
+																		<tr>
+																			<th>시작</th>
+																			<th>종료</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td>1</td>
+																			<td>2</td>
+																			<td>3</td>
+																			<td>4</td>
+																			<td>5</td>
+																			<td>6</td>
+																			<td>7</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>-->
+
+					<div class="panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">시나리오 정책 분석 결과</h3>
+								<br>
+								<div id="secn_info"></div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">침해사고이력</h3>
+								<br>
+								<div id="secn_info" style="padding: 0 17px;">
+									<button id="search_att_ip" ng-click="search_ip('ATT')"
+										class="btn btn-gr wd120" style="margin-right: 40px;">
+										<i class="fa fa-search" />출발지 IP
+									</button>
+									<button id="search_dmg_ip" ng-click="search_ip('DMG')"
+										class="btn btn-gr wd120">
+										<i class="fa fa-search" />목적지 IP
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel panel-default">
+							<div class="text-right">
+								<div class="col-sm-12" style="margin-top: 10px;">
+									<span class="org" style="font-weight: bold;"
+										id="search_duplication"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group pull-right">
+						<div class="col-sm-12" style="margin-top: 10px;">
+							<button id="acc_save" ng-click="accd_save()"
+								class="btn btn-gr wd120" value="">
+								<i class="fa fa-save" />사고 등록
+							</button>
+							<button id="anal_finish" ng-click="anal_finish()"
+								class="btn btn-gr wd120" value="">
+								<i class="glyphicon glyphicon-floppy-remove" />분석 종료
+							</button>
+							<button type="submit" ng-click="pop_close()"
+								class="btn btn-bu wd120">
+								<i class="fa fa-times" />닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="view_detail" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">상세보기</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="animated fadeIn">
+			<div class="panel-body" id="detail_body">
+				<div class="form-group paddLR15">
+					<table class="table table-bordered ">
+						<colgroup>
+							<col width="10%">
+							<col width="40%">
+							<col width="10%">
+							<col width="40%">
+						</colgroup>
+						<tr class="tb_l">
+							<th>공격유형</th>
+							<td colspan="3">
+								<div class="col-sm-5 paddL0"
+									style="text-align: left; margin-top: 4px;">
+									<label class="mrgR10">주분류 : </label> <input type="text"
+										id="DRULE_ATT_TYPE_NM1" class="form-control" noKor="1"
+										maxlength="100"
+										style="width: 330px; display: initial; margin-bottom: 4px;"
+										disabled>
+								</div>
+								<div class="col-sm-5" style="text-align: left; margin-top: 4px;">
+									<label class="mrgR10">세분류 : </label> <input type="text"
+										id="DRULE_ATT_TYPE_NM2" class="form-control" noKor="1"
+										maxlength="100"
+										style="width: 330px; display: initial; margin-bottom: 4px;"
+										disabled>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>ECSC 패턴</th>
+							<td>
+								<div class="mrgT0">
+									<input type="text" id="DRULE_PATTERN" name="sigtext"
+										class="form-control" noKor="1" maxlength="30" disabled>
+								</div>
+							</td>
+							<th>탐지규칙 정보</th>
+							<td>
+								<div class="mrgT0">
+									<input type="text" id="sig_text" name="sigtext"
+										class="form-control" noKor="1" maxlength="30" disabled>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>탐지규칙명</th>
+							<td colspan="3" id="DRULE_NM" style="font-weight: 700;"></td>
+						</tr>
+						<tr id="ntm_rule_column">
+							<th rowspan="2">규칙</th>
+							<td colspan="3">
+								<div class="col-sm-3 paddL0">
+									<input type="text" id="rule_action" class="form-control"
+										noKor="1" maxlength="100" disabled>
+								</div>
+								<div class="col-sm-1 paddL0">
+									<input type="text" id="rule_protocol" class="form-control"
+										noKor="1" disabled>
+								</div>
+								<div class="col-sm-2 paddL0">
+									<input type="text" id="rule_ip" class="form-control" noKor="1"
+										disabled>
+								</div>
+								<div class="col-sm-1 paddL0">
+									<input type="text" id="rule_port" class="form-control"
+										noKor="1" maxlength="10" disabled>
+								</div>
+								<div class="col-sm-1 paddL0">
+									<input type="text" id="rule_direction" class="form-control"
+										noKor="1" disabled>
+								</div>
+								<div class="col-sm-2 paddL0">
+									<input type="text" id="rule_ip2" class="form-control" disabled>
+								</div>
+								<div class="col-sm-1 paddL0">
+									<input type="text" id="rule_port2" class="form-control"
+										noKor="1" maxlength="10" disabled>
+								</div>
+								<div class="col-sm-12 paddL0 paddT5 paddR0">
+									<input type="text" id="rule_option" class="form-control"
+										disabled>
+								</div>
+							</td>
+						</tr>
+						<tr id="ntm_drule_column">
+							<td colspan="3" style="text-align: left;">검증결과 규칙 : <label
+								id="DRULE_RULE" style="font-weight: 700;"></label>
+							</td>
+						</tr>
+						<tr id="limit_column">
+							<th>임계치 (횟수)</th>
+							<td><input type="text" id="DRULE_LIMIT" class="form-control"
+								numberonly="1" value="0" maxlength="5" disabled></td>
+							<th>임계치 시간 (초)</th>
+							<td><input type="text" id="DRULE_LIMIT_TIME"
+								class="form-control" numberonly="1" value="0" maxlength="2"
+								disabled></td>
+						</tr>
+						<tr>
+							<th>위험지수</th>
+							<td><input type="text" id="DRULE_RISK_CNT"
+								class="form-control" numberonly="1" value="0" maxlength="2"
+								disabled></td>
+							<th>공격의도</th>
+							<td><input type="text" id="DRULE_INTENT"
+								class="form-control" numberonly="1" value="0" maxlength="2"
+								disabled></td>
+						</tr>
+						<tr>
+							<th>상세설명</th>
+							<td colspan="3"><textarea id="DRULE_DESC"
+									class="form-control" style="resize: none; height: 60px;"
+									maxlength="1000" disabled></textarea></td>
+						</tr>
+						<tr>
+							<th>이벤트 발생 FLOW</th>
+							<td colspan="3"><textarea id="DRULE_FLOW"
+									class="form-control" style="resize: none; height: 60px;"
+									maxlength="1000" disabled></textarea></td>
+						</tr>
+						<tr>
+							<th>대응방법</th>
+							<td colspan="3"><textarea id="DRULE_WAYFUNC"
+									class="form-control" style="resize: none; height: 60px;"
+									maxlength="1000" disabled></textarea></td>
+						</tr>
+						<tr>
+							<th>참고사이트</th>
+							<td colspan="3"><textarea id=DRULE_SITE class="form-control"
+									style="resize: none; height: 60px;" maxlength="1000" disabled></textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>기타</th>
+							<td colspan="3"><textarea id="DRULE_ETC"
+									class="form-control" style="resize: none; height: 60px;"
+									maxlength="1000" disabled></textarea></td>
+						</tr>
+						<tr>
+							<th>원본규칙이름</th>
+							<td colspan="3"><input type="text" id="DRULE_ORIGNAL_NM"
+								class="form-control" disabled></td>
+						</tr>
+					</table>
+				</div>
+				<div class="form-group">
+					<div class="text-rigt paddT10 pull-right"
+						style="padding-right: 15px;">
+						<button id="btn_detail_close" class="btn btn-primary">
+							<i class="fa fa-times"></i> 닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--분석 종료 추가-->
+	<div id="anal_finish_pop" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">분석 정보 입력</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body">
+			<div class="form-horizontal">
+				<form class="form-horizontal ng-pristine ng-valid" role="form"
+					id="inst_form">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<table class="table table-bordered">
+								<tbody>
+									<tr class="tb_l">
+										<th widht="15%">분석 유형</th>
+										<td colspan="3">
+											<div class="radio-inline paddL0">
+												<div class="radio3 radio-sm">
+													<input type="radio" id="threat_anal_true"
+														name="threat_anal_type" value="0" checked="checked"><label
+														for="threat_anal_true" class="control-label">정탐</label>
+												</div>
+											</div>
+											<div class="radio-inline paddL0">
+												<div class="radio3 radio-sm">
+													<input type="radio" id="threat_anal_false"
+														name="threat_anal_type" value="1" /><label
+														for="threat_anal_false" class="control-label">오탐</label>
+												</div>
+											</div>
+											<div class="radio-inline paddL0">
+												<div class="radio3 radio-sm">
+													<input type="radio" id="threat_anal_etc"
+														name="threat_anal_type" value="2"
+														title="기타 선택시에만 입력 가능합니다." /><label for="threat_anal_etc"
+														class="control-label">기타</label>
+												</div>
+											</div>
+											<div class="radio-inline paddL0">
+												<input type="text" id="threat_anal_etc_info"
+													name="threat_anal_etc_info" class="form-control">
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th width="15%">분석 정보</th>
+										<td colspan="3"><textarea id="tw_anal_info"
+												class="form-control" rows="3" maxlength="1000"
+												style="height: 90px; resize: none;"></textarea></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-sm-offset-2 col-sm-10 text-right"
+						style="padding-right: 0; margin-top: -10px;">
+						<button type="submit" ng-click="anal_finish_save()"
+							class="btn btn-gr wd90">
+							<i class="fa fa-check" />저장
+						</button>
+						<button type="submit" ng-click="anal_finish_close()"
+							class="btn btn-bu wd90">
+							<i class="fa fa-times" />닫기
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--항목지정-->
+	<div id="view_item" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">컬럼 설정</h3>
+			<div class="actions pull-right"></div>
+			<!--<div class="pop-close ">x</div-->
+		</div>
+		<div class="animated fadeIn">
+			<div class="panel-body">
+				<div class="col-sm-12">
+					<div class="s_line col-sm-12"></div>
+					<table id="view_list" class="table table-striped table-bordered"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th>
+									<div
+										class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+										<input type="checkbox" id="view_chk_total"> <label
+											for="view_chk_total"></label>
+									</div>
+								</th>
+								<th>항목 명칭</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12 paddL10">
+						<div class="pull-left">
+							<button ng-click="btn_view_reset()" type="button"
+								class="btn btn-bu wd120 fwb">
+								<i class="fas fa-redo-alt"></i>&nbsp;컬럼 초기화
+							</button>
+						</div>
+						<div class="pull-right">
+							<button class="btn btn-gr wd80" ng-click="btn_view_save()">
+								<i class="fa fa-check" />저장
+							</button>
+							<button class="btn btn-bu wd80" ng-click="btn_view_close()">
+								<i class="fa fa-times" />닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 목적지IP 자산 정보  -->
+	<div id="victim_pop" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">위험도 자산 정보</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body">
+			<!--<p class="red wd100 text-center" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 출발지IP 자산 <input type="text" id="att_ip_search" readonly="true"></p>-->
+			<!--<p class="gre wd100 text-center" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 목적지IP 자산 <input type="text" id="dmg_ip_search" readonly="true"></p>-->
+			<!--<p class="gre wd100 text-center inline-block" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 목적지IP 자산 </p>-->
+			<!--<p class="red wd100 text-center inline-block" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 출발지IP 자산 </p>-->
+			<!--<p class="gre wd100 text-center inline-block" id="result_dmg_ip" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 목적지IP 자산 </p>-->
+			<!--<p class="red wd100 text-center inline-block" id="result_att_ip" style="font-size: 14px; font-weight: bold; margin-bottom: 0;"> 출발지IP 자산 </p>-->
+			<p class="text-center inline-block" id="result_dmg_ip"
+				style="font-size: 12px; font-weight: bold; margin-bottom: 0; color: blue;">
+				목적지IP 자산</p>
+			|
+			<p class="text-center inline-block" id="result_att_ip"
+				style="font-size: 12px; font-weight: bold; margin-bottom: 0; color: red;">
+				출발지IP 자산</p>
+			<div class="form-horizontal">
+				<div class="form-group" style="margin-top: -15px;">
+					<div class="col-sm-12">
+						<table id="victim_list" class="table table-striped table-bordered"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th rowspan="2">1.구분<br />(교육청:산하기관)<br />(대학:건물)
+									</th>
+									<th rowspan="2">2.구분<br />(초,중,고)
+									</th>
+									<th colspan="2">3.자산IP</th>
+									<th rowspan="2">4.IP구분</th>
+									<th rowspan="2">5.자산구분</th>
+									<th rowspan="2">6.자산설명</th>
+								</tr>
+								<tr>
+									<th>시작</th>
+									<th>종료</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="col-sm-12">
+						<button type="submit" ng-click="victim_close()"
+							class="btn btn-bu pull-right">
+							<i class="fa fa-times" />닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- WHOIS 검색 팝업창 -->
+	<div id="whois_pop" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">Whois 검색 결과</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body">
+			<div class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<div class="result">
+							<div id="query"></div>
+							<br>
+							<div id="queryType"></div>
+							<br>
+							<div id="registry"></div>
+							<br>
+							<div id="countryCode"></div>
+							<br>
+						</div>
+						<button type="submit" ng-click="whois_close()"
+							class="btn btn-bu pull-right">
+							<i class="fa fa-times" />닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--검색조건저장-->
+	<div id="term_item" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">모니터링 검색조건저장</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="animated fadeIn">
+			<div class="panel-body">
+				<div class="search table">
+					<table style="width: 100%;">
+						<caption></caption>
+						<colgroup>
+							<col width="40%">
+							<col width="80%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>현재 검색조건 정보를 저장합니다.</td>
+								<td class="fr">
+									<button id="btn_item_insert"
+										class="btn btn-sm btn-primary wd120">
+										<i class="fa fa-plus"></i>등록
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<table id="term_list_table"
+					class="table table-striped table-bordered" cellspacing="0"
+					width="100%">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>검색조건 명칭</th>
+							<th>검색조건 설명</th>
+							<th>작성일</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+				</table>
+
+				<div class="form-group">
+					<div class="text-rigt paddT10 pull-right">
+						<button ng-click="threat_search_term_load()" id="btn_item_apply"
+							class="btn btn-sm btn-primary wd120">
+							<i class="fas fa-external-link-alt"></i> 불러오기
+						</button>
+						<button ng-click="threat_search_term_pop_close()"
+							id="btn_item_close" class="btn btn-sm btn-bu wd120 fwb">
+							<i class="fa fa-times"></i> 닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- metadata 검색 -->
+	<div id="search_metadata" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">{{tab}} 검색</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body">
+			<div class="form-horizontal">
+				<form class="form-horizontal ng-pristine ng-valid" role="form"
+					id="inst_form">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<div class="tabs">
+								<ul id="idtab">
+									<li class="" id="t1"><a href="javascript:;" id="tab_1"
+										ng-click="onTab('spkt', 1)">spkt</a></li>
+									<li class="" id="t2"><a href="javascript:;" id="tab_2"
+										ng-click="onTab('http', 2)">http</a></li>
+									<li class="" id="t3"><a href="javascript:;" id="tab_3"
+										ng-click="onTab('flw', 3)">flw</a></li>
+								</ul>
+							</div>
+							<div id="search_form">
+								<div class="tab_content">
+									<table class="table table-striped table-bordered text-center">
+										<tr class="tb_l">
+											<td>탐지일시</td>
+											<td id="search_datetime" colspan="3"></td>
+										</tr>
+										<tr>
+											<td>출발지 IP</td>
+											<td id="qwerqwer"><span id="search_s_ip"></span></td>
+											<td>출발지 포트</td>
+											<td><span id="search_s_port"></span></td>
+										</tr>
+										<tr>
+											<td>목적지 IP</td>
+											<td id="zxcvzxcv"><span id="search_e_ip"></span></td>
+											<td>목적지 포트</td>
+											<td><span id="search_e_port"></span></td>
+										</tr>
+									</table>
+									<button type="submit" ng-click="onClickSearch()"
+										class="btn btn-gr wd90">
+										<i class="fa fa-search" />검색
+									</button>
+									<div id="noDataMessage"
+										style="border: solid gray 1px; height: 200px; display: none">
+										데이터가 없습니다.</div>
+									<div class="tab_content_1">
+										<div id="search_spkt"
+											style="border: solid gray 1px; height: 200px"></div>
+									</div>
+									<div class="tab_content_2">
+										<div id="search_http"
+											style="border: solid gray 1px; height: 200px"></div>
+									</div>
+									<div class="tab_content_3">
+										<div id="search_flw"
+											style="border: solid gray 1px; height: 200px"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-offset-2 col-sm-10 text-right"
+						style="padding-right: 0;">
+						<button type="submit" ng-click="close_metadata()"
+							class="btn btn-bu wd90">
+							<i class="fa fa-times" />닫기
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="view_rule" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">탐지규칙 조회</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body" id="rule_body">
+			<div class="form-horizontal">
+				<div class="col-sm-12">
+					<div class="box_bu_03"
+						style="border-top: 2px solid rgb(181, 186, 202)">
+						<table class="table table-striped table-bordered text-center">
+							<tbody>
+								<tr>
+									<th style="width: 20%">탐지규칙명</th>
+									<td style="width: 80%"><input type="text" id="DRULE_NM"
+										class="form-control" readonly="readonly"></td>
+								</tr>
+								<tr>
+									<th style="width: 20%">공격유형</th>
+									<td style="width: 80%"><input type="text" id="ATT_KR_NM"
+										class="form-control" readonly="readonly"></td>
+								</tr>
+								<tr>
+									<th style="width: 20%">탐지규칙 룰 형식</th>
+									<td style="width: 80%"><input type="text" id="rule_type"
+										class="form-control" readonly="readonly"></td>
+								</tr>
+								<tr>
+									<th style="width: 20%">탐지규칙</th>
+									<td style="width: 80%"><textarea id="DRULE_RULE2"
+											class="form-control" rows="5" style="resize: none;"
+											readonly="readonly"></textarea></td>
+								</tr>
+								<tr>
+									<th style="width: 20%">페이로드</th>
+									<td style="width: 80%"><textarea id="rule_payload"
+											class="form-control" rows="5" style="resize: none;"
+											readonly="readonly"></textarea></td>
+								</tr>
+								<tr>
+									<th>이벤트 발생 FLOW</th>
+									<td colspan="3"><textarea id="DRULE_FLOW"
+											class="form-control" style="resize: none; height: 60px;"
+											maxlength="1000" disabled></textarea></td>
+								</tr>
+								<tr>
+									<th>대응방법</th>
+									<td colspan="3"><textarea id="DRULE_WAYFUNC"
+											class="form-control" style="resize: none; height: 60px;"
+											maxlength="1000" disabled></textarea></td>
+								</tr>
+								<tr>
+									<th>상세설명</th>
+									<td colspan="3"><textarea id="DRULE_DESC"
+											class="form-control" style="resize: none; height: 60px;"
+											maxlength="1000" disabled></textarea></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="form-group">
+						<div class="text-rigt paddT10 pull-right"
+							style="padding-right: 15px;">
+							<button id="btn_rule_close" class="btn btn-primary">
+								<i class="fa fa-times"></i> 닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="view_pattern" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">패턴문자열 조회</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body" id="pattern_body">
+			<div class="form-horizontal">
+				<div class="col-sm-12">
+					<div class="box_bu_03"
+						style="border-top: 2px solid rgb(181, 186, 202)">
+						<table class="table table-striped table-bordered text-center">
+							<tbody>
+								<tr>
+									<th
+										style="text-align: center; width: 10%; vertical-align: middle;">탐지Payload
+										<br> (String, Hex)
+									</th>
+									<td colspan="5" align="center"><textarea rows="3"
+											id="TW_PATTERN_STR"
+											style="width: 100%; height: 130px; resize: none;"
+											class="hide" readonly></textarea> <textarea rows="3"
+											id="TW_PATTERN_STR_str2" class="form-control hide"
+											style="width: 49%; height: auto; min-height: 130px; resize: none; float: left;"
+											readonly></textarea>
+										<div style="align-items: center;">
+											<pre id="TW_PATTERN_STR_string2" class="form-control"
+												style="margin: 0px; white-space: pre-wrap; width: 50%; max-width: 600px; height: 160px; resize: none; float: left; text-align: left; word-break: break-all; margin-left: -4px;"></pre>
+											<pre id="TW_PATTERN_STR_hex2" class="form-control"
+												style="white-space: pre-wrap; width: 50%; height: 160px; margin-bottom: -10px; resize: none; float: right; text-align: left; word-break: break-word;"></pre>
+										</div></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="form-group">
+						<div class="text-rigt paddT10 pull-right"
+							style="padding-right: 15px;">
+							<button id="btn_pattern_close" class="btn btn-primary">
+								<i class="fa fa-times"></i> 닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="view_coding" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">인코딩</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body" id="coding_body">
+			<div class="form-horizontal">
+				<div class="col-sm-12">
+					<div class="box_bu_03"
+						style="border-top: 2px solid rgb(181, 186, 202)">
+						<table class="table table-striped table-bordered text-center">
+							<tbody>
+								<tr>
+									<td colspan="5" align="center">
+										<div style="display: flex; align-items: center;">
+											<textarea id="input_text" class="form-control"
+												style="margin: 0px; white-space: pre-wrap; width: 45%; max-width: 600px; height: auto; min-height: 130px; resize: none; float: left; text-align: left; word-break: break-all;" />
+											<select id="changer_type" class="btn-bu"
+												style="width: 8%; margin: 7px;">
+												<option value="encoded" selected="selected">인코딩</option>
+												<option value="decoded">디코딩</option>
+											</select> <select id="view_coding_type" class="btn-bu"
+												style="width: 8%; margin: 7px;">
+												<option value="Base64" selected="selected">Base64</option>
+												<option value="URL">URL</option>
+												<option value="HTML">HTML</option>
+												<option value="HEX">Hex</option>
+												<option value="ASCII">ASCII</option>
+											</select>
+											<textarea id="output_changer" class="form-control"
+												style="white-space: pre-wrap; width: 45%; height: auto; min-height: 130px; resize: none; float: right; text-align: left; word-break: break-all;"></textarea>
+											<div style="clear: both;"></div>
+										</div>
+										<div style="margin-top: -45px; padding-bottom: 12px;">
+											<button class="btn btn-bu wd55" style="height: 33px;"
+												id="btn_convert" ng-click="btn_convert()">변환</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="form-group">
+						<div class="text-rigt paddT10 pull-right"
+							style="padding-right: 15px;">
+							<button id="btn_coding_close" class="btn btn-primary">
+								<i class="fa fa-times"></i> 닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="view_setting" class="panel panel-success reveal-modal">
+		<div class="panel-heading">
+			<h3 class="pop-title">하이라이팅 설정</h3>
+			<div class="actions pull-right"></div>
+		</div>
+		<div class="panel-body" id="setting_body">
+			<div class="form-horizontal">
+				<div>
+					<div align="center" class="box_bu_03"
+						style="border: 1px solid rgb(181, 186, 202); padding: 8px 4px 4px 4px">
+						<div>
+							<label for="textColorPicker">색상: </label> <input type="color"
+								id="textColorPicker">
+						</div>
+						<div style="transform: translateX(-18px);">
+							<label for="textBold">굵기: </label> <input
+								style="margin-top: -3px" type="checkbox" id="textBold"
+								ng-model="bold" ng-click="fontCheck('b')">
+						</div>
+						<div style="transform: translateX(-18px);">
+							<label for="textUnderline">밑줄: </label> <input
+								style="margin-top: -3px" type="checkbox" id="textUnderline"
+								ng-model="underline" ng-click="fontCheck('u')">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="text-rigt paddT10 pull-right"
+							style="padding-right: 15px;">
+							<button id="btn_setting_save" class="btn btn-primary wd70">
+								<span class="fa fa-check" /> 저장
+							</button>
+							<button id="btn_setting_close" class="btn btn-bu wd70">
+								<span class="fa fa-times" /> 취소
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+/* 공통 css와 겹치기 때문에 조금 수정.*/
+#container {
+    flex-grow: 1; /* 나머지 공간을 차지하게 설정 */
+    border: 0px solid #ddd !important;
+
+}
+#graph-container{
+	border: 1px solid #ddd !important;
+    border-left: 1px solid #ddd !important;
+    width:100% !important;
+    height:450px !important;
+}
+
+#overlay {
+    position: absolute;
+    width: calc(100% - 170px) ;
+    height: 450px;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 효과 */
+    z-index: 10; /* 그래프 위에 오도록 z-index 설정 */
+}
+#sirFlow{
+	width: 25%;
+	border: 1px solid #ddd ;
+	border-right: 0px !important;
+	min-width: 150px;
+}
+#sirDetail{
+	width: 20%;
+	height: 450px;
+	border: 1px solid #ddd;
+	min-width: 150px;
+	position: absolute; 
+	z-index: 1; 
+	background-color: white;
+	display: none;
+}
+#sirMainDiv{
+	padding:10px 60px 10px 60px;
+	display: flex;
+
+}
+/*--------------------------- 하이라트 관련 ------------------------------------------*/
+@keyframes strokeBlink {
+  0% {
+    stroke: #FF0000; /* 빨간색으로 시작 */
+  }
+  50% {
+    stroke: #00FF00; /* 중간에는 녹색 */
+  }
+  100% {
+    stroke: #FF0000; /* 다시 빨간색으로 */
+  }
+}
+
+.blinking-stroke {
+  animation: strokeBlink 1s infinite; /* 1초마다 반복되는 애니메이션 */
+}
+
+
+
+
+/*--------------------------------------------------------------------------------*/
+</style>

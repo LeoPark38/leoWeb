@@ -1,0 +1,15 @@
+# Eclipse 관련
+.metadata/
+.classpath
+.project
+.settings/
+
+# 빌드 산출물
+/bin/
+/build/
+/target/
+
+# 기타
+*.log
+*.tmp
+

@@ -1,0 +1,774 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<i class="fas fa-users-cog mrgR10"></i>사용자 권한 설정
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-sm-12">
+				<div class="sub_bl02_ti wd200">사용자 권한 조회</div>
+				<div class="form-group">
+					<table class="table table-bordered" style="vertical-align: middle">
+						<tbody>
+							<tr class="tb_l">
+								<td style="text-indent: 5px;">
+									<label class="control-label" style="text-transform: none; margin-right: 10px;">사용자 권한</label>
+									<select id="user_auth" class="select" style="width: 140px;">
+										<option value="">-- 선택 --</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="sub_bl02_ti wd200">사용자 권한 설정</div>
+				<div class="form-group">
+					<form>
+						<table class="table table-bordered auth_table" style="vertical-align: middle">
+							<tbody>
+								<tr class="tb_l">
+									<th style="text-indent: 5px; background-color: #f8f8f8; min-width: 250px; text-align: center">
+										<b class="control-label">메인 메뉴</b>
+									</th>
+									<th style="text-indent: 5px; text-align: center">
+										<b class="control-label">서브 메뉴</b>
+									</th>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+											<input type="checkbox" id="threat_menu" value="threat_menu">
+											<label for="threat_menu" style="padding-bottom: 0px; padding-top: 3px;">위협경보</label>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="threat" id="monitoring" value="monitoring">
+												<label for="monitoring" style="padding-bottom: 0px; padding-top: 3px;">모니터링</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="threat" id="analysis" value="analysis">
+												<label for="analysis" style="padding-bottom: 0px; padding-top: 3px;">분석 목록</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="threat" id="assign" value="assign">
+												<label for="assign" style="padding-bottom: 0px; padding-top: 3px;">분석 할당</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="threat" id="finish" value="finish">
+												<label for="finish" style="padding-bottom: 0px; padding-top: 3px;">분석 완료</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="threat" id="statistics" value="statistics">
+												<label for="statistics" style="padding-bottom: 0px; padding-top: 3px;">위협경보 통계</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="accident_menu" value="accident_menu">
+												<label for="accident_menu" style="padding-bottom: 0px; padding-top: 3px;">침해사고 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentManage" value="accidentManage">
+												<label for="accidentManage" style="padding-bottom: 0px; padding-top: 3px;">사고 목록</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentRegist" value="accidentRegist">
+												<label for="accidentRegist" style="padding-bottom: 0px; padding-top: 3px;">사고 등록</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentRequest" value="accidentRequest">
+												<label for="accidentRequest" style="padding-bottom: 0px; padding-top: 3px;">사고 접수</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentList" value="accidentList">
+												<label for="accidentList" style="padding-bottom: 0px; padding-top: 3px;">사고 조치</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="closeApproval" value="closeApproval">
+												<label for="closeApproval" style="padding-bottom: 0px; padding-top: 3px;">종결 요청</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="rejectList" value="rejectList">
+												<label for="rejectList" style="padding-bottom: 0px; padding-top: 3px;">반려 목록</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="fieldInspect" value="fieldInspect">
+												<label for="fieldInspect" style="padding-bottom: 0px; padding-top: 3px;">현장점검 결과 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="dailyControlReport" value="dailyControlReport">
+												<label for="dailyControlReport" style="padding-bottom: 0px; padding-top: 3px;">일일관제현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentTemplate" value="accidentTemplate">
+												<label for="accidentTemplate" style="padding-bottom: 0px; padding-top: 3px;">사고 템플릿 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="rejectTemplate" value="rejectTemplate">
+												<label for="rejectTemplate" style="padding-bottom: 0px; padding-top: 3px;">반려 템플릿 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="aiAccident" value="aiAccident">
+												<label for="aiAccident" style="padding-bottom: 0px; padding-top: 3px;">사고 자동등록</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="accident" id="accidentStatistics" value="accidentStatistics">
+												<label for="accidentStatistics" style="padding-bottom: 0px; padding-top: 3px;">사고 처리 통계</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="search_menu" value="search_menu">
+												<label for="search_menu" style="padding-bottom: 0px; padding-top: 3px;">통합 검색</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="search" id="search" value="search">
+												<label for="search" style="padding-bottom: 0px; padding-top: 3px;">통합 검색</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="search" id="q_editor" value="q_editor">
+												<label for="q_editor" style="padding-bottom: 0px; padding-top: 3px;">쿼리검색</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="search" id="csvManager" value="csvManager">
+												<label for="csvManager" style="padding-bottom: 0px; padding-top: 3px;">대용량 CSV 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="linkSystem_menu" value="linkSystem_menu">
+												<label for="linkSystem_menu" style="padding-bottom: 0px; padding-top: 3px;">종합시스템 연계</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="dRuleScenarioLink" value="dRuleScenarioLink">
+												<label for="dRuleScenarioLink" style="padding-bottom: 0px; padding-top: 3px;">탐지규칙 및 시나리오 공유 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="dRuleAnalReport" value="dRuleAnalReport">
+												<label for="dRuleAnalReport" style="padding-bottom: 0px; padding-top: 3px;">탐지규칙 분석 보고서</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="shareInfoLink" value="shareInfoLink">
+												<label for="shareInfoLink" style="padding-bottom: 0px; padding-top: 3px;">공유정보 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="ooecCollGear" value="ooecCollGear">
+												<label for="ooecCollGear" style="padding-bottom: 0px; padding-top: 3px;">수집장비 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="threatLink" value="threatLink">
+												<label for="threatLink" style="padding-bottom: 0px; padding-top: 3px;">위협경보 연계</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkSystem" id="linkServer" value="linkServer">
+												<label for="linkServer" style="padding-bottom: 0px; padding-top: 3px;">연계 서버 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="policy_menu" value="policy_menu">
+												<label for="policy_menu" style="padding-bottom: 0px; padding-top: 3px;">관제정책 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="ntmDetect" value="ntmDetect">
+												<label for="ntmDetect" style="padding-bottom: 0px; padding-top: 3px;">NTM 탐지규칙</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="mtmDetect" value="mtmDetect">
+												<label for="mtmDetect" style="padding-bottom: 0px; padding-top: 3px;">MTM 탐지규칙</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="detectCondition" value="detectCondition">
+												<label for="detectCondition" style="padding-bottom: 0px; padding-top: 3px;">탐지규칙 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="detectAuto" value="detectAuto">
+												<label for="detectAuto" style="padding-bottom: 0px; padding-top: 3px;">탐지규칙 자동화</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="responseMtd" value="responseMtd">
+												<label for="responseMtd" style="padding-bottom: 0px; padding-top: 3px;">탐지규칙별 대응방안</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="scenario" value="scenario">
+												<label for="scenario" style="padding-bottom: 0px; padding-top: 3px;">시나리오 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="scenarioAuto" value="scenarioAuto">
+												<label for="scenarioAuto" style="padding-bottom: 0px; padding-top: 3px;">시나리오 자동화</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="riskManage" value="riskManage">
+												<label for="riskManage" style="padding-bottom: 0px; padding-top: 3px;">위험지수 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="policy" id="riskHistory" value="riskHistory">
+												<label for="riskHistory" style="padding-bottom: 0px; padding-top: 3px;">위험지수 이력 조회</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="detect_menu" value="detect_menu">
+												<label for="detect_menu" style="padding-bottom: 0px; padding-top: 3px;">탐지 적용 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="detect" id="ntmDetectTest" value="ntmDetectTest">
+												<label for="ntmDetectTest" style="padding-bottom: 0px; padding-top: 3px;">NTM 검증기관 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="detect" id="mtmDetectTest" value="mtmDetectTest">
+												<label for="mtmDetectTest" style="padding-bottom: 0px; padding-top: 3px;">MTM 검증기관 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="detect" id="exception" value="exception">
+												<label for="exception" style="padding-bottom: 0px; padding-top: 3px;">기관별 예외 IP 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="detect" id="wildcard" value="wildcard">
+												<label for="wildcard" style="padding-bottom: 0px; padding-top: 3px;">와일드 카드(IP/탐지규칙) 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="collect_menu" value="collect_menu">
+												<label for="collect_menu" style="padding-bottom: 0px; padding-top: 3px;">수집 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="equipmentEcsc" value="equipmentEcsc">
+												<label for="equipmentEcsc" style="padding-bottom: 0px; padding-top: 3px;">수집장비 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="equipmentAvailability" value="equipmentAvailability">
+												<label for="equipmentAvailability" style="padding-bottom: 0px; padding-top: 3px;">수집장비 가용성 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="applyDetectRule" value="applyDetectRule">
+												<label for="applyDetectRule" style="padding-bottom: 0px; padding-top: 3px;">장비별 탐지규칙 적용</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="origCondition" value="origCondition">
+												<label for="origCondition" style="padding-bottom: 0px; padding-top: 3px;">원본데이터 수집 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="isightCondition" value="isightCondition">
+												<label for="isightCondition" style="padding-bottom: 0px; padding-top: 3px;">글로벌 위협정보 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="atypicallog" value="atypicallog">
+												<label for="atypicallog" style="padding-bottom: 0px; padding-top: 3px;">비정형데이터 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="maliciousFiles" value="maliciousFiles">
+												<label for="maliciousFiles" style="padding-bottom: 0px; padding-top: 3px;">악성파일 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="serverAuth" value="serverAuth">
+												<label for="serverAuth" style="padding-bottom: 0px; padding-top: 3px;">서버 권한 관리 </label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="md5Management" value="md5Management">
+												<label for="md5Management" style="padding-bottom: 0px; padding-top: 3px;">MD5 관리 </label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="collect" id="md5AnalysisResult" value="md5AnalysisResult">
+												<label for="md5AnalysisResult" style="padding-bottom: 0px; padding-top: 3px;">웹서버 악성행위 의심파일 조회 </label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="logCollection_menu" value="logCollection_menu">
+												<label for="logCollection_menu" style="padding-bottom: 0px; padding-top: 3px;">연동 수집</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="collectSyslog" value="collectSyslog">
+												<label for="collectSyslog" style="padding-bottom: 0px; padding-top: 3px;">수집 Syslog 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="collectApiQuery" value="collectApiQuery">
+												<label for="collectApiQuery" style="padding-bottom: 0px; padding-top: 3px;">수집 API/Query 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="collectAgent" value="collectAgent">
+												<label for="collectAgent" style="padding-bottom: 0px; padding-top: 3px;">수집 Agent 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="serverResourceManage" value="serverResourceManage">
+												<label for="serverResourceManage" style="padding-bottom: 0px; padding-top: 3px;">서버 자원 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="externalDataManage" value="externalDataManage">
+												<label for="externalDataManage" style="padding-bottom: 0px; padding-top: 3px;">외부 데이터 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="dataTransferManage" value="dataTransferManage">
+												<label for="dataTransferManage" style="padding-bottom: 0px; padding-top: 3px;">데이터 이관 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="snmpManage" value="snmpManage">
+												<label for="snmpManage" style="padding-bottom: 0px; padding-top: 3px;">SNMP MIB 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="logCollection" id="tableRuleManage" value="tableRuleManage">
+												<label for="tableRuleManage" style="padding-bottom: 0px; padding-top: 3px;">테이블 규칙 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="linkAnalysis_menu" value="linkAnalysis_menu">
+												<label for="linkAnalysis_menu" style="padding-bottom: 0px; padding-top: 3px;">연동 분석</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkAnalysis" id="dataSearch" value="dataSearch">
+												<label for="dataSearch" style="padding-bottom: 0px; padding-top: 3px;">데이터 검색</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkAnalysis" id="dataStatistics" value="dataStatistics">
+												<label for="dataStatistics" style="padding-bottom: 0px; padding-top: 3px;">데이터 통계</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkAnalysis" id="timelineAnalysis" value="timelineAnalysis">
+												<label for="timelineAnalysis" style="padding-bottom: 0px; padding-top: 3px;">타임라인 분석</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="linkAnalysis" id="abnormalCognition" value="abnormalCognition">
+												<label for="abnormalCognition" style="padding-bottom: 0px; padding-top: 3px;">비정상 상황인지 분석</label>
+											</div>
+										</div>
+<!--										고도화 개발 중인 메뉴로 사용자 권한 설정에 보이면 안 됨 추후 주석 해제 예정-->
+<!--										<div style="display: inline-block; min-width: 200px;">-->
+<!--											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">-->
+<!--												<input type="checkbox" class="linkAnalysis" id="dashWidget" value="dashWidget">-->
+<!--												<label for="dashWidget" style="padding-bottom: 0px; padding-top: 3px;">위젯대시보드</label>-->
+<!--											</div>-->
+<!--										</div>										-->
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="module_menu" value="module_menu">
+												<label for="module_menu" style="padding-bottom: 0px; padding-top: 3px;">차세대 탐지 체계 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="module" id="moduleManage" value="moduleManage">
+												<label for="moduleManage" style="padding-bottom: 0px; padding-top: 3px;">차세대 탐지 체계 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="module" id="moduleMonitoring" value="moduleMonitoring">
+												<label for="moduleMonitoring" style="padding-bottom: 0px; padding-top: 3px;">차세대 탐지 체계 모니터링</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="module" id="applyDrule" value="applyDrule">
+												<label for="applyDrule" style="padding-bottom: 0px; padding-top: 3px;">차세대 탐지 체계 탐지규칙 현황</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="share_menu" value="share_menu">
+												<label for="share_menu" style="padding-bottom: 0px; padding-top: 3px;">공유정보 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="share" id="forecast" value="forecast">
+												<label for="forecast" style="padding-bottom: 0px; padding-top: 3px;">예경보 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="share" id="advisory" value="advisory">
+												<label for="advisory" style="padding-bottom: 0px; padding-top: 3px;">권고문 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="share" id="accdKnowledge" value="accdKnowledge">
+												<label for="accdKnowledge" style="padding-bottom: 0px; padding-top: 3px;">침해대응 지식정보 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="share" id="news" value="news">
+												<label for="news" style="padding-bottom: 0px; padding-top: 3px;">뉴스클리핑 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="mail_menu" value="mail_menu">
+												<label for="mail_menu" style="padding-bottom: 0px; padding-top: 3px;">메일 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="mail" id="mailHistory" value="mailHistory">
+												<label for="mailHistory" style="padding-bottom: 0px; padding-top: 3px;">메일/SMS 이력</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="mail" id="mailSend" value="mailSend">
+												<label for="mailSend" style="padding-bottom: 0px; padding-top: 3px;">메일/SMS 발송</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="mail" id="mailTemplate" value="mailTemplate">
+												<label for="mailTemplate" style="padding-bottom: 0px; padding-top: 3px;">메일 템플릿 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="user_menu" value="user_menu">
+												<label for="user_menu" style="padding-bottom: 0px; padding-top: 3px;">사용자 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="user" id="institution" value="institution">
+												<label for="institution" style="padding-bottom: 0px; padding-top: 3px;">기관 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="user" id="user" value="user">
+												<label for="user" style="padding-bottom: 0px; padding-top: 3px;">사용자 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="user" id="userAuth" value="userAuth">
+												<label for="userAuth" style="padding-bottom: 0px; padding-top: 3px;">사용자 권한 설정</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="system_menu" value="system_menu">
+												<label for="system_menu" style="padding-bottom: 0px; padding-top: 3px;">설정</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="system" id="code" value="code">
+												<label for="code" style="padding-bottom: 0px; padding-top: 3px;">공통코드 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="system" id="notice" value="notice">
+												<label for="notice" style="padding-bottom: 0px; padding-top: 3px;">통보 설정 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="system" id="cycle" value="cycle">
+												<label for="cycle" style="padding-bottom: 0px; padding-top: 3px;">주기 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="system" id="accdProcess" value="accdProcess">
+												<label for="accdProcess" style="padding-bottom: 0px; padding-top: 3px;">사고프로세스 관리</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="stats_menu" value="stats_menu">
+												<label for="stats_menu" style="padding-bottom: 0px; padding-top: 3px;">통계 관리</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="stats" id="dash" value="dash">
+												<label for="dash" style="padding-bottom: 0px; padding-top: 3px;">통계 대시보드</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="stats" id="stats" value="stats">
+												<label for="stats" style="padding-bottom: 0px; padding-top: 3px;">통계 정책 관리</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="stats" id="statsAnalysis" value="statsAnalysis">
+												<label for="statsAnalysis" style="padding-bottom: 0px; padding-top: 3px;">통계 정책 분석</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="inspection_menu" value="inspection_menu">
+												<label for="inspection_menu" style="padding-bottom: 0px; padding-top: 3px;">홈페이지 취약점 점검</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="inspection" id="inspectionSchedule" value="inspectionSchedule">
+												<label for="inspectionSchedule" style="padding-bottom: 0px; padding-top: 3px;">심층점검 일정</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="inspection" id="inspectionState" value="inspectionState">
+												<label for="inspectionState" style="padding-bottom: 0px; padding-top: 3px;">심층점검 현황</label>
+											</div>
+										</div>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="inspection" id="inspectionAnal" value="inspectionAnal">
+												<label for="inspectionAnal" style="padding-bottom: 0px; padding-top: 3px;">심층점검 통계</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #f8f8f8;">
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" id="auditHistory_menu" value="auditHistory_menu">
+												<label for="auditHistory_menu" style="padding-bottom: 0px; padding-top: 3px;">감사 이력</label>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div style="display: inline-block; min-width: 200px;">
+											<div class="checkbox3 checkbox-sm checkbox-inline checkbox-check checkbox-light">
+												<input type="checkbox" class="auditHistory" id="auditHistory" value="auditHistory">
+												<label for="auditHistory" style="padding-bottom: 0px; padding-top: 3px;">감사 이력</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+				<div class="form-group">
+					<div class="pull-right">
+						<button class="btn btn-primary wd120 fwb" ng-click="save()">
+							<i class="fa fa-check"></i>저장
+						</button>
+						<button class="btn btn-gr wd120 fwb" ng-click="cancel()">
+							<i class="fas fa-redo-alt"></i>초기화
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

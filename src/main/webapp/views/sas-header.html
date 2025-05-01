@@ -1,0 +1,66 @@
+<div >
+	<div class="brand">
+		<a href="main.html#!/dash" class="logo mrgR15">
+			<i class="icon-layers"></i>
+			<span>{{headerTitle}}</span>
+		</a>
+		<select id="menu_search" class="wd250 hide" style="height:30px;">
+			<option ng-repeat="menu in menu_list" value="{{menu.value}}">{{menu.text}}</option>
+		</select>
+	</div>
+
+	<ul class="nav navbar-nav navbar-left">
+		<li class="toggle-navigation toggle-left" toggle-left-sidebar></li>  
+	</ul>
+
+	<ul class="nav navbar-nav navbar-right" style="margin-right: 65px;">
+		<li class="profile">
+			<input id="knowledge_search" type="text" placeholder=" 지식정보 검색" class="form-control mrgT10" style="padding:0 0 0 5px;width:250px;height:30px;border-top-right-radius:0;border-bottom-right-radius:0;">
+			<a class="knowledge_search_btn " style="float:right;cursor:pointer;height:30px;padding:4px 10px 0 10px;margin-top:10px;" id="search_filter" ng-click="$knowledge_search()">
+      		<i class="glyphicon glyphicon-search"></i></a>
+		</li>
+		<li class="profile" id=user_cnt style="padding-right: 5px; padding-left: 5px;" ng-show={{isDev}}>
+			 <a class="user_cnt_btn mrgT5 message_area" id="eyes">
+				<i class="fas fa-eye faa-tada faa-fast" style="font-size:20px"></i>
+			</a> 
+     		<span style="margin-left: 8px; ">{{user_cnt}}</span> 
+     	</li>
+<!-- ----------------------------------- -->		
+		<li class="profile">
+			<a href="#" class="message_area" ng-click="mainNoticePopup()">
+				<i class="fas fa-envelope faa-tada faa-fast" id="notice_icon"></i>
+			</a>
+			<span id="notice_message_span" class="hide"></span>
+		</li>
+		
+		<li class="profile" id="limit_profile">
+			<a class="limit_alarm_btn mrgT5 message_area" id="limit_alarm_btn" ng-click="limitAlarmPopup()">
+				<i class="glyphicon glyphicon-bell message_area faa-tada faa-fast" style="font-size:20px" id="limit_alarm_icon"></i>
+			</a>
+     	<span>{{limit_alarm_cnt}}</span>
+		</li>
+		
+		<li class="profile">
+			<div class="mrgT10 text-center" style="color: white; margin-left:10px;">
+				<!-- <i class="glyphicon glyphicon-user"></i> -->
+				[({{user_nm}}){{user_id}}]님 환영합니다!
+				<a href="javascript:void(0);" ng-click="user_logout()" title="로그아웃"><img src=""></a>
+			</div>
+		</li>
+	
+		<li class="toggle-fullscreen hidden-xs" fullscreen-mode></li>
+		<li class="toggle-navigation toggle-right" toggle-right-sidebar></li>
+	</ul>
+</div>
+<div id="header_line" style="height: 5px; margin-top: 45px;"></div>
+	<script>
+		
+	$('#eyes').hover(function() {
+		$('#test2').css('opacity', 100);
+		$('#test2').css('z-index', 1000);
+	}, function() {
+		$('#test2').css('opacity', 0);
+		$('#test2').css('z-index', -1000);
+	});
+		
+	</script>

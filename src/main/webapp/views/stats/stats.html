@@ -1,0 +1,70 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-list-ul mrgR5"></i> 통계 정책 관리</h3>
+			<div class="actions pull-right">
+				<i fullscreen-widget class="fa fa-expand"></i>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div id="data_list">
+				<div class="btn_fr">
+					<button id="insert_btn" class="btn btn-sm btn-bu fr mrgL5 wd90"><i class="fa fa-plus"></i>
+						등록</button>
+				</div>
+				<div class="search table">
+					<table style="width:100%;">
+						<caption></caption>
+						<colgroup>
+							<col width="90" />
+							<col width="" />
+							<col width="25%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>키워드</th>
+								<td>
+									<input type="text" id="text_filter" class="form-control" maxlength="50"
+										placeholder="내용을 입력해 주세요.">
+								</td>
+								
+								<td style="display: flex; justify-content: flex-end;">
+								<div class="stableToggleGroup">
+									<input ng-click="stableToggle_btn()" type="checkbox" checked
+										id="toggle-one" data-toggle="toggle"
+										data-on=" On"
+										data-on=" Off" data-style="ios">
+									<p class="arrow_box">검색 조건을 저장 합니다</p>
+								</div>
+								<div style="order: 2;">
+									<button id="search_btn" class="btn btn-sm btn-primary mrgL5 wd80"><i
+											class="glyphicon glyphicon-search"></i> 검색</button>
+									<button id="search_reset" class="btn btn-sm btn-gr wd80"><i
+											class="glyphicon glyphicon-repeat"></i> 초기화</button>
+								</div>
+							</td>
+				
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<column-setting table-id="data_table"></column-setting>
+				<table id="data_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>사용여부</th>
+							<th>통계 정책명</th>
+							<th>통계 정책 설명</th>
+							<th>통계 종류</th>
+							<th>생성일시</th>
+							<th>작성자</th>
+							<th>수정일시</th>
+							<th>수정자</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
