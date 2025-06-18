@@ -1,0 +1,230 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title" id="anal_title">
+				<i class="fab fas fa-bezier-curve mR10" css3animate
+					data-animated="wobble"></i>AIR 모니터링
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div id="data_list">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-12" style="margin-top: 0px !important">
+							<div class="pull-right">
+								<button class="btn btn-sm btn-primary floatR mL5 btn-insert"
+									ng-click="filter_refresh()" id="filter_reset" style="width: 30px;">
+									<span class="glyphicon glyphicon-refresh"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div id="split-container" style="border: 1px solid #ddd;">
+						<div id="table-pane">
+							<table id="air_table" class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>시도</th>
+										<!-- <th>대기환경지수</th> -->
+										<th>대기환경등급</th>
+										<!-- <th>미세먼지 농도</th> -->
+										<th>미세먼지 등급</th>
+										<!-- <th>초미세먼지 농도</th> -->
+										<th>초미세먼지 등급</th>
+										<!-- <th>오존 농도</th> -->
+										<th>오존 등급</th>
+										<th>측정 시각</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div id="chart-pane" style="border-left: 1px solid #ddd;">
+							<div id="chart" >
+								<div id="pieChart" style="width: 100%; height: 300px; border-bottom: 1px solid #ddd"></div>	
+								<div id="myChart" style="width: 100%; height: 300px;"></div>	
+							</div>
+							<div id="detail-pane" class="hide" >
+								<div class="panel-body">
+									<table class="table table-bordered textCenter"
+										style="border-top: 1px solid #ddd;">
+										<colgroup>
+											<col width="90">
+											<col width="150">
+											<col width="90">
+											<col width="150">
+										</colgroup>
+										<tbody>
+											<input type="hidden" id="_id">
+											<tr>
+												<th class="textCenter" style="width: 15%;">지역</th>
+												<td>{{airData.stationName}}</td>
+												<th class="textCenter" style="width: 15%;">측정 시각</th>
+												<td>{{airData.dataTime}}</td>
+											</tr>
+											<tr>
+												<th class="textCenter" style="width: 15%;">대기환경 등급</th>
+												<td>{{airData.khaiGrade}}</td>
+												<th class="textCenter" style="width: 15%;">대기환경 지수</th>
+												<td>{{airData.khaiValue}}</td>
+											</tr>
+											<tr>
+												<th class="textCenter" style="width: 15%;">미세먼지 등급</th>
+												<td>{{airData.pm10Grade}}</td>
+												<th class="textCenter" style="width: 15%;">미세먼지 지수</th>
+												<td>{{airData.pm10Value}}</td>
+											</tr>
+											<tr>
+												<th class="textCenter" style="width: 15%;">초미세먼지 등급</th>
+												<td>{{airData.pm25Grade}}</td>
+												<th class="textCenter" style="width: 15%;">초미세먼지 지수</th>
+												<td>{{airData.pm25Value}}</td>
+											</tr>
+											<tr>
+												<th class="textCenter" style="width: 15%;">오존 등급</th>
+												<td>{{airData.o3Grade}}</td>
+												<th class="textCenter" style="width: 15%;">오존 지수</th>
+												<td>{{airData.o3Value}}</td>
+											</tr>
+											<tr>
+												<th class="textCenter">내용</th>
+												<td colspan="3">
+												<textarea class="form-control input-sm"
+														style="resize: none" rows="4"
+														ng-model="airData.desc" placeholder="내용 입력">
+													</textarea></td>
+											</tr>
+											<tr>
+												<div style="width: 100%; height:330px !important;">
+													<div id="container" style="">
+														<div id="overlay" style="display: none"></div> 
+													</div>								
+												</div>
+											</tr>
+										</tbody>
+									</table>
+									<div class="mT20"></div>
+									<!-- 🔽 버튼 영역 -->
+									<div class="textCenter mT20">
+										<div class="floatR">
+											<button type="button" ng-click="wrong_air_save()" id="wrongAirSave"
+												class="btn btn-primary width120 fwb hide" >
+												<i class="fa fa-check" />이상대기 등록
+											</button>
+											<button type="button" ng-click="air_detail_close()"
+												class="btn btn-primary width120 fwb">
+												<i class="fa fa-times" />닫기
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+.gutter {
+  background-color: transparent;
+  position: relative;
+}
+
+.gutter-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;       /* 너비 */
+  height: 10px;      /* 높이 */
+  background-color: #888;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.gutter-handle:hover {
+  background-color: #555;
+}
+
+#split-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+#split-container > div {
+  overflow: auto;
+}
+
+#table-pane {
+  background-color: #f8f8f8;
+}
+
+#chart-pane {
+  background-color: #ffffff;
+}
+
+/* 공통 css와 겹치기 때문에 조금 수정.*/
+#container {
+    flex-grow: 1; /* 나머지 공간을 차지하게 설정 */
+    border: 0px solid #ddd !important;
+
+}
+#graph-container{
+	border: 1px solid #ddd !important;
+    border-left: 1px solid #ddd !important;
+    width:100% !important;
+    height:330px !important;
+}
+
+#overlay {
+    position: absolute;
+    width: calc(100% - 170px) ;
+    height: 450px;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 효과 */
+    z-index: 10; /* 그래프 위에 오도록 z-index 설정 */
+}
+#airFlow{
+	width: 25%;
+	border: 1px solid #ddd ;
+	border-right: 0px !important;
+	min-width: 150px;
+}
+#airDetail{
+	width: 20%;
+	height: 450px;
+	border: 1px solid #ddd;
+	min-width: 150px;
+	position: absolute; 
+	z-index: 1; 
+	background-color: white;
+	display: none;
+}
+#airMainDiv{
+	padding:10px 60px 10px 60px;
+	display: flex;
+
+}
+/*--------------------------- 하이라트 관련 ------------------------------------------*/
+@keyframes strokeBlink {
+  0% {
+    stroke: #FF0000; /* 빨간색으로 시작 */
+  }
+  50% {
+    stroke: #00FF00; /* 중간에는 녹색 */
+  }
+  100% {
+    stroke: #FF0000; /* 다시 빨간색으로 */
+  }
+}
+
+.blinking-stroke {
+  animation: strokeBlink 1s infinite; /* 1초마다 반복되는 애니메이션 */
+}
+
+
+
+
+/*--------------------------------------------------------------------------------*/
+</style>

@@ -1,0 +1,83 @@
+<section style="height: 100%;">
+	<div class="panel panel-default" style="height: 100%;">
+	    <div ng-controller="gageCtrl" style="height: 100%;">
+	    	<div style="display: flex; flex-direction: column; height: 100%;">
+		        <!-- 상단 헤더 -->
+		        <div>
+		        	<div class="widget-header">
+		        		<span>📈[Gage 차트] {{ widgetData.TITLE }}</span>
+		        		<button ng-click="removeWidget(widgetData.I)" class="btn btn-danger btn-sm x-btn floatR">X</button>
+		        	</div>
+		        	<div class="widget-controls">
+		        		<input type="text" id="datepicker_gage" class="form-control" placeholder="날짜 선택" style="width:140px"/>
+						<select name="seletType" ng-model="seletType" ng-change="gageSelectTypeChange()">
+							<option value="KNA">강남구</option>
+							<option value="KDA">강동구</option>
+							<option value="KBA">강북구</option>
+							<option value="KSA">강서구</option>
+							<option value="NWA">노원구</option>
+							<option value="DBA">도봉구</option>
+							<option value="SCA">서초구</option>
+							<option value="SPA">송파구</option>
+							<option value="YGA">영등포구</option>
+							<option value="JRA">종로구</option>
+							<option value="JGA">중구</option>
+						</select>
+					</div>
+		          	
+
+		        </div>
+		
+		        <!-- 차트 영역 -->
+		        <div style="flex: 1 1 auto; overflow: hidden;">
+		        	<div id="gageChart" style="width: 100%; height: 100%;"></div>
+		        </div>
+	    	</div>
+	    </div>
+	</div>
+</section>
+
+<style>
+	.x-btn{
+		padding: 1px 5px !important;
+		font-size: 10px !important;
+	}
+  	.widget-header {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    margin-bottom: 10px;
+  	}
+
+  	.widget-header .title {
+	    font-weight: bold;
+	    font-size: 16px;
+  	}
+  	.widget-controls {
+	    display: flex;
+	    gap: 10px;
+	    padding-bottom: 5px;
+  	}
+
+  	.widget-controls select,
+  	.widget-controls input {
+	    width: auto;
+	    flex: 1;
+  	}
+  	.grid-stack {
+    	background: #f0f0f0;
+    	min-height: 600px;
+  	}
+
+  	.grid-stack-item-content {
+    	background-color: #fff;
+    	border-radius: 6px;
+    	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    	text-align: center;
+    	padding: 20px;
+  	}
+	#chart {
+  		width: 100%;
+  		height: 100%;
+	}
+</style>

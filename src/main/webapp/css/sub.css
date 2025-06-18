@@ -8,31 +8,26 @@
     width:96.5%;
 }
 
-/* DataTable 관련 */
-
-/* .dataTables_paginate {
-    text-align: center !important;
-    margin-top: 20px !important;
+/* sweetalert css 설정 */
+.swal2-popup.my-swal-popup {
+  width: 320px !important;
+  padding: 1.2em !important;
 }
 
-.dataTables_paginate .paginate_button {
-    background: none !important;
-    border: none !important;
-    margin: 0 4px !important;
-    color: black !important;
-    font-size: 16px !important;
-    font-weight: normal !important;
+.my-swal-title {
+  font-size: 16px;
 }
 
-.dataTables_paginate .paginate_button.current {
-    color: red !important;
-    font-weight: bold  !important;
-    text-decoration: underline !important;
+.my-swal-confirm, .my-swal-cancel {
+  font-size: 13px;
+  padding: 6px 14px;
 }
-
-.dataTables_paginate .paginate_button:hover {
-    color: darkred!important;
-} */
+.swal2-icon.swal2-warning {
+  margin: 0.6em auto .6em auto !important;
+}
+.swal2-html-container{
+	    font-size: 0.8em !important;
+}
 
 /* 기타 */
 .uploardform {
@@ -41,7 +36,7 @@
     opacity: 1;
     border: 1px solid #DDD;
     padding: 8px 12px 9px 12px;
-    height: 28px;
+    height: 30px;
     vertical-align:middle;
     padding-left: 4px;
     font-size: 12px;
@@ -50,4 +45,150 @@
 
 .maxWd90{
 	max-width: 90%;
+}
+
+.modal_title{
+	font-size:16px;
+	color:#fff; 
+	width:90%;
+	margin-top: 5px; 
+	margin-bottom: 5px;
+	}
+
+/* 쿼리검색 모달관련  */
+#queryModal-bg {
+	background: rgba(0, 0, 0, 0.6);
+}
+#queryModal .panel-heading{
+	background-color: #337ab7;
+	padding: 5px;
+}
+
+/* 위젯 모달관련  */
+#widgetModal-bg {
+	background: rgba(0, 0, 0, 0.6);
+}
+#widgetModal .panel-heading{
+	background-color: #337ab7;
+	padding: 5px;
+}
+
+/* 헤더 관련 추가 */
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.dropdown-menu {
+  transition: all 0.2s ease-in-out;
+}
+/* 모달창 */
+.reveal-modal-bg {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	/*background: rgb(214, 212, 212, 0.57);*/
+	z-index: 9;
+	display: none;
+	top: 0;
+	left: 0;
+}
+.reveal-modal {
+	display:none;
+	visibility: hidden;
+	top: 100px;
+	left: 50%;
+	margin-left: -300px;
+	width: 420px;	
+	position: absolute;
+	z-index: 10001;	
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+	-box-shadow: 0 0 10px rgba(0,0,0,.4);
+	border-radius: 5px;
+	border: 1px solid #454a54;
+
+}
+/* .reveal-modal.pop { padding:1px; top: 50px; }
+.reveal-modal.small { width: 200px; margin-left: -140px;}
+.reveal-modal.medium { width: 400px; margin-left: -240px;}
+.reveal-modal.large { width: 600px; margin-left: -340px;}
+.reveal-modal.xlarge { width: 800px; margin-left: -440px;}
+.reveal-modal > .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+	font-weight: bold;
+	cursor: pointer;
+}
+.rvl_pop_m-bg {position: absolute; height: 100%; width: 100%; background: #000; background: rgba(0,0,0,.1); z-index: 10001; display: none; top: 0; left: 0;}
+.rvl_pop_m {visibility: hidden; top: 0px !important;background: #eee no-repeat; position: absolute; z-index: 10001; padding: 5px 20px 2px;}
+.rvl_pop_m2 {visibility: hidden; top: 100px;left: 50%;margin-left: -300px;width: 420px;background: #eee no-repeat;position: absolute;z-index: 10001;padding: 30px 40px 34px;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;-moz-box-shadow: 0 0 10px rgba(0,0,0,.4);-webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);-box-shadow: 0 0 10px rgba(0,0,0,.4);}
+.rvl_pop_m2 > .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+	font-weight: bold;
+	cursor: pointer;
+} */
+
+/* 체크박스 */
+ .custom-checkbox input[type="checkbox"] {
+	    margin: 0px 0px 3px 10px;
+} 
+
+.custom-checkbox-wrapper {
+  display: flex;
+  gap: 20px; /* 항목 사이 간격 */
+  align-items: center;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #25459c;
+  cursor: pointer;
+}
+
+.custom-checkbox label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 라디오 박스 */
+.custom-radio-group {
+ 	display: flex;
+ 	gap: 24px;  /* Yes / No 사이 간격 */
+  	align-items: center;
+}
+
+.custom-radio {
+  	display: flex;
+  	align-items: center;
+  	gap: 6px;  /* 라디오 버튼과 텍스트 간 간격 */
+  	font-size: 14px;
+}
+.custom-radio input {
+	margin-bottom: 5px !important;
+	cursor: pointer;
+}
+.custom-radio label {
+	cursor: pointer;
 }

@@ -2,9 +2,18 @@
 var app = angular.module('myApp', ['ui.router']); 
 
 console.log("========== app.js IN ==========")
+	app.controller('main_ctrl', function($scope, $rootScope, $http, $interval, $element, $filter, $location, $compile) {
+		$http.post("../login/getSession",{}, $rootScope.http_config).then(function(rs) {
+			if (rs.data) {
+				$rootScope.userInfo = rs.data
+				console.log("@ $rootScope.userInfo : ",$rootScope.userInfo)
+			}
+		}, function(rs) {});
+		
+	});
 app.config(function($stateProvider, $urlRouterProvider) {
     var url_path = '/sas/views';
-
+	$urlRouterProvider.when('/search/editor', '/search/editor/elastic');
     $stateProvider
         /*검색*/
     	.state('search', {
@@ -17,31 +26,36 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: url_path + '/query/editor.html',
 			controller: 'editorCtrl'
 		})	
-		.state("search.editor.trino", {
-			url: "/trino",
-			templateUrl: url_path + '/query/trino.html',
-			controller: 'sirManageCtrl'
+		.state("search.editor.mySql", {
+			url: "/mySql",
+			templateUrl: url_path + '/query/mySql.html',
+			controller: 'editorSqlCtrl'
 		})	
 		.state("search.editor.elastic", {
 			url: "/elastic",
 			templateUrl: url_path + '/query/elastic.html',
 			controller: 'editorElasticCtrl'
 		})	
-       /* sir 관련 템플릿 */
-		.state('sir', {
-			url: '/sir',
+       /* air 관련 템플릿 */
+		.state('air', {
+			url: '/air',
 			template: '<div ui-view></div>',
 			abstract: true
 		})       
-		.state('sir.sirManage', {
-			url: '/sirManage',
-			templateUrl: url_path+'/sir/sirManage.html',
-			controller: 'sirManageCtrl'
+		.state('air.airManage', {
+			url: '/airManage',
+			templateUrl: url_path+'/air/airManage.html',
+			controller: 'airManageCtrl'
 		})
-		.state('sir.sirMonitoring', {
-			url: '/sirMonitoring',
-			templateUrl: url_path+'/sir/sirMonitoring.html',
-			controller: 'sirManageCtrl'
+		.state('air.airMonitoring', {
+			url: '/airMonitoring',
+			templateUrl: url_path+'/air/airMonitoring.html',
+			controller: 'airMonitoringCtrl'
+		})
+		.state('air.airBoard', {
+			url: '/airBoard',
+			templateUrl: url_path+'/air/airBoard.html',
+			controller: 'airBoardCtrl'
 		})
 		/*게시판 관련*/
 		.state('board', {
@@ -66,11 +80,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			templateUrl: url_path + '/user/user.html',
 			controller: 'UserCtrl'
 		})
-		.state('user.userAuth', {
-			url: '/userAuth',
-			templateUrl: url_path + '/user/userAuth.html',
-			controller: 'UserCtrl'
-		})
 		/*통계*/
 		.state('stats', {
 			url: '/stats',
@@ -80,8 +89,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state("stats.dash", {
 			url: "/dash",
 			templateUrl: url_path + '/stats/dash.html',
-			controller: 'sirManageCtrl'
+			controller: 'dashCtrl'
 		})	
+		.state('stats.widget', {
+			url: '/widgetCtrl',
+			templateUrl: url_path + '/stats/widget.html',
+			controller: 'widgetCtrl'
+		})		
 		
 });
 app.directive('ngFiles', ['$parse', function($parse) {

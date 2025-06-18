@@ -1,9 +1,9 @@
 <section id="main-content" class="animated fadeIn">
-	<div class="panel panel-default" style="height: 10px">
+	<div class="panel" style="height: 10px; box-shadow: none !important;">
     </div>
     <div class="tabs">
 		<div id='tabs_div'>
-			<ul id='idtab'>
+			<ul id='query_tab'>
 				<li id="{{ tab.id }}" class="tab" ng-repeat="tab in tabs" >
 					<a ng-class="{'selected' : tab.isSelected}" ui-sref="{{ tab.key }}">{{ tab.value }}</a>
 				</li>

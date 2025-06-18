@@ -90,7 +90,6 @@ public class UserCtl  {
 	public @ResponseBody HashMap<String, Object> saveUser(HttpSession session,@RequestBody HashMap<String, Object> param) throws Exception {
 		HashMap<String, Object> map = new HashMap();
 		System.out.println("## saveUser ##");
-		System.out.println("mode : "+param.get("mode"));
 		try {
 			// ins
 			if(param.get("mode").equals("ins")) {
@@ -195,4 +194,6 @@ public class UserCtl  {
 		
 		return map;
 	}
+	
+
 }

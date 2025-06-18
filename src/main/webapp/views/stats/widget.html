@@ -1,0 +1,23 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-body" ng-controller="widgetCtrl">
+		  <h4>📈 차트 위젯</h4>
+		  <button ng-click="refresh()">데이터 새로고침</button>
+		  <button ng-click="removeWidget(widgetData.I)" class="btn btn-danger btn-sm">삭제</button>
+		</div>
+	</div>
+</section>
+<style>
+  .grid-stack {
+    background: #f0f0f0;
+    min-height: 600px;
+  }
+
+  .grid-stack-item-content {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+  }
+</style>

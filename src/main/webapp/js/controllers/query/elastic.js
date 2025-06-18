@@ -1,6 +1,7 @@
 angular.module('myApp').controller('editorElasticCtrl', [
 	'$scope', '$element', '$rootScope', '$http', '$compile', '$filter', '$timeout',
 	function($scope, $element, $rootScope, $http, $compile, $filter, $timeout) {
+		console.log("## editorElasticCtrl.js ##")
 		var sAction = {
 			save: '../query/elastic/setQuery'
 		};
@@ -45,7 +46,12 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		var defs = Object.keys(def);
 		var bools = Object.keys(bool);
 		var agges = Object.keys(aggs);
-				
+		// 로컬호스트 쿼리 저장용
+		var createTable = function() {
+			if (!localStorageDb) {jsUt.delocalStorage('q_editor', { query_data: [] })}
+		}
+		createTable();		
+		
 		$scope.method_type = "GET"
 		$scope._id =""; // row id
 		$scope.detail = {}  // row detail
@@ -55,87 +61,68 @@ angular.module('myApp').controller('editorElasticCtrl', [
 			minWidth: 300,
 			resize: function() {
 				editor.resize(),
-					rt_view.resize()
+					query_editor2.resize()
 			}
 		});
-		//@@EXP 화면 리사이즈시 실행되는 부분
+
 		$(window).bind("resize", function() {
 			var win_h = $(window).height();
 			var win_w = $(window).width();
 			var min_resizeable2 = win_w - 450;
-			el.find("#editor1").resizable("option", "maxWidth", min_resizeable2);
-			var result_h = win_h - 280;
-			var org_width1 = el.find("#editor1").width();
-			el.find("#editor2").width(win_w - 160 - org_width1);
-			el.find("#query_editor,#rt_view").height(result_h);
+			var $editor1 = el.find("#editor1");
+			// resizable 초기화가 안 되어 있으면 초기화
+			if (!$editor1.data("ui-resizable")) {
+			    $editor1.resizable({
+			        handles: "e, w"
+			    });
+			}
+			$editor1.resizable("option", "maxWidth", min_resizeable2);
+			var result_h = win_h - 320;
+			el.find("#query_editor,#query_editor2").height(result_h);
 		});
-		var db;
-		$scope.mode = "json";
+		var localStorageDb;
 
-		$(document).ready(function() {
-			cluster_state();
-		});		
-		
-		function cluster_state() {
-			var color;
-			$http.post(gAction.state).then(function(rs) {
-				var status = rs.data.cc.status;
-				switch (status) {
-					case "green":
-						color = "#25459c;";
-						break;
-					case "yellow":
-						color = "#efe900;";
-						break;
-					case "red":
-						color = "#ea0000;";
-						break;
-				}
-				$("#elastic_sts").css("background-color", color);
-			});
-		};		
+// 검색버튼
 		$scope.btnSearch =  function(e){
-			console.log("@@@@ search")
 			if (isSearch) {
 				alert("검색이 진행중입니다.");
 				return;
 			}
 
-			var texts = editor.getSession().doc.$lines;
-			var req = texts[1].split(' ');
-			var data = '';
-			var line_num = texts.length;
+  			const lines = editor.getSession().getDocument().getAllLines();
+  			const requestPath = lines[1]?.trim().split(" ") || [];
+  			const bodyLines = [];
 
-			for (var i = 2; i < line_num; i++) {
-				if (texts[i].indexOf(" //") != -1) {	//주석일 경우
-					data += texts[i].substring(0, texts[i].indexOf(" //")) + "\n";
-				} else {
-					data += texts[i] + "\n";
-				}
-			}
-			data = data.replace(/"""/gi, "\"");
-			data = data.replace(/\t/g, "");
-
+			for (let i = 2; i < lines.length; i++) {
+    			const line = lines[i];
+    			if (line.includes(" //")) {
+      				bodyLines.push(line.substring(0, line.indexOf(" //")));
+    			} else {
+      				bodyLines.push(line);
+    			}
+  			}
+  			let data = bodyLines.join("\n").replace(/"""/gi, '"').replace(/\t/g, "");
+  			
 			isSearch = true;
 			
-			rt_view.setValue("");
-			insertData(texts);
-			prev_list_load();
+			query_editor2.setValue("");
+			insData(lines);
+			get_recent_query();
 			
-			sendQuery(req,data)
+			sendQuery(requestPath,data)
 		}
-
+// 쿼리보내기
 		var sendQuery = function(req, data) {
 			var method2= $scope.method_type;
-			//쿼리 실행
+
 			$http({method: 'POST', url: gAction.query, data: { method: method2, url: req[0], data: data }}).then(function(res) {
 				if (res.data.error) {
-					rt_view.setValue(JSON.stringify(res.data, null, '\t'));
+					query_editor2.setValue(JSON.stringify(res.data, null, '\t'));
 					isSearch = false;
 				} else {
-					rt_view.setValue(JSON.stringify(res.data, null, '\t'));
+					query_editor2.setValue(JSON.stringify(res.data, null, '\t'));
 					
-					rt_view.session.selection.clearSelection(); //fromJSON({row: 0, column: 0});
+					query_editor2.session.selection.clearSelection(); //fromJSON({row: 0, column: 0});
 					isSearch = false;
 				}
 			});
@@ -152,13 +139,13 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		$scope.btnQuerySave =  function(){
 		    var _id = $scope._id;
 		    var userInput = "";
-			console.log("detail : ",$scope.detail)
+
 		    // 기존 쿼리 라인 추출
-		    var texts = editor.getSession().doc.$lines;
+		    var lines = editor.getSession().getDocument().getAllLines();
 		    var data = '';
-		    var line_num = texts.length;
+		    var line_num = lines.length;
 		    for (var i = 2; i < line_num; i++) {
-		        data += texts[i] + (i == line_num - 1 ? "" : "\n");
+		        data += lines[i] + (i == line_num - 1 ? "" : "\n");
 		    }
 		
 		    // 정규식
@@ -194,7 +181,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		
 		    var param = {
 		        query_title: userInput,
-		        query_index: texts[1],
+		        query_index: lines[1],
 		        query_content: data,
 		        query_method: $scope.method_type
 		    };
@@ -205,7 +192,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		    } else {
 		        param.type = "ins";
 		    }
-			console.log("@@ param : ",param)
+
 		    // 🔹 전송
 		    $http.post(sAction.save, param, $rootScope.http_config).then(function (rs) {
 		        if (rs.data.sOk == "ok") {
@@ -218,100 +205,71 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		        $scope.$emit('pageRD', [location.href, rs.status]);
 		    });
 		}
-// 노드 상태 조회
-		$scope.nodeStat =  function(e){
-			if (confirm("node 상태를 조회하시겠습니까?")) {
-				$scope.method_type = "GET"
-				var query_title = "node 상태 조회";
-				var query_index = "_nodes/stats/os";
-				var query_content = "{}";
-				editor.setValue("## " + query_title + "\n" + query_index + "\n" + query_content, 1);
-				$scope.btnSearch()
-			}
-		}
-// 노드 서치 조회
-		$scope.nodeSearch =  function(e){
-			if (confirm("node 서치를 조회하시겠습니까?")) {
-				$scope.method_type = "GET"
-				var query_title = "node 서치 조회";
-				var query_index = "_nodes/stats/indices/search";
-				var query_content = "{}";
-				editor.setValue("## " + query_title + "\n" + query_index + "\n" + query_content, 1);
-				$scope.btnSearch()
-			}
-		}
-// 클러스터 셋팅 조회
-		$scope.clusetSet =  function(e){
-			if (confirm("클러스터 셋팅을 조회하시겠습니까?")) {
-				$scope.method_type = "GET"
-				var query_title = "클러스터 셋팅 조회";
-				var query_index = "_cluster/settings";
-				var query_content = "{}";
-				editor.setValue("## " + query_title + "\n" + query_index + "\n" + query_content, 1);
-				$scope.btnSearch()
-			}
-		}
-// 로컬호스트 쿼리 저장용
-		var createTable = function() {
-			if (!db) {
-				niUt.defLcst('q_editor', { query_data: [] })
-			}
-		}
-		createTable();
 
-		var insertData = function(texts) {
-			db = niUt.lcst('q_editor');
-			var mode = 'json';
-			var query_title = texts[0]
-			var query_index = texts[1]
+
+		
+// 최근 검색쿼리 저장
+		var insData = function(lines) {
+			localStorageDb = jsUt.localStorage('q_editor');
+			var q_title = lines[0]
+			var q_index = lines[1]
 
 			var data = '';
-			var line_num = texts.length;
+			var line_num = lines.length;
 			for (var i = 2; i < line_num; i++) {
 				if (i == line_num - 1) {
-					data += texts[i]
+					data += lines[i]
 				} else {
-					data += texts[i] + "\n"
+					data += lines[i] + "\n"
 				}
 			}
-			var query_content = data;
+			var q_content = data;
 			var query_mk_dt = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-			var search_query = { mode: mode, title: query_title, index: query_index, content: query_content, mk_dt: query_mk_dt }
-			db.query_data.push(search_query)
-			niUt.lcst('q_editor', db)
+			var search_query = { title: q_title, index: q_index, content: q_content, mk_dt: query_mk_dt }
+			localStorageDb.query_data.push(search_query)
+			jsUt.localStorage('q_editor', localStorageDb)
 
 		}
+// 최근 검색 쿼리
+var get_recent_query = function() {
+    const $select = el.find("#recent_query");
+    $select.html("");
+    $select.append('<option value="">최근 검색 쿼리</option>');
 
-		var prev_list_load = function() {
-			var mode = $scope.mode
-			el.find("#prev_list").html("");
-			el.find("#prev_list").append('<option value="">최근 검색 쿼리</option>');
-			var result = niUt.lcst("q_editor").query_data
-			for (var i = 0; i < result.length; i++) {
-				if (mode === result[i].mode) {
-					el.find("#prev_list").append('<option value="' + i + '">' + "(" + result[i].mk_dt + ") " + result[i].index + '</option>')
-				}
-				el.find("#prev_list").multipleSelect({
-					filter: true, single: true, selectAll: false, width: '490px', onClick: function(v) {
-						if (v.value != "") {
-							prev_load(v.value, mode);
-						}
-					}
-				})
-			}
-		}
+    const result = jsUt.localStorage("q_editor").query_data || [];
 
-		var prev_load = function(rowid, mode) {
-			var selected_mode = 'json';
-			if (selected_mode === mode) {
-				var row = niUt.lcst("q_editor").query_data
-				var query_title = row[rowid].title
-				var query_index = row[rowid].index
-				var query_content = row[rowid].content
-				editor.setValue(query_title + "\n" + query_index + "\n" + query_content, 1);
-			}
-		}
-		prev_list_load()
+    // 가장 최근 것이 위로 오도록 역순 반복
+    for (let i = result.length - 1; i >= 0; i--) {
+        const item = result[i];
+        $select.append(
+            `<option value="${i}">(${item.mk_dt}) ${item.index}</option>`
+        );
+    }
+
+    // multipleSelect 초기화 (반복문 밖!)
+    $select.multipleSelect({
+        filter: true,
+        single: true,
+        selectAll: false,
+        width: '35%',
+        onClick: function(v) {
+            if (v.value !== "") get_recent(v.value);
+        }
+    });
+}
+
+var get_recent = function(rowid) {
+    const rows = jsUt.localStorage("q_editor").query_data || [];
+    const item = rows[rowid];
+    if (!item) return;
+
+    const q_title = item.title;
+    const q_index = item.index;
+    const q_content = item.content;
+
+    editor.setValue(q_title + "\n" + q_index + "\n" + q_content, 1);
+}
+		get_recent_query()
 
 // 인덱스명 배열 셋팅
 		$http.get(gAction.idx).then(function(res) {
@@ -328,111 +286,179 @@ angular.module('myApp').controller('editorElasticCtrl', [
 			enableSnippets: true,
 			enableLiveAutocompletion: false
 		});
-// 에이스 자동완성		
-		var queryAutoFormatting = function() {
-			var text = editor.getSession().doc.$lines;
-			var title = text[0];
-			var head = text[1];
-			var note = '';
-
-			var content = "";
-			for (var i = 2; i < text.length; i++) {
-				if (text[i].indexOf("//") != -1) {
-					content += text[i].substring(0, text[i].indexOf("//"));
-					note += text[i].substring(text[i].indexOf("//"), text[i].length) + "\n";
-				} else {
-					content += text[i];
-				}
-			}
-			content = content.replace(/"""/gi, "\"");
-			content = content.replace(/\t/g, "");
-
-			editor.setValue(title + "\n" + head + "\n" + JSON.stringify(JSON.parse(content), null, '\t') + "\n" + note);
-			rt_view.session.selection.clearSelection();
-		};
 		editor.setTheme("ace/theme/monokai");
 		editor.completers = [{
-			getCompletions: function(editor, session, pos, prefix, callback) {
-				var val = session.doc.$lines[1].replace(/[\r\n]/g, ' ').split(' ');
-				var prevPhrase = val[val.length - 2]; //지금 입력 들어가기 전에 입력 들어간거
+  			getCompletions: function (editor, session, pos, prefix, callback) {
+			    const lineIndex = 1;
+			    const currentRow = pos.row;
+			    const completions = [];
+			    const lineText = session.getLine(lineIndex) || "";
 
-				if (pos.row == 1) {
-					if (prevPhrase) {
-						prevPhrase = prevPhrase.toLowerCase();
-					}
-					if (prevPhrase == undefined) {
-						var idx = 0;
-						callback(null, indexList.map(function(val) {
-							return {
-								caption: val, value: val, meta: "index", score: idx++
-							};
-						}));
-					}
-				} else if (pos.row >= 3) {
-					var idx = 0;
+    			if (currentRow === lineIndex) {
+			    	const words = lineText.replace(/[\r\n]/g, " ").split(" ");
+			      	const prevPhrase = words.length >= 2 ? words[words.length - 2].toLowerCase() : undefined;
 
-					callback(null, agges.map(function(val) {
-						return {
-							caption: val, snippet: '"' + val + '" ' + aggs[val], meta: "aggs", score: idx++
-						};
-					}));
-					callback(null, bools.map(function(val) {
-						return {
-							caption: val, snippet: bool[val], meta: "bool", score: idx++
-						};
-					}));
-					callback(null, defs.map(function(val) {
-						return {
-							caption: val, snippet: def[val], meta: "def", score: idx++
-						};
-					}));
-				}
-				
-			}
+			      	// 2번째 줄(인덱스 줄) 자동완성
+			      	if (prevPhrase === undefined) {
+			        	indexList.forEach((val, idx) => {
+			          		completions.push({ caption: val, value: val, meta: "index", score: idx });
+			        	});
+			      	}
+    			} else if (currentRow >= 3) {
+      				let idx = 0;
+      				agges.forEach(val => {
+			        	completions.push({
+				          	caption: val,
+				          	snippet: `"${val}" ${aggs[val]}`,
+				          	meta: "aggs",
+				          	score: idx++
+			        	});
+      				});
+      				bools.forEach(val => {
+			        	completions.push({
+				          	caption: val,
+				          	snippet: bool[val],
+				          	meta: "bool",
+				         	score: idx++
+			        	});
+			      	});
+      				defs.forEach(val => {
+			        	completions.push({
+			          		caption: val,
+			          		snippet: def[val],
+			          		meta: "def",
+			          		score: idx++
+			        	});
+      				});
+    			}
+
+    			callback(null, completions);
+  			}
 		}];
 		editor.keyBinding.addKeyboardHandler({
-			handleKeyboard: function(data, hash, ks, kc) {
-				if (hash === 1 && kc === 13) {
-					$scope.btnSearch()
-				} else if (hash === 1 && kc === 75) {
-					try {
-						queryAutoFormatting();
-					} catch (e) {
-						console.error("error : " ,e);
-					}
-				} else if (kc === 13 || kc === 40) {
-					var pos = data.editor.getCursorPosition();
-					var text = data.editor.session.doc.$lines;
-					if (pos.row === 1 && text[1].trim() === "") {
-						alert("두번째줄에 인덱스를 선택후 진행해주세요.\n[ \"Ctrl+space\"로 인덱스목록 확인 가능 ]");
-						return { command: "null", passEvent: false }; // 엔터 기본 동작 막기
-					}
-			
-					if (pos.row == 1) {
-						var text = data.editor.session.doc.$lines;
+  			handleKeyboard: function (data, hash, keyString, keyCode) {
+				let KEY_ENTER = 13;
+				let KEY_K = 75;
+				let LINE_INDEX = 1;
+			    let editor = data.editor;
+			    let pos = editor.getCursorPosition();
+			    let session = editor.getSession();
+			    let lines = session.getDocument().getAllLines();
 
-						if (kc === 13 && text.length === 2) {
-							data.editor.session.insert({ row: 3, column: 0 }, "\n{\n}");
-							data.editor.gotoLine(3, 1);
-						}
-					}
-				}
-			}
+			    // Ctrl+Enter → 검색 실행
+			    if (hash === 1 && keyCode === KEY_ENTER) {
+			      	$scope.btnSearch();
+			      	return;
+			    }
+
+			    // Ctrl+K → 포맷 실행
+			    if (hash === 1 && keyCode === KEY_K) {
+			      	try {
+			        	$scope.editorFormatting();
+			      	} catch (e) {
+			        	console.error("editorFormatting error:", e);
+			      	}
+			      	return;
+			    }
+
+			    // Enter 
+			    if (keyCode === KEY_ENTER ) {
+			      	const lineText = lines[LINE_INDEX] || "";
+			
+			      	// 두 번째 줄 비어있으면 경고
+			      	if (pos.row === LINE_INDEX && lineText.trim() === "") {
+			        	alert("두번째 줄에 인덱스를 입력하세요.\n[Ctrl + Space]로 인덱스 자동완성 가능합니다.");
+			        	return { command: "null", passEvent: false };
+			      	}
+			
+			      // 두 줄만 있을 경우 → {} 자동 삽입
+			      	if (pos.row === LINE_INDEX && keyCode === KEY_ENTER && lines.length === 2) {
+			        	session.insert({ row: 3, column: 0 }, "\n{\n}");
+			        	editor.gotoLine(3, 1);
+			        	return;
+			      	}
+			    }
+  			}
 		});
+// 에이스 자동완성		
+		$scope.editorFormatting = function() {
+  			const lines = editor.getSession().getDocument().getAllLines();
+  			const title = lines[0] || "";
+  			const head = lines[1] || "";
+
+		  	// 본문 줄 합치기 (2번째 줄 이후)
+		  	let content = "";
+		  	for (let i = 2; i < lines.length; i++) {
+		   		content += lines[i];
+		  	}
+
+  			if (/\/\/.*/.test(content)) {
+    			alert("JSON 내에 주석(//)이 포함되어 있습니다.\n자동 포맷팅을 위해 주석을 제거해주세요.");
+    			return;
+  			}
+
+  			// 포맷팅 전 문자열 정리
+  			content = content.replace(/"""/gi, '"').replace(/\t/g, "");
+
+  			let formatted = "";
+  			try {
+    			formatted = JSON.stringify(JSON.parse(content), null, "\t");
+  			} catch (e) {
+    			alert("JSON 형식이 올바르지 않아 자동 포맷팅을 할 수 없습니다.");
+    			return;
+  			}
+
+  			const result = [title, head, formatted].join("\n");
+  			editor.setValue(result);
+  			query_editor2.session.selection.clearSelection();
+		};
 // 에이스 에디터 셋팅(쿼리 결과 에디터)		
-		var rt_view = ace.edit("rt_view", {
+		var query_editor2 = ace.edit("query_editor2", {
 			mode: "ace/mode/javascript",
 			showPrintMargin: false,
 			readOnly: true,
 			tabSize: 2
 		});
-		el.find("#method_list").multipleSelect({filter: true, single: true, selectAll: false, width: '120px', onClick: function(v) {}});
+		el.find("#method_list").multipleSelect({filter: false, single: true, selectAll: false, width: '100px', onClick: function(v) {}});
 		
 		angular.element(el).ready(function() {
+			editor.setValue("## 2번째줄에 인덱스,  3번째줄에 쿼리를 입력해주세요. ( \"ctrl+ spaceBar\"로 자동완성 )\n", 1);
 			$(window).trigger("resize");
-			editor.setValue("## 2번째줄에 인덱스,  3번째줄에 쿼리를 입력해주세요. ( \"ctrl+ spaceBar\"로 자동완성 )\n", 1);											
 		});
 		
+// 노드 상태 조회
+		$scope.nodeStat =  function(e){
+			if (confirm("node 상태를 조회하시겠습니까?")) {
+				$scope.method_type = "GET"
+				var q_title = "node 상태 조회";
+				var q_index = "_nodes/stats/os";
+				var q_content = "{}";
+				editor.setValue("## " + q_title + "\n" + q_index + "\n" + q_content, 1);
+				$scope.btnSearch()
+			}
+		}
+// 노드 서치 조회
+		$scope.nodeSearch =  function(e){
+			if (confirm("node 서치를 조회하시겠습니까?")) {
+				$scope.method_type = "GET"
+				var q_title = "node 서치 조회";
+				var q_index = "_nodes/stats/indices/search";
+				var q_content = "{}";
+				editor.setValue("## " + q_title + "\n" + q_index + "\n" + q_content, 1);
+				$scope.btnSearch()
+			}
+		}
+// 클러스터 셋팅 조회
+		$scope.clusetSet =  function(e){
+			if (confirm("클러스터 셋팅을 조회하시겠습니까?")) {
+				$scope.method_type = "GET"
+				var q_title = "클러스터 셋팅 조회";
+				var q_index = "_cluster/settings";
+				var q_content = "{}";
+				editor.setValue("## " + q_title + "\n" + q_index + "\n" + q_content, 1);
+				$scope.btnSearch()
+			}
+		}		
 // 저장된 쿼리 모달	열기 버튼
 		$scope.queryMange = function(){
 			let css ={
@@ -487,18 +513,17 @@ angular.module('myApp').controller('editorElasticCtrl', [
 					data: function(param) {
 					},
 					dataSrc: function(json) {
-						return niCvUt.resDataResult(json, "data");
+						return jsUt.result(json, "data");
 					},
 					error: function(xhr) {
-						console.log("@@ xhr : ",xhr)
 						if ("error" == xhr.statusText || xhr.readyState == 4)
 							$scope.$emit('pageRD', [location.href, xhr.status]);
 					}
 				},
-				pageLength: 3,
+				pageLength: 4,
 				pagingType: "custom_simple_numbers",
-				// scrollY: "365px",
-				// dom: 'z<"dt-toolbar" <"pull-left"f>> t <"dt-toolbar-footer" <"pull-left"> <"pull-right"p>>',
+				scrollY: "225px",
+				dom: 'z<"dt-toolbar"> t <"dt-toolbar-footer d-flex justify-content-center"p>',
 				language: {
 					zeroRecords: "데이터가 없습니다",
 					lengthMenu: "<div class='pull-right'>_MENU_</div >",
@@ -506,7 +531,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 				},
 				columnDefs: [ 
 					{ 
-						targets: [0], width: '15%', class: 'text-center',
+						targets: [0], width: '15%', class: 'textCenter',
 						render: function(data, type, row) {
 							let method = row.QUERY_METHOD.toUpperCase();
 							let color = "";
@@ -526,7 +551,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 						}
 					},
 					{
-						targets: [1], width: '35%', class: 'text-center',
+						targets: [1], width: '35%', class: 'textCenter',
 						render: function(data, type, row) {
 							let title = row.QUERY_TITLE || "";
 							if (title.length > 20) {
@@ -539,7 +564,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 						}
 					},
 					{
-						targets: [2], width: '15%', class: 'text-center',
+						targets: [2], width: '15%', class: 'textCenter',
 						render: function(data, type, row) {
 							let id = row.QUERY_USER_ID || "";
 							if (id.length > 10) {
@@ -549,14 +574,14 @@ angular.module('myApp').controller('editorElasticCtrl', [
 						}
 					},
 					{
-						targets: [3], width: '20%', class: 'text-center',
+						targets: [3], width: '20%', class: 'textCenter',
 						render: function(data, type, row) {
 							let date = row.QUERY_MK_DT || "";
 							return date.substring(0, 10); // "YYYY-MM-DD"
 						}
 					},
 					{
-						targets: [4], width: '15%', class: 'text-center',
+						targets: [4], width: '15%', class: 'textCenter',
 						render: function(data, type, row) {
 							let str = '<button class="btn btn-xs btn-danger del_row" ng-click="queryDelete(\'' + row._id + '\')" style="margin:3px 0 0 0;">';
 							str += '<span class="glyphicon glyphicon-trash"></span></button>';
@@ -590,18 +615,18 @@ angular.module('myApp').controller('editorElasticCtrl', [
 			_id: id
 		}
 		$http.post(gAction.row, param, $rootScope.http_config).then(function(rs) {
-			var passData = niCvUt.resDataResultOne(rs, "data");
+			var passData = jsUt.resultOne(rs, "data");
 			if (!passData) {
 	            console.warn("응답 데이터가 비어있습니다.", rs);
 	            alert("해당 쿼리 정보를 불러오지 못했습니다.");
 	            return;
        	 	}
        	 	$scope.detail = passData;
-	        var query_index = passData.QUERY_INDEX || "";  // 인덱스셋팅
-	        var query_content = passData.QUERY_CONTENT || ""; // 쿼리셋팅
+	        var q_index = passData.QUERY_INDEX || "";  // 인덱스셋팅
+	        var q_content = passData.QUERY_CONTENT || ""; // 쿼리셋팅
 	        $scope.method_type = passData.QUERY_METHOD || "GET"; // 메서드셋팅
 	        const headerText = "## 2번째줄에 인덱스,  3번째줄에 쿼리를 입력해주세요. ( \"ctrl+ spaceBar\"로 자동완성 )\n";
-			editor.setValue(headerText + query_index + "\n" + query_content, 1);
+			editor.setValue(headerText + q_index + "\n" + q_content, 1);
 			$scope._id = passData._id;
 			$scope.queryModal_close(); // 모달 닫아주기
 		}, function(err) {
@@ -646,6 +671,31 @@ angular.module('myApp').controller('editorElasticCtrl', [
 			            console.warn("table is undefined");
 			        }
 			    }, 1000);
-			};		 
+			};	
+			
+		$(document).ready(function() {
+			cerebro_state();
+		});
+		
+// 세레브로 상태
+		function cerebro_state() {
+			var color;
+			$http.post(gAction.state).then(function(rs) {
+				var status = rs.data.cc.status;
+				switch (status) {
+					case "green":
+						color = "#1DDB16;";
+						break;
+					case "yellow":
+						color = "#FFE400;";
+						break;
+					case "red":
+						color = "#FF0000;";
+						break;
+				}
+				$("#elastic_sts").css("background-color", color);
+			});
+		};			
+				 
 	 
 	}]);

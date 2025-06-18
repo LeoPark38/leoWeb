@@ -10,7 +10,7 @@ angular.module('myApp').controller('HomeController', ['$scope', '$http', functio
         console.error("API 호출 실패:", error);
     });
 
-    $http.get("../sir/test").then(function(response) {
+    $http.get("../air/test").then(function(response) {
         console.log("서버 응답!:", response.data);
         $scope.serverMessage = response.data;  // 서버에서 받은 데이터를 변수에 저장
     }).catch(function(error) {

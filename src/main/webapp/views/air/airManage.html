@@ -1,0 +1,665 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<i class="fab fas fa-bezier-curve mR10"></i>AIR 관리
+			</h3>
+		</div>
+		<div class="panel-bodys" style="height:40px; padding: 5px 5px 10px 0px !important; background-color: #f9f9f9; border: 1px solid #ddd; margin-top: 5px;">
+			<div class="floatR">
+				<button ng-click="airEtcMange()" class="btn btn-sm btn-primary mL5 width40" data-toggle="tooltip" title="air 관리" >
+					<i class="fa fa-cog" aria-hidden="true"></i>
+				</button>		
+				<button ng-click="airDataDetailOpen()" class="btn btn-sm btn-primary mL5 width40" data-toggle="tooltip" title="추가" >
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>			
+			</div>		
+		</div>
+		<div class="panel-body" style="display: flex; padding: 5px 0px 15px 0px !important">
+			<div style="border: 1px solid #ddd; background-color: #fff;">		
+				<div class="base_box" style="background-color:#f9f9f9; border-bottom: 1px solid #dfe3e8 !important;">
+					<div style="display: flex; height: 28px;" ></div>
+				</div>
+				<div class="file-tree p14" id="" >
+				    <div id="fileTree"></div>
+				</div>
+			</div>	
+ <!-- panning / selction swich -->	
+			<button type="button" ng-click="dragSwitch()" class="memo-box btn btn-sm btn-primary floatL width40 colorG" style="z-index:9;">
+				<img id="dragImg" src="../../../sas/icon/soar/click01.png" alt="Icon" style="width: 24px; height: 24px;">
+			</button>
+<!-- 그래프 / 툴바  div -->
+			<div class="mainAirDiv" >
+				<div id="toolbar" style="display: flex;">			
+					<div style="vertical-align: top; display: inline-block; padding-left: 8px; font-size: 14px;">
+						<div class="tool" id="isUseDiv" style="cursor: unset;width: 22px; height: 23px;background-color: #8C8C8C; position: unset; margin-left: 0; padding-top: 2px;" data-toggle="tooltip" title="상태">
+						</div>
+					</div>
+					<div >
+						<span id="airDataTile" ng-click="openDetail()" class="" style="font-weight: bold; cursor:pointer; border: 0px; background-color: #f9f9f9; display: inline-block;"></span>					
+					</div>
+				</div>
+				<div id="toolbarDetail" style="width:1518px" >
+					<div class="p14" >
+						<table class="table" style="border:1px solid #e1e1e1;">
+							<colgroup>
+									<col width="25%"> <!-- 1 -->
+									<col width="15%">
+									<col width="15%">
+									<col width="10%">
+									<col width="15%"> <!-- 5 -->
+									<col width="10%">
+									<col width="15%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th colspan="1">사용여부</th>
+									<td id="use_chk_tr" colspan="6">
+										<div class="custom-radio-group floatL">
+											<div class="custom-radio">
+												<input type="radio" name="isUse" id="isUseYes" value="true" checked><label
+													for="isUseYes" class="">Yes</label>
+											</div>
+										</div>
+										<div class="custom-radio-group floatL pL20">
+											<div class="custom-radio">
+												<input type="radio" name="isUse" id="isUseNo" value="false" ><label
+													for="isUseNo" class="">No</label>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr ng-show="state == 'ins'">
+									<th colspan="1">AIR 명</th>
+									<td colspan="6"><input id="x6_name" style="width:100%"></input></td>								
+								</tr>
+								<tr ng-show="state == 'ins'">
+									<th colspan="1">타입</th>
+									<th colspan="6">
+										<select class="form-control" id="x6_type" ng-model="x6_type">
+										<option value="airData" >대기질</option>
+										<option value="rainData">강수</option>
+										<option value="temperData">기온</option>
+										<option value="etc" >etc</option>
+										</select>			
+									</th>				
+								</tr>
+								<tr ng-show="state != 'ins'">
+									<th colspan="1">생성일</th>
+									<td colspan="2"><span id="x6_mk_dt" ></span></td>		
+									<th colspan="1">수정일</th>
+									<td colspan="2"><span id="x6_upd_dt" ></span></td>
+									<td colspan="1"></td>
+								</tr>
+								<tr>
+									<th>설명</th>
+									<td colspan="6">
+										<textarea class="form-control" id="x6_desc" name="editor" style="resize: none ; height: 150px;"></textarea>
+									</td>
+								</tr>	
+							</tbody>
+						</table> 
+						<div class="panel-footer textCenter" style="background-color: #fff; border-top :0px !important">
+							<button type="button" ng-click="savePopAdd()" class="btn btn-primary width90 colorG" >
+								<i class="fa fa-plus"></i>저장
+							</button> 
+							<button type="button" ng-click="deletePopAdd()" class="btn btn-primary width90 colorG" ng-show="state != 'ins'">
+								<i class="fa fa-times"></i>삭제
+							</button>
+							<button type="button" ng-click="toolbarDetailClose()" class="btn btn-primary width90 colorG" >
+								<i class="fa fa-times"></i>닫기
+							</button>
+						</div>
+					</div>
+				</div>		
+				<div id="container" style=""></div>
+			</div>
+
+<!-- node 옵션 div -->
+			<div id="optionDiv" style="display: none; border: 1px solid #ddd;" class="base ">
+				<!-- node option div -->
+				<div id="nodeOptionDiv" >
+					<div class="base_box">
+						<div class="op_box floatL" >⛏️옵션 설정</div>
+						<div class="custom-checkbox floatR " style="margin: 7px 10px 0px 0px">
+							<input id="moreOption" type="checkbox"> 
+							<label for="moreOption" style="font-weight: 400; color: white">
+								고급 옵션 
+							</label>
+						</div>
+					</div>
+					<div class="p14" style="padding: 10px !important">
+						<table class="air_table">
+							<colgroup>
+								<col width="15%">
+								<col width="85%">
+							</colgroup>
+							<tbody>
+								<tr id="nodeLabel">
+									<th>01.명칭</th>
+									<td><input type="input" id="label" ></td>
+								</tr>
+								<tr id="">
+									<th>02.색상</th>
+									<td><input type="color" id="nodeColor"></td>
+								</tr>
+								<tr id="nodeFontFamily">
+									<th>03.폰트 종류</th>
+									<!-- <td><input type="input" id="family"></td> -->
+									<td>
+										<select class="form-control" id="fontFamily"
+												ng-model="fontFamily">
+													<option value="Arial, helvetica, sans-serif" style="font-family: Arial, helvetica, sans-serif;">심플(Simple)</option>
+													<option value="Georgia, serif" style="font-family: Georgia, serif;">전통적(Traditional)</option>
+													<option value="Times New Roman, serif" style="font-family:Times New Roman, serif;">고전적(Classic)</option>
+													<option value="Verdana, Geneva, sans-serif" style="font-family: Verdana, Geneva, sans-serif;">명확(Clear)</option>
+													<option value="Courier New, monospace" style="font-family: Courier New, monospace;">고정폭(Monospaced)</option>
+													<option value="Roboto, Arial, sans-serif" style="font-family: Roboto, Arial, sans-serif;">현대적(Modern)</option>
+													<option value="Open Sans, sans-serif" style="font-family: Open Sans, sans-serif;">다목적(Versatile)</option>
+											</select>
+	 								</td>
+								</tr>
+								<tr id="nodeFont">
+									<th>04.폰트 크기</th>
+									<td><input type="input" id="font"></td>
+								</tr>
+								<tr id="nodeFontColor">
+									<th>05.폰트 색상</th>
+									<td><input type="color" id="fontColor"></td>
+								</tr>
+								<tr id="nodeStrokWidth">
+									<th>06.테두리 넓이</th>
+									<td><input type="input" id="strokeWidth"></td>
+								</tr>
+								<tr id="nodeStrokeColor">
+									<th>07.테두리 색상</th>
+									<td><input type="color" id="strokeColor"></td>
+								</tr>
+								<tr id="nodeMemo">
+									<th>08.메모</th>
+									<td><textarea class="form-control" id="node_content" name="editor" style="resize: none"></textarea></td>
+								</tr>
+								<tr id="tr_opa" style="display: none;">
+									<th>09.opacity</th>
+									<td>
+										<input type="range" min="0" max="1" step="0.05" id="opacity" 
+											ng-model="opacityValue" ng-change="changeOpacity()"> 
+										<span id="opacityValue" style="z-index: -1000;"></span>
+									</td>
+								</tr>
+								<tr id="tr_blur" style="display: none;">
+									<th>10.blur</th>
+									<td>
+										<input type="range" min="0" max="20" step="1" id="blur"
+											ng-model="blurValue" ng-change="changeBlur()"> 
+										<span id="blurValue" style="z-index: -1000;"></span>
+									</td>
+								</tr>
+								<tr id="tr_dx" style="display: none;">
+									<th>11.dx</th>
+									<td>
+										<input type="range" min="0" max="20" step="1" id="dx"
+											ng-model="dxValue" ng-change="changeDx()"> 
+										<span id="dxValue" style="z-index: -1000;"></span>
+									</td>
+								</tr>
+								<tr id="tr_dy" style="display: none;">
+									<th>12.dy</th>
+									<td>
+										<input type="range" min="0" max="20" step="1" id="dy"
+										ng-model="dyValue" ng-change="changeDy()"> 
+										<span id="dyValue" style="z-index: -1000;"></span>
+									</td>
+								</tr>
+								<tr id="tr_index" style="display: none;">
+									<th>13.z-index</th>
+									<td>
+										<input type="input" id="zIndex">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- node data div -->
+				<div id="nodeDataDiv" >
+					<div class="base_box">
+						<div class="op_box floatL" >⛏️데이터 설정</div>
+					</div>
+					<div class="p14" style="padding: 10px !important">
+						<table class="table_bor fontG">
+							<colgroup>
+								<col width="15%">
+								<col width="85%">
+							</colgroup>
+							<tbody>
+								<tr id="">
+									<th>01.d_type</th>
+									<td>
+										<select class="form-control" id="d_type" ng-model="d_type">
+												<option value="elastic" >elastic</option>
+												<option value="mySql">mySql</option>
+												<option value="etc" >etc</option>
+										</select>
+	 								</td>
+								</tr>
+								<tr id="">
+									<th>03.d_index_nm</th>
+									<td><input type="input" id="d_index_nm" ></td>
+								</tr>
+								<tr id="">
+									<th>05.d_query</th>
+									<td><input type="input" id="d_query" ></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="panel-footer col-sm-12 textCenter"style="background-color: #fff;">
+					<button type="submit" ng-click="deleteNode()" class="btn btn-primary width90 colorG" id="del_btn">
+						<i class="fa fa-trash" />삭제
+					</button>
+					<button type="submit" ng-click="saveOption()" class="btn btn-primary width90 colorG" >
+						<i class="fa fa-check" />저장
+					</button>
+					<button type="button" ng-click="closeOption()" class="btn btn-primary width90 colorG" >
+						<i class="fa fa-times" />닫기
+					</button>
+				</div>
+			</div>
+
+<!-- edge 옵션 -->
+			<div id="edgeDiv" style="display: none;" class="base ">
+				<div class="base_box">
+					<div class="op_box floatL" >⛏️설정</div>
+				</div>
+				<div class="p14" style="padding: 10px !important">
+					<table class="table_bor fontG">
+						<colgroup>
+							<col width="15%">
+							<col width="85%">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>00.flowLine</th> 
+								<td>
+									<select class="form-control" id="flowLine" ng-model="flowLine">
+										<option value="NONE">NONE</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+									</select>
+ 								</td>
+							</tr>
+							<tr>
+								<th>1.테두리 넓이</th>
+								<td><input type="input" id="strokeWidth_edge"></td>
+							</tr>
+							<tr>
+								<th>2.Marker 크기</th>
+								<td><input type="input" id="targetWidth_edge"></td>
+							</tr>
+							<tr>
+								<th>3.Marker 종류</th>
+								<!-- <td><input type="input" id="family"></td> -->
+								<td>
+									<select class="form-control" id="markerFamily"
+											ng-model="markerFamily">
+												<option value="classic">기본(classic)</option>
+												<option value="diamond">다이아(diamond)</option>
+												<option value="cross">크로스(cross)</option>
+												<option value="circle">원형(circle)</option>
+									</select>
+ 								</td>
+							</tr>
+	<!-- 						<tr>
+								<th>5.색상</th>
+								<td><input type="color" id="edgeColor"></td>
+							</tr> -->
+						</tbody> 
+					</table>
+				</div>
+				<div class="panel-footer col-sm-12 textCenter "
+					style="background-color: #fff;">
+					<button type="submit" ng-click="deleteEdge()" class="btn btn-primary width90 colorG" id="del_btn">
+						<i class="fa fa-trash" />삭제
+					</button>
+					<button type="submit" ng-click="saveEdgeOption()" class="btn btn-primary width90 colorG" >
+						<i class="fa fa-check" />저장
+					</button>
+					<button type="button" ng-click="closeEdgeOption()" class="btn btn-primary width90 colorG" >
+						<i class="fa fa-times" />닫기
+					</button>
+				</div>
+			</div>
+
+
+
+	
+		</div>
+	</div>
+</section>
+<style>
+.op_box{
+	padding:8px 0 5px 5px; 
+	font-size:13px; 
+	color: white;
+}
+.base{
+	border-right: 1px solid #d3daed !important;
+    border-bottom: 1px solid #d3daed !important;
+	border-radius:3px;
+	}
+.base_box{
+	background-color:#337ab7;
+	height:35px;
+}
+.tool{
+	position:absolute;
+	padding-left:7px;
+	top:110px;
+	margin-left:24px;
+	cursor:pointer;
+	width:20px;
+	height:20px; 
+	background-color:#b8b9bf;
+	border-radius:100px;
+	font-size:14px;
+	color:#fff;}
+.tool:hover{
+	background-color:#566ca8;
+	border-radius:100px;
+	font-size:14px;
+	color:#fff;
+}
+
+/* ----------------------------------- */
+#searchBox *{
+	height: 100%
+}
+
+.file-tree {
+    width: 300px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    font-size: 12px;
+    margin: 5px;
+}
+
+.listSpan {
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+    display: block; /* Block level element to make it span the full width */
+    margin-bottom: 5px; /* Add some space below the caret */
+    font-weight: bold; /* Make the text bold */
+}
+
+.listSpan::before {
+    content: "";
+    display: inline-block;
+    width: 16px;  /* 이미지의 너비 */
+    height: 16px; /* 이미지의 높이 */
+    background-image: url('../icon/folder-close.png'); /* 이미지를 삽입 */
+    background-size: contain; /* 이미지 크기를 컨테이너에 맞춤 */
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    vertical-align: middle; /* 텍스트와 이미지가 수직 정렬되도록 설정 */
+    transition: background-image 0.5s ease;
+}
+
+.listSpan-down::before {
+    background-image: url('../icon/folder-open.png'); /* 이미지를 삽입 */
+}
+
+.nested {
+    display: none;
+    padding-left: 20px; /* Indent the nested list */
+}
+
+.active {
+    display: block;
+    margin-left: 5px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin: 2px 0;
+    padding-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.file-item .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#searchInput {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+
+ @keyframes border-gradient-animation {
+  0% {
+    stroke-dashoffset: 380;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+   stroke-dashoffset: -380;
+  }
+} 
+
+.animate-border {
+  stroke-width: 8px;
+  stroke-dasharray: 380;
+  animation: border-gradient-animation 3s linear infinite;
+
+
+}
+
+/* ----------------------------------- */
+
+
+
+
+.fontG th{
+	color: #565656;
+}
+.colorG{
+	background-color: #d3daed; 
+	color: #565656;
+}
+#opacityValue, #blurValue, #dxValue, #dyValue {
+	width: 30px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	background: #03a9f4;
+	color: #fff;
+	font-size: 12px;
+	display: block;
+	position: absolute;
+	left: 84%;
+	transform: translate(-50%, 0);
+	border-radius: 6px;
+}
+/* 이제 필요할듯
+ 	.x6-widget-stencil-title {
+	visibility: hidden;
+} */
+.x6-widget-stencil-search input[type="search"]::placeholder {
+	color: #444;
+}
+
+ .x6-widget-stencil-content {
+	margin-top: -6px;
+	top: 38px !important;
+} 
+
+/*Stencill 아이콘 순서대로 head(close)/head(open)/title(close)/title(open)*/
+.x6-widget-stencil.collapsable.collapsed > .x6-widget-stencil-title::before{
+	background-image: url('../../../sas/icon/double-arrow(down).png')!important;
+	background-size: 60%;
+	background-position: center;
+	opacity: 1;
+}
+.x6-widget-stencil.collapsable > .x6-widget-stencil-title::before{
+	background-image: url('../../../sas/icon/double-arrow(up).png')!important;
+	background-size: 60%;
+	background-position: center;
+	opacity: 1;
+}
+.x6-widget-stencil-group.collapsable.collapsed>.x6-widget-stencil-group-title::before
+	{
+	background-image: url('../../../sas/icon/antV/arrow(down).png')!important;
+	background-size: 60%;
+	background-position: center;
+	opacity: 1;
+}
+.x6-widget-stencil-group.collapsable>.x6-widget-stencil-group-title::before
+	{
+	background-image: url('../../../sas/icon/antV/arrow(up).png')!important;
+	opacity: 0.4;
+	background-size: 60%;
+	background-position: center;
+	transition: all 0.3s;
+}
+
+
+.slider-value {
+	display: inline-block;
+	margin-left: 8px;
+	padding: 3px 7px;
+	color: #333;
+	font-size: 12px;
+	line-height: 1.25;
+	background: #eee;
+	border-radius: 10px;
+}
+/*toolbar+container 레이아웃*/
+.mainAirDiv {
+    display: flex;
+    flex-direction: column;
+    height: 77vh; 
+    width: 100%
+}
+
+/*툴바 관련 --> 기존것을 그대로 쓰면 정렬이 흐트러 져서 th,td,btn도 함께 수정*/
+#toolbar {
+    height: 35px; 
+    /* background-color: #d3daed;  */
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-right:  1px solid #ddd;
+}
+/* #toolbar th,#toolbar th{
+	min-width: 90px;
+} */
+#toolbar div{
+	padding: 3px 5px 5px 5px;
+}
+/*composition과는 다르게 toolbar추가로인한 container에 css 추가*/
+#container {
+    flex-grow: 1; /* 나머지 공간을 차지하게 설정 */
+    background-color: #e2e2e2; 
+    width:100%;
+    border: 0px solid #ddd !important;
+
+}
+#graph-container{
+border: 1px solid #ddd !important;
+    border-left: 1px solid #ddd !important;
+}
+#stencil{
+	border-right: 0px solid #dfe3e8 !important;
+	border-bottom: 1px solid #ddd;
+}
+
+.btn-toolbar{
+	padding: 0px !important;
+}
+
+.switch-container {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 18px;
+}
+.switch-input {
+    display: none;
+}
+.switch-label {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.switch-ball {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.switch-input:checked + .switch-label {
+    background-color: #4caf50; /* 머티리얼 디자인의 녹색 */
+}
+
+.switch-input:checked + .switch-label .switch-ball {
+    transform: translateX(25px);
+}
+/* 툴바 상세보기 관련 */
+#toolbarDetail {
+    height: 436px; 
+    background-color: white; 
+    border-top:  1px solid #ddd;
+    border-right:  1px solid #ddd;
+    position:absolute;
+    z-index: 9;
+    top : 177px;
+    border-bottom: 1px solid #ddd; 
+    /* width: calc(100% -310px); */
+    display: none;
+/*     opacity: 0;
+    transition:opacity 0.5s ease; */
+}
+
+.toolbarTable{
+	font-size:0.875em	
+}
+
+.memo-box {
+	position: absolute;
+	background-color: white;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
+	z-index: 99;
+    top: 196px;
+    left: 509px;
+}
+</style>

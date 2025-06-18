@@ -12,14 +12,7 @@ import java.util.Map;
 public class ApiController {
 
     @GetMapping("/api/message")
-    public Map<String, String> getMessage() {
-    	System.out.println("------ api Message");
-    	
-    	
-    	
-    	
-    	
-    	
+    public Map<String, String> getMessage() {	
         Map<String, String> response = new HashMap<>();
         response.put("message", "Hello, this is a message from the server!");
         return response;

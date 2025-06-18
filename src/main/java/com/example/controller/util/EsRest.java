@@ -24,6 +24,7 @@ import javax.net.ssl.TrustManager;
 
 import java.security.cert.X509Certificate;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -353,6 +354,26 @@ public class EsRest {
 			return toResJson(null);
 		}
 	}	
+	// 스크립트용 업데이트
+	public JSONObject updateScript(String index, String _id, String script, Map<String, Object> params) throws Exception {
+		if (index != null && _id != null && script != null) {
+			RestClient rc = getInstance();
+
+			JSONObject scriptObj = new JSONObject();
+			scriptObj.put("source", script);
+			scriptObj.put("params", params);
+
+			JSONObject updateInfo = new JSONObject();
+			updateInfo.put("script", scriptObj);
+
+			HttpEntity entity = new NStringEntity(updateInfo.toString(), ContentType.APPLICATION_JSON);
+			Request request = new Request("POST", "/" + index + "/_update/" + _id);
+			request.setEntity(entity);
+			return toResJson(rc.performRequest(request).getEntity().getContent());
+		} else {
+			return toResJson(null);
+		}
+	}
 	// #========================= delete ==============================#	
 	public JSONObject delete(String table, String id) throws Exception {
 		if (table != null && id != null) {
@@ -431,7 +452,6 @@ public class EsRest {
 	}	
 	
 	public String querySearch(String method, String url, String query) throws Exception {
-		System.out.println("query: "+query);
 	    RestClient rc = EsRest.getInstance();
 	    if ("undefined".equals(query)) {
 	        query = "";
@@ -460,8 +480,27 @@ public class EsRest {
 	    return result;
 	}
 
-	
-	
+	// #========================= id 존재 여부 확인  ==============================#	
+	public boolean exists(String index, String id) throws Exception {
+	    if (index == null || id == null) return false;
+
+	    RestClient rc = EsRest.getInstance();
+	    Request request = new Request("GET", "/" + index + "/_doc/" + id);
+	    request.setOptions(EsRest.COMMON_OPTIONS);
+
+	    try {
+	        Response response = rc.performRequest(request);
+	        return response.getStatusLine().getStatusCode() == 200;
+	    } catch (ResponseException e) {
+	        if (e.getResponse().getStatusLine().getStatusCode() == 404) {
+	            // 404는 "없는 문서" → false 반환
+	            return false;
+	        } else {
+	            // 404 외의 예외는 그대로 터뜨림
+	            throw e;
+	        }
+	    }
+	}
 	
 	private String toJsonStr(Map<String, Object> hm) {
 		StringBuilder sb = new StringBuilder();

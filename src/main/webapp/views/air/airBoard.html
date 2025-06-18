@@ -1,0 +1,177 @@
+<section id="main-content" class="animated fadeIn">
+	<div class="panel panel-default">
+		<div class="panel-heading clearfix">
+			<h3 class="panel-title pull-left">
+				<i class="glyphicon glyphicon-list-alt mR5"></i> 게시판 목록
+			</h3>
+		</div>
+		<div class="panel-body">
+			<!-- data_list -->
+			<div id="data_list">
+				<table id="board_table"
+					class="table table-bordered table-striped"
+					cellspacing="0" width="100%" >
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>시도</th>
+							<th>대기환경지수</th>
+							<th>대기환경등급</th>
+							<th>미세먼지 농도</th>
+							<th>미세먼지 등급</th>
+							<th>초미세먼지 농도</th>
+							<th>초미세먼지 등급</th>
+							<th>오존 농도</th>
+							<th>오존 등급</th>
+							<th>측정 시각</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="textCenter mT20">
+					<div class="form-inline d-flex justify-content-center align-items-center flex-wrap" style="gap: 10px;">
+					    <div class=" d-flex align-items-center" style="gap: 10px;">
+					    	<label for="search_category" class="mR5">카테고리</label>
+					      		<select class="form-control input-sm" ng-model="boardtype">
+							        <option value="전체">전체</option>
+									<option value="KNA">강남구</option>
+									<option value="KDA">강동구</option>
+									<option value="KBA">강북구</option>
+									<option value="KSA">강서구</option>
+									<option value="NWA">노원구</option>
+									<option value="DBA">도봉구</option>
+									<option value="SCA">서초구</option>
+									<option value="SPA">송파구</option>
+									<option value="YGA">영등포구</option>
+									<option value="JRA">종로구</option>
+									<option value="JGA">중구</option>
+							      </select>
+					
+					      	<label for="search_keyword" class="mL10">검색어</label>
+					      	<input type="text" class="form-control input-sm" ng-model="boardtext" placeholder="등급 검색">
+					
+						    <button class="btn btn-default btn-sm mL10" ng-click="search_btn()">
+						    	<i class="glyphicon glyphicon-search"></i> 검색
+						    </button>
+					    </div>
+					</div>
+				</div>
+
+			</div>
+<!-- data_view -->
+			<div id="data_view" class="hide">
+				<div class="panel-body">
+					<div class="board-detail-container maxWd90" style="margin: auto;">
+						<div class="board-detail-header"
+							style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding: 10px 0;">
+							<div style="flex: 1;">
+								<div style="font-weight: bold; font-size: 16px;">
+									[<span ng-bind="boardData.type"></span>] 
+									<span ng-bind="boardData.stationName"></span>
+								</div>
+								<div class="text-fade" style="font-size: 13px; margin-top: 3px;">
+									<span ng-bind="boardData.dataTime"></span>
+								</div>
+							</div>
+						</div>
+					<div class="width100p">
+						<table class="table-th table table-bordered textCenter">
+							<caption></caption>
+							<colgroup>
+								<col width="20%">
+								<col width="30%">
+								<col width="20%">
+								<col width="30%">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>시도</th>
+									<td colspan="3">{{ boardData.stationName }}</td>
+								</tr>
+								<tr>
+									<th>측정 시각</th>
+									<td colspan="3">{{ boardData.dataTime }}</td>
+								</tr>
+								<tr>
+									<th>대기환경 지수</th>
+									<td>{{ boardData.khaiValue }}</td>
+									<th>대기환경 등급</th>
+									<td>{{ boardData.khaiGrade }}</td>
+								</tr>
+								<tr>
+									<th>미세먼지 지수</th>
+									<td>{{ boardData.pm10Value }}</td>
+									<th>미세먼지 등급</th>
+									<td>{{ boardData.pm10Grade }}</td>
+								</tr>
+								<tr>
+									<th>초미세먼지 지수</th>
+									<td>{{ boardData.pm25Value }}</td>
+									<th>초미세먼지 등급</th>
+									<td>{{ boardData.pm25Grade }}</td>
+								</tr>
+								<tr>
+									<th>오존 지수</th>
+									<td>{{ boardData.o3Value }}</td>
+									<th>오존 등급</th>
+									<td>{{ boardData.o3Grade }}</td>
+								</tr>
+								<tr>
+									<th>미세먼지 FLAG</th>
+									<td>{{ boardData.pm10Flag }}</td>
+									<th>초미세먼지 FLAG</th>
+									<td>{{ boardData.pm25Flag }}</td>
+								</tr>
+								<tr>
+									<th>오존 FLAG</th>
+									<td>{{ boardData.o3Flag }}</td>
+									<th>대기환경 FLAG</th>
+									<td>-</td>
+								</tr>
+								<tr>
+									<th rowspan="3">비고</th>
+									<td colspan="3" rowspan="3" class="note-cell">{{ boardData.desc }}</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+								</tr>
+							</tbody>
+						</table>
+					<div class="textCenter mT20">
+						<div class="floatR">
+							<button type="button" ng-click="sendMail()"
+								class="btn btn-primary width120 fwb">
+								<i class="fa fa-check" />문의하기
+							</button>
+							<button type="button" ng-click="board_close()"
+								class="btn btn-primary width120 fwb">
+								<i class="fa fa-times" />닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<style>
+div.dataTables_scrollBody {
+  overflow-x: hidden !important;
+}
+/* 페이징 가운데로 옮기기  */
+.dt-toolbar-footer {
+  text-align: center !important;
+}
+#board_table_paginate {
+  text-align: center !important;
+  float: none !important;
+  display: block !important;
+}
+/* 테이블만들때 td 합치기용 css */
+.note-cell {
+  height: 100px;               
+  vertical-align: middle;     
+  text-align: center;        
+  padding: 12px;
+}
+</style>

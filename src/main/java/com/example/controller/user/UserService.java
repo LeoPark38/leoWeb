@@ -64,7 +64,7 @@ public class UserService {
         column_list.add("USER_AUTH");
         column_list.add("USER_PHONE");
         column_list.add("IS_USE");
-        column_list.add("IS_SIR_USE");
+        column_list.add("IS_AIR_USE");
         column_list.add("IS_QUERY_USE");
         column_list.add("IS_ETC_USE");
         column_list.add("USER_MK_DT");
@@ -127,7 +127,7 @@ public class UserService {
         column_list.add("USER_AUTH");
         column_list.add("USER_PHONE");
         column_list.add("IS_USE");
-        column_list.add("IS_SIR_USE");
+        column_list.add("IS_AIR_USE");
         column_list.add("IS_QUERY_USE");
         column_list.add("IS_ETC_USE");
         column_list.add("USER_MK_DT");
@@ -177,7 +177,8 @@ public class UserService {
             param.put("USER_MK_DT", smf.format(today));
             param.put("USER_UPD_DT", smf.format(today));
             param.put("USER_LOGIN_DT", smf.format(today));
-
+            param.put("USER_LIKE_BOARD", new ArrayList<String>());
+            
             // 비밀번호 암호화
             String password = (String) param.get("USER_PW");
             if ("".equals(password)) {
@@ -187,7 +188,7 @@ public class UserService {
                 param.replace("USER_PW", encryptedPassword);
             }
 
-            Set<String> booleanFields = Set.of("IS_USE", "IS_SIR_USE", "IS_ETC_USE", "IS_QUERY_USE");
+            Set<String> booleanFields = Set.of("IS_USE", "IS_AIR_USE", "IS_ETC_USE", "IS_QUERY_USE");
 
             for (Map.Entry<String, Object> entry : param.entrySet()) {
                 String key = entry.getKey();

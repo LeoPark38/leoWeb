@@ -1,0 +1,106 @@
+.table {
+	font-size: 0.875em;
+}
+.table a {
+	color: #337ab7; 
+}
+table.dataTable tbody th, table.dataTable tbody td {
+	padding: 4px 8px;
+}
+
+.table td {
+	vertical-align: middle;
+}
+.table td a, td input, td button, td label {
+	vertical-align: middle;
+}
+.table td .btn  {
+	margin-bottom: 0;
+}
+.table td label i {
+	vertical-align: middle;
+	padding: 0px;
+	padding-bottom: 2px;
+}
+.air_table{width:100%;border:1px solid #ddd;}
+.air_table tr{border-top:1px solid #ddd;}
+.air_table th{padding:7px;font-size:12px;height:40px;white-space:nowrap;}
+.air_table td{padding:7px;font-size:12px;}
+
+.table-th {width:100%;line-height:180%}
+.table-th th {padding:10px;font-weight:bold;}
+.table-th tr:first-child th,
+.table-th tr:first-child  td {border-top:none}
+.table-th tbody th,
+.table-th tbody td {border:1px solid #e3e3e3}
+.table-th tbody th {text-align:center;background-color:white;}
+.table-th tbody td span[class^="state"] {border:none;font-size:12px}
+.table_bor{width:100%;border:1px solid #ddd;}
+.table_bor tr{border-top:1px solid #ddd;}
+.table_bor th{padding:7px;font-size:12px;height:40px;white-space:nowrap;}
+.table_bor td{padding:7px;font-size:12px;}
+.above_table {margin-top:10px;padding:5px;border:1px solid #ddd;background-color:#f9f9f9;border-radius:5px;width:100%;}
+.above_table td {padding:3px 0 3px 0;}
+
+/*DataTables*/
+div.dt-toolbar{
+    background: #fafafa;
+    font-size: 15px;
+    overflow: hidden;
+    padding: 0 10px;
+    -webkit-box-shadow: inset 0 1px #fff;
+    -moz-box-shadow: inset 0 1px #fff;
+    -ms-box-shadow: inset 0 1px #fff;
+    box-shadow: inset 0 1px #fff;
+    margin-top: 5px;
+	margin-bottom:5px;
+}
+table.dataTable thead .sorting{
+    cursor: pointer;
+}
+table.dataTable thead .sorting {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATAgMAAAAPPt5fAAAACVBMVEUAAADIyMjl5eVIBBP/AAAAAXRSTlMAQObYZgAAAClJREFUCNdjwAYEwGQKiGDsBJFsTA5AUoJhAqZaiDhEDVg9RC/MHEwAANsMA91AQfd/AAAAAElFTkSuQmCC) no-repeat center right;
+}
+div.dataTables_scrollBody table {
+    border-top: 1px solid #b5baca;
+	border-top: none;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+div.dataTables_scrollBody table thead .sorting:after {
+    display: none;
+}
+div.dataTables_scrollBody table tbody tr:first-child th,
+div.dataTables_scrollBody table tbody tr:first-child td {
+    border-top: none;
+}
+.dt-toolbar-footer{
+    font-size: 15px;
+    overflow: hidden;
+    padding: 15px 10px;
+    -webkit-box-shadow: inset 0 1px #fff;
+    -moz-box-shadow: inset 0 1px #fff;
+    -ms-box-shadow: inset 0 1px #fff;
+    box-shadow: inset 0 1px #fff;
+    text-align: center !important;
+}
+
+div.dataTables_scrollBody {
+  overflow-x: hidden !important;
+}
+#board_table_paginate {
+  text-align: center !important;
+  float: none !important;
+  display: block !important;
+}
+
+/* 페이징 버튼 크기 조절 */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  font-size: 12px;         /* 글자 크기 ↓ */
+  padding: 3px 8px !important;        /* 내부 여백 ↓ */
+  min-width: 28px !important;         /* 기본 너비 제한 */
+  height: 28px;
+  line-height: 20px;
+  margin: 0 2px;           /* 버튼 간격 줄이기 */
+  border-radius: 4px !important;
+}

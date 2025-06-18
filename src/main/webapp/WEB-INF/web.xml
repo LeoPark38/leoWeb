@@ -26,4 +26,8 @@
         <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <url-pattern>/</url-pattern> <!-- 모든 요청을 DispatcherServlet이 처리 -->
     </servlet-mapping>
+    
+    <listener>
+    	<listener-class>com.example.controller.scheduler.AppInitListener</listener-class>
+	</listener>
 </web-app>

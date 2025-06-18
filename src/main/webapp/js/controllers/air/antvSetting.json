@@ -1,0 +1,300 @@
+
+ [
+	{
+		"type": "주석용",
+		"content": " type 으로 구분 ",
+		"content2": " label / image / path / testpng"
+	},
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#FF7012",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "미세먼지",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#FF7012",
+		        "text": "pm10",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"style":{},
+		     	"class":""
+		     }
+		},
+		"data":{
+			"airType":"pm10"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#1DDB16",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "초미세먼지",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "fontWeight":800
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#1DDB16",
+		        "text": "pm25",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"airType":"pm25"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#00D8FF",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "오존",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#00D8FF",
+		        "text": "o3",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"style":{},
+		     	"class":""
+		     }
+		},
+		"data":{
+			"airType":"o3"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#0054FF",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "정상 통신",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#0054FF",
+		        "text": "Success",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"airType":"Success"
+		}
+	},
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#FF0000",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "통신 에러",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "fontWeight":800
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#FF0000",
+		        "text": "Error",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"airType":"Error"
+		}
+	},	
+	{
+		"type":"indexType",
+		"shape": "air-node",
+		"width":150,
+		"height": 52,
+		"attrs": {
+			"body":{
+		        "refWidth": "100%",
+		        "refHeight": "100%",
+		        "fill": "#454a51",
+		        "stroke": "#FFE400",
+		        "strokeWidth": 2,
+		        "rx": 10,
+		        "ry": 10,
+		        "pointerEvents": "visiblePainted"
+			},
+			"text": {
+				"text": "비정상 등록",
+				"fill": "#FFFFFF",
+		        "fontSize": 14,
+		        "fontWeight":800,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0
+		    },
+		    "desc": {
+		    	"refX": 0.95,
+		    	"refY": 0.8,
+		    	"fontWeight":800,
+		    	"fill": "#FFE400",
+		        "text": "Register",
+		        "fontSize": 10,
+		        "fontFamily": "Arial",
+		        "letterSpacing": 0,
+		        "textAnchor": "end"
+		     },
+		     "border":{
+		     	"refWidth": "100%",
+		     	"refHeight": "100%",
+		     	"rx":15,
+		     	"ry":15,
+		     	"stroke":"none",
+		     	"fill":"none",
+		     	"style":{}
+		     }
+		},
+		"data":{
+			"airType":"Register"
+		}
+	}
+]

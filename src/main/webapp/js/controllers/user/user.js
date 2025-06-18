@@ -20,42 +20,28 @@ angular.module('myApp').controller('UserCtrl', [
 		
 //------------------- user 테이블 리스트 -------------------
 		$scope.load_table = function() {
-			var win_h = $(window).height();
-			var head_h = $("#header").height();
-			var mrg_h = (15 * 2) + (15 * 2) + (2 + 10) + (2 + 10);
-			var list_h = win_h - (head_h + 1) - 30 - mrg_h;
-			const scrollY = list_h - 185;
-
-			table = el.find('#data_table').DataTable({
-					order: [[1, 'asc']],
-					retrieve: true,
-					jQueryUI: false,
-					lengthChange: false,
-					deferRender: true,
-					paging: true,
-					processing: true,
-					serverSide: false,
-					stateSave: true,
-					autoWidth: false,
-					scrollX: false,
-					colResize: {
-						scrollY: scrollY,
-						resizeable: true,
-						resizeTable: true
-					},
-					colReorder: {
-						enable: true,
-						realtime: true
-					},
-			    ajax: {
+			table = el.find('#board_table').DataTable({
+				order: [[1, 'asc']],
+				retrieve: true,
+				jQueryUI: false,
+				lengthChange: false,
+				deferRender: true,
+				paging: true,
+				processing: true,
+				serverSide: false,
+				stateSave: true,
+				autoWidth: false,
+				scrollX: false,
+				scrollY: "500px",
+				pageLength: 10,
+		    	ajax: {
 			        url: gAction.list,
 			        type: "POST",
 			        dataSrc: function(json) {
-						console.log("json: ",json)
-		            	console.log("niCvUt.resDataResultNum : ", niCvUt.resDataResultNum(json, "data", table));
-		            	return niCvUt.resDataResultNum(json, "data", table);
+		            	//console.log("jsUt.resultNum : ", jsUt.resultNum(json, "data", table));
+		            	return jsUt.resultNum(json, "data", table);
 		            },
-			    },
+		    	},
 			    columns: [
 					{ data: 'num' ,name: "num"},
 			        { data: 'USER_ID' ,name: "USER_ID"},	//사용자 ID
@@ -65,22 +51,26 @@ angular.module('myApp').controller('UserCtrl', [
 			        { data: 'USER_UPD_DT' ,name: "USER_UPD_DT"}	//생성일
 			    ],
 	    		columnDefs: [
-	                { targets: [0], width: '5%', class: 'text-left', visible: true, sortable: false, searchable: false },
+	                { targets: [0], width: '5%', class: 'textLeft', visible: true, sortable: false, searchable: false },
 					{
-						targets: [1], width: '10%', class: 'text-left', render: function(data, type, row) {
+						targets: [1], width: '10%', class: 'textLeft', render: function(data, type, row) {
 							return '<a href="javascript:;" id="' + row._id + '"ng-click="pop_edit($event, \'upd\')">' + row.USER_ID + '</a>';
 						}
 					},
 	            ],
-			    pageLength: 3,
-			    pagingType: "custom_simple_numbers",
-		        dom: 'z<"dt-toolbar" <"pull-left">> t <"dt-toolbar-footer" <"pull-right"p>>',
-		        language: {
-	                zeroRecords: "데이터가 없습니다",
-	                paginate: { first: "First", last: "Last", next: ">", previous: "<" }
-		        },
+				pagingType: "full_numbers",
+				dom: 'z<"dt-toolbar"> t <"dt-toolbar-footer d-flex justify-content-center"p>',
+				language: {
+					zeroRecords: "데이터가 없습니다",
+					paginate: { first: "◀◀", last: "▶▶", next: "▶", previous: "◀" }
+				},
 		        createdRow: function(row, data) {
 					$compile(row)($scope);
+				},
+				initComplete: function() {
+				  setTimeout(function() {
+				    table.columns.adjust().draw();
+				  }, 500);  // 렌더링 이후 컬럼 재계산
 				},
 			});
 			
@@ -108,7 +98,7 @@ angular.module('myApp').controller('UserCtrl', [
 				console.log("@@ param : ",param)
 				$http.post(gAction.row, param, $rootScope.http_config).then(function(rs) {
 					el.find('#data_edit').show();
-					var row = niCvUt.resDataResultOne(rs, "row");
+					var row = jsUt.resultOne(rs, "row");
 					console.log("row : ",row)
 					if (row) {
 						el.find('#USER_ID').val(row.USER_ID).attr('disabled', true);
@@ -121,9 +111,9 @@ angular.module('myApp').controller('UserCtrl', [
 							el.find('#USER_TEL2').val(user_tel[1]);
 							el.find('#USER_TEL3').val(user_tel[2]);
 						}
-						if (row.IS_SIR_USE != null) {
-							if (row.IS_SIR_USE == 'true' || row.IS_SIR_USE == true) {
-								el.find('#IS_SIR_USE').prop('checked', true);
+						if (row.IS_AIR_USE != null) {
+							if (row.IS_AIR_USE == 'true' || row.IS_AIR_USE == true) {
+								el.find('#IS_AIR_USE').prop('checked', true);
 							}
 						}
 						if (row.IS_QUERY_USE != null) {
@@ -219,7 +209,7 @@ angular.module('myApp').controller('UserCtrl', [
 
 				var pw1 = $('#USER_PW').val();//비밀번호
 				var pw2 = $('#USER_PW_OK').val();//비밀번호확인
-				var is_sir_use = $('#IS_SIR_USE').is(":checked");
+				var is_air_use = $('#IS_AIR_USE').is(":checked");
 				var is_query_use = $('#IS_QUERY_USE').is(":checked");
 				var is_etc_use = $('#IS_ETC_USE').is(":checked");
 				var is_use = $('#IS_USE').is(":checked");
@@ -283,7 +273,7 @@ angular.module('myApp').controller('UserCtrl', [
 					USER_PW: el.find('#passwd').val(),
 					USER_NAME: el.find('#USER_NM').val(),
 					USER_PHONE: el.find('#USER_TEL').val(),
-					IS_SIR_USE: is_sir_use,
+					IS_AIR_USE: is_air_use,
 					IS_QUERY_USE: is_query_use,
 					IS_ETC_USE: is_etc_use,
 					IS_USE:is_use,
@@ -291,8 +281,7 @@ angular.module('myApp').controller('UserCtrl', [
 
 				};
 				console.log("param : ",param)
-				if (confirm('저장하시겠습니까?')) {
-					//niUt.startLoading('.panel-body');
+ 				if (confirm('저장하시겠습니까?')) {
 					$http.post(sAction.save, param, $rootScope.http_config).then(function(rs) {
 						if (rs.data.sOk == 'ok') {
 							if ($scope.mode == 'ins') {

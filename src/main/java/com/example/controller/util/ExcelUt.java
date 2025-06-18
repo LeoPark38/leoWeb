@@ -101,7 +101,7 @@ public class ExcelUt {
 		exp.put(3, "3. 비밀번호는 암호화된상태로 확인됩니다.");
 		exp.put(4, "4. 사용자명에 특수문자는 들어갈 수 없습니다. 최대 10글자(필수입력)");
 		exp.put(6, "5. 사용자 휴대폰번호는 -를 포함하여 휴대폰번호 형식에 맞춰 입력해주세요(필수입력)");
-		exp.put(7, "6. SIR 사용여부는 대문자 O 또는 X 를 입력해주세요");
+		exp.put(7, "6. AIR 사용여부는 대문자 O 또는 X 를 입력해주세요");
 		exp.put(8, "7. Query 사용여부는 대문자 O 또는 X 를 입력해주세요");
 		exp.put(9, "8. 기타 사용여부는 대문자 O 또는 X 를 입력해주세요");
 		exp.put(10, "9. ID 사용여부는 대문자 O 또는 X 를 입력해주세요");
@@ -141,7 +141,7 @@ public class ExcelUt {
 
 		sheet.addMergedRegion(new CellRangeAddress(16, 17, 4, 4));
 		cell = row.createCell(4);
-		cell.setCellValue("5.SIR 사용여부");
+		cell.setCellValue("5.AIR 사용여부");
 		cell.setCellStyle(cellStyle);
 
 		sheet.addMergedRegion(new CellRangeAddress(16, 17, 5, 5));
@@ -183,7 +183,7 @@ public class ExcelUt {
 		sheet.setColumnWidth(1, 6550); // 2 비밀번호
 		sheet.setColumnWidth(2, 5550); // 3 사용자 명
 		sheet.setColumnWidth(3, 5550); // 4 휴대폰 번호
-		sheet.setColumnWidth(4, 4550); // 5 Sir 사용여부
+		sheet.setColumnWidth(4, 4550); // 5 AIR 사용여부
 		sheet.setColumnWidth(5, 4550); // 6 Query 사용여부
 		sheet.setColumnWidth(6, 4550); // 7 기타 사용여부
 		sheet.setColumnWidth(7, 4550); // 8 아이디 사용여부
@@ -193,11 +193,10 @@ public class ExcelUt {
 			try {
 				JSONObject obj = new JSONObject();
 				int data_col_num = 18; // 엑셀에 데이터가 들어가기 시작하는 위치
-				System.out.println("시작");
+				System.out.println("엑셀 시작");
 				for (int i = 0; i < data_obj.length(); i++) {
 					obj = (JSONObject) data_obj.get(i);
 					row = sheet.createRow(data_col_num);
-					System.out.println("obj : "+obj);
 					// 사용자 ID
 					cell = row.createCell(0);
 					if (obj.get("USER_ID") != null) {
@@ -230,19 +229,19 @@ public class ExcelUt {
 					}
 					cell.setCellStyle(dataCellStyle);
 					
-					// 사용자 SIR 사용여부
+					// 사용자 AIR 사용여부
 					cell = row.createCell(4);
-					if (obj.get("IS_SIR_USE") != null) {
-						String is_sir_use = "";
-						switch (obj.get("IS_SIR_USE").toString()) {
+					if (obj.get("IS_AIR_USE") != null) {
+						String is_air_use = "";
+						switch (obj.get("IS_AIR_USE").toString()) {
 						case "true":
-							is_sir_use = "O";
+							is_air_use = "O";
 							break;
 						case "false":
-							is_sir_use = "X";
+							is_air_use = "X";
 							break;
 						}
-						cell.setCellValue(is_sir_use);
+						cell.setCellValue(is_air_use);
 					} else {
 						cell.setCellValue("");
 					}
@@ -363,8 +362,6 @@ public class ExcelUt {
 				XSSFSheet sheet = workbook.getSheetAt(0);
 
 				int rows = sheet.getPhysicalNumberOfRows();
-				System.out.println("## rows : " + rows);
-
 
 				// ip 정규식
 				String id_reg = "[a-z0-9]{6,15}$";
@@ -383,13 +380,13 @@ public class ExcelUt {
 				boolean msg3 = false;
 				String err_msg4 = "\n------ 4번 항목 오류 ------\n사용자 휴대폰번호는 -를 포함하여 휴대폰번호 형식에 맞춰 입력해주세요(필수입력)\n";
 				boolean msg4 = false;
-				String err_msg5 = "\n------ 5번 항목 오류 ------\nSIR 사용여부는 O,X만 입력해주세요. \n";
+				String err_msg5 = "\n------ 5번 항목 오류 ------\nAIR 사용여부는 O,X만 입력해주세요. \n";
 				boolean msg5 = false;
 				String err_msg6 = "\n------ 6번 항목 오류 ------\nQuery 사용여부는 O,X만 입력해주세요. \n";
 				boolean msg6 = false;
 				String err_msg7 = "\n------ 7번 항목 오류 ------\n기타 사용여부는 O,X만 입력해주세요. \n";
 				boolean msg7 = false;
-				String err_msg8 = "\n------ 8번 항목 오류 ------\nSIR 사용여부는 O,X만 입력해주세요. \n";
+				String err_msg8 = "\n------ 8번 항목 오류 ------\nAIR 사용여부는 O,X만 입력해주세요. \n";
 				boolean msg8 = false;
 
 
@@ -417,7 +414,7 @@ public class ExcelUt {
 						XSSFCell USER_PW = row.getCell(1);
 						XSSFCell USER_NM = row.getCell(2);
 						XSSFCell USER_PHONE = row.getCell(3);
-						XSSFCell IS_SIR_USE = row.getCell(4);
+						XSSFCell IS_AIR_USE = row.getCell(4);
 						XSSFCell IS_QUERY_USE = row.getCell(5);
 						XSSFCell IS_ETC_USE = row.getCell(6);
 						XSSFCell IS_USE = row.getCell(7);
@@ -427,7 +424,7 @@ public class ExcelUt {
 						String user_pw = USER_PW == null ? "" : USER_PW.toString().trim();
 						String user_nm = USER_NM == null ? "" : USER_NM.toString().trim();
 						String user_phone = USER_PHONE == null ? "" : USER_PHONE.toString().trim();
-						String is_sir = IS_SIR_USE == null ? "" : IS_SIR_USE.toString().trim();
+						String is_air = IS_AIR_USE == null ? "" : IS_AIR_USE.toString().trim();
 						String is_query = IS_QUERY_USE == null ? "" : IS_QUERY_USE.toString().trim();
 						String is_etc = IS_ETC_USE == null ? "" : IS_ETC_USE.toString().trim();
 						String is_use = IS_USE == null ? "" : IS_USE.toString().trim();
@@ -480,22 +477,22 @@ public class ExcelUt {
 							setData.put("USER_PHONE", user_phone);
 						}
 
-						// @@ sir 사용 여부
-						if ("".equals(is_sir) || (!"O".equals(is_sir) && !"X".equals(is_sir))) {
+						// @@ AIR 사용 여부
+						if ("".equals(is_air) || (!"O".equals(is_air) && !"X".equals(is_air))) {
 							result = false;
 							err_msg5 += "예상 오류 라인 : " + (rowindex + 1) + "\n";
 							msg5 = true;
 						} else {
-							String sirRs = "";
-							switch (is_sir) {
+							String airRs = "";
+							switch (is_air) {
 							case "O":
-								sirRs = "true";
+								airRs = "true";
 								break;
 							case "X":
-								sirRs = "false";
+								airRs = "false";
 								break;
 							}
-							setData.put("IS_SIR_USE", sirRs);
+							setData.put("IS_AIR_USE", airRs);
 						}
 						
 						// @@ 쿼리 사용 여부
@@ -561,10 +558,7 @@ public class ExcelUt {
 						set_num++;
 					}
 				}
-				System.out.println("setDataArr : " + setDataArr);
 				JSONObject data = new JSONObject();
-				
-				System.out.println("처리 결과 : " + result);
 				if (result) {
 					//사용자 데이터 삭제
 					rs.deleteAll(index);

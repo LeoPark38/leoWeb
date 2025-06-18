@@ -1,66 +1,162 @@
-<div >
-	<div class="brand">
-		<a href="main.html#!/dash" class="logo mrgR15">
-			<i class="icon-layers"></i>
-			<span>{{headerTitle}}</span>
-		</a>
-		<select id="menu_search" class="wd250 hide" style="height:30px;">
-			<option ng-repeat="menu in menu_list" value="{{menu.value}}">{{menu.text}}</option>
-		</select>
-	</div>
-
-	<ul class="nav navbar-nav navbar-left">
-		<li class="toggle-navigation toggle-left" toggle-left-sidebar></li>  
+<div ng-controller="headerCtrl">
+	<ul class="nav navbar-nav navbar-right">
+		<li class="profile">
+			<div class=" textCenter"
+				style="color: white; margin-left: 10px; margin-top: 15px;">
+				<!-- <i class="glyphicon glyphicon-user"></i> -->
+				[{{userInfo.user_name}}]님 환영합니다 
+				<a href="#" ng-click="logout()" title="로그아웃">
+					<img src="../icon/main/logout.png" style="padding-left: 5px; width: 24px;padding-bottom: 5px;">
+				</a>
+			</div>
+			
+		</li>
 	</ul>
 
-	<ul class="nav navbar-nav navbar-right" style="margin-right: 65px;">
-		<li class="profile">
-			<input id="knowledge_search" type="text" placeholder=" 지식정보 검색" class="form-control mrgT10" style="padding:0 0 0 5px;width:250px;height:30px;border-top-right-radius:0;border-bottom-right-radius:0;">
-			<a class="knowledge_search_btn " style="float:right;cursor:pointer;height:30px;padding:4px 10px 0 10px;margin-top:10px;" id="search_filter" ng-click="$knowledge_search()">
-      		<i class="glyphicon glyphicon-search"></i></a>
+	<ul class="nav navbar-nav"
+		style="display: flex; gap: 15px; align-items: center;">
+		<!-- 통합 검색 (드롭다운) -->
+		<li class="dropdown" ng-class="{active: $state.includes('search')}">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+			role="button" aria-expanded="false" style="color: white;"> 통합 검색
+				<span class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="search.editor">쿼리 검색</a></li>
+			</ul>
 		</li>
-		<li class="profile" id=user_cnt style="padding-right: 5px; padding-left: 5px;" ng-show={{isDev}}>
-			 <a class="user_cnt_btn mrgT5 message_area" id="eyes">
-				<i class="fas fa-eye faa-tada faa-fast" style="font-size:20px"></i>
-			</a> 
-     		<span style="margin-left: 8px; ">{{user_cnt}}</span> 
-     	</li>
-<!-- ----------------------------------- -->		
-		<li class="profile">
-			<a href="#" class="message_area" ng-click="mainNoticePopup()">
-				<i class="fas fa-envelope faa-tada faa-fast" id="notice_icon"></i>
-			</a>
-			<span id="notice_message_span" class="hide"></span>
+
+		<!-- 통합 게시판 (드롭다운이지만 실질 메뉴는 1개) -->
+		<li class="dropdown" ng-class="{active: $state.includes('board')}">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+			role="button" aria-expanded="false" style="color: white;"> 게시판
+				<span class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="board.hub">통합 게시판</a></li>
+			</ul>
 		</li>
-		
-		<li class="profile" id="limit_profile">
-			<a class="limit_alarm_btn mrgT5 message_area" id="limit_alarm_btn" ng-click="limitAlarmPopup()">
-				<i class="glyphicon glyphicon-bell message_area faa-tada faa-fast" style="font-size:20px" id="limit_alarm_icon"></i>
-			</a>
-     	<span>{{limit_alarm_cnt}}</span>
+		<li class="dropdown" ng-class="{active: $state.includes('air')}">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+			role="button" aria-expanded="false" style="color: white;"> AIR <span
+				class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="air.airMonitoring">AIR 모니터링</a></li>
+				<li><a ui-sref="air.airManage">AIR 관리</a></li>
+				<li><a ui-sref="air.airBoard">기후 게시판</a></li>
+			</ul>
 		</li>
-		
-		<li class="profile">
-			<div class="mrgT10 text-center" style="color: white; margin-left:10px;">
-				<!-- <i class="glyphicon glyphicon-user"></i> -->
-				[({{user_nm}}){{user_id}}]님 환영합니다!
-				<a href="javascript:void(0);" ng-click="user_logout()" title="로그아웃"><img src=""></a>
-			</div>
+		<li class="dropdown" ng-class="{active: $state.includes('user')}">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+			role="button" aria-expanded="false" style="color: white;"> 사용자
+				<span class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="user.user">사용자 관리</a></li>
+			</ul>
 		</li>
-	
-		<li class="toggle-fullscreen hidden-xs" fullscreen-mode></li>
-		<li class="toggle-navigation toggle-right" toggle-right-sidebar></li>
+		<!-- 통계 관리 -->
+		<li class="dropdown" ng-class="{active: $state.includes('stats')}">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+			role="button" aria-expanded="false" style="color: white;"> 통계 관리
+				<span class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a ui-sref="stats.dash">통계 대시보드</a></li>
+			</ul>
+		</li>
+
 	</ul>
 </div>
 <div id="header_line" style="height: 5px; margin-top: 45px;"></div>
-	<script>
-		
-	$('#eyes').hover(function() {
-		$('#test2').css('opacity', 100);
-		$('#test2').css('z-index', 1000);
-	}, function() {
-		$('#test2').css('opacity', 0);
-		$('#test2').css('z-index', -1000);
-	});
-		
-	</script>
+<style>
+/* 기본 폰트 및 바 전체 */
+/* 전체 폰트 설정 */
+body {
+  font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif !important;
+  font-size: 14px !important;
+}
+
+/* 상단 네비게이션 바 */
+.navbar {
+  background-color: #1A4D9C !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 20px !important;
+  margin: 0 !important;
+}
+
+/* 메뉴 리스트 */
+.navbar-nav {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+/* 메뉴 아이템 */
+.navbar-nav > li {
+  position: relative !important;
+  margin-right: 16px !important;
+}
+
+/* 메뉴 링크 */
+.navbar-nav > li > a {
+  color: white !important;
+  padding: 16px 20px !important;
+  display: block !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+  transition: background 0.2s ease !important;
+}
+
+/* hover 또는 active 메뉴 */
+.navbar-nav > li:hover > a,
+.navbar-nav > li.active > a {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+  background-color: #fff !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+  min-width: 180px !important;
+  padding: 8px 0 !important;
+  margin-top: 0 !important;
+  z-index: 10000 !important;
+  border-radius: 4px !important;
+}
+
+/* 드롭다운 항목 */
+.dropdown-menu > li > a {
+  padding: 10px 20px !important;
+  color: #333 !important;
+  font-weight: 400 !important;
+  white-space: nowrap !important;
+  display: block !important;
+  background-color: transparent !important;
+  transition: background 0.2s ease !important;
+}
+
+/* 드롭다운 hover */
+.dropdown-menu > li > a:hover {
+  background-color: #f5f5f5 !important;
+  color: #000 !important;
+}
+
+/* caret 간격 */
+.navbar-nav > li > a .caret {
+  margin-left: 6px !important;
+}
+
+/* 프로필 영역 오른쪽 */
+.navbar-nav.navbar-right {
+  margin-left: auto !important;
+}
+
+</style>

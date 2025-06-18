@@ -1,6 +1,5 @@
 package com.example.controller.board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.controller.util.EsRest;
 
 
 @RestController
@@ -32,10 +29,10 @@ public class BoardCtl {
 	public @ResponseBody HashMap<String, Object> getListUser(@RequestParam HashMap<String, String> param) throws Exception {
 	    HashMap<String, Object> map = new HashMap<>();
 	    System.out.println("#### getBoardList ####");
-	    
 	    try {
 	        // Elasticsearch 쿼리 결과 가져오기
-	        JSONObject dataJo = boardService.getBoardList();
+	        JSONObject dataJo = boardService.getBoardList(param);
+	        List<JSONObject> data2 = boardService.getSelectedAirQualityData();
 
 	        // 결과를 Map에 넣기
 	        map.put("data", ((JSONObject) dataJo.get("data")).toMap());
@@ -61,6 +58,7 @@ public class BoardCtl {
 		HashMap<String, Object> map = new HashMap();
 		try {
 			map = boardService.getRowBoard(param);
+			System.out.println("map : "+map);
 		} catch (Exception e) {
 			map.put("sError", "보드 상세정보를 가져올 수 없습니다");
 			System.out.println("sError"+e);
@@ -76,7 +74,6 @@ public class BoardCtl {
 	public @ResponseBody HashMap<String, Object> saveBoard(@RequestBody HashMap<String, Object> param) throws Exception {
 	    HashMap<String, Object> map = new HashMap<>();
 	    System.out.println("#### saveBoard ####");
-	    System.out.println("para : "+param);
 	    try {
 			// ins
 			if(param.get("mode").equals("ins")) {
@@ -153,9 +150,83 @@ public class BoardCtl {
 	    return map;
 	}	
 	
+	/**
+	 * 게시글 조회수 업데이트
+	 * @param HashMap<String, Object> @return HashMap<String, Object>
+	 */	
+	@RequestMapping(value = "/updateViewCnt")
+	public @ResponseBody HashMap<String, Object> updateViewCnt(@RequestBody HashMap<String, Object> param) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    System.out.println("#### updateViewCnt ####");
+	    try {
+			map = boardService.updateViewCnt(param);
+	    } catch (Exception e) {
+	        map.put("sError", "댓글 정보를 가져올 수 없습니다");
+	        System.out.println("sError" + e);
+	    }
+	    
+	    return map;
+	}		
 	
+	/**
+	 * 게시글 좋아요 중복체크
+	 * @param HashMap<String, Object> @return HashMap<String, Object>
+	 */	
+	@RequestMapping(value = "/LikeCheck")
+	public @ResponseBody HashMap<String, Object> LikeCheck(@RequestBody HashMap<String, Object> param) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    System.out.println("#### LikeCheck ####");
+	    try {
+			map = boardService.LikeCheck(param);
+	    } catch (Exception e) {
+	        map.put("sError", "댓글 정보를 가져올 수 없습니다");
+	        System.out.println("sError" + e);
+	    }
+	    
+	    return map;
+	}
 	
+	/**
+	 * 게시글 좋아요 업데이트
+	 * TODO 길이가 1만건 이상일시에는 leo_user인덱스에서 관리하는 좋아요값을 따로 인덱스를 빼야할 필요성이있다.
+	 * @param HashMap<String, Object> @return HashMap<String, Object>
+	 */	
+	@RequestMapping(value = "/updateLike")
+	public @ResponseBody HashMap<String, Object> updateLike(@RequestBody HashMap<String, Object> param) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    System.out.println("#### updateLike ####");
+	    String type = (String) param.get("type");
+	    try {
+	    	if(type.equals("up")) {
+				map = boardService.updateLikeUp(param);
+	    	}else {
+				map = boardService.updateLikeDown(param);
+	    	}
+
+	    } catch (Exception e) {
+	        map.put("sError", "댓글 정보를 가져올 수 없습니다");
+	        System.out.println("sError" + e);
+	    }
+	    
+	    return map;
+	}	
 	
-	
-	
+	/**
+	 * 사용자의 좋아하는 게시글 리스트 가져오기
+	 * @param HashMap<String, Object> @return HashMap<String, Object>
+	 */	
+	@RequestMapping(value = "/likedBoard")
+	public @ResponseBody HashMap<String, Object> likedBoard(@RequestBody HashMap<String, Object> param) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    System.out.println("#### likedBoard ####");
+	    String type = (String) param.get("type");
+	    try {
+	    	map = boardService.likedBoard(param);
+	    } catch (Exception e) {
+	        map.put("sError", "댓글 정보를 가져올 수 없습니다");
+	        System.out.println("sError" + e);
+	    }
+	    
+	    return map;
+	}		
 }

@@ -15,8 +15,6 @@ public class HomeController {
 //    }
     @GetMapping("/")
     public String home() {
-    	System.out.println("------ index 반환 ------");
-
         return "test"; // index.html 반환 (redirect 삭제)
     }
 }

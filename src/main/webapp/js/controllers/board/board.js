@@ -6,13 +6,17 @@ angular.module('myApp').controller('boardCtrl', [
 		var sAction = {
 			save: '../board/saveBoard',
 			comment : '../board/saveComment', // 댓글 저장
-			childcomment : '../board/saveChildComment' // 대댓글 저장 
+			childcomment : '../board/saveChildComment', // 대댓글 저장 
+			cnt : '../board/updateViewCnt',
+			updateLike : '../board/updateLike',
 
 		};
 		var gAction = {
 			list: '../board/getBoardList', // user List 가져오기
 			row: '../board/getRowBoard', // user Row 가져오기
 			comment: '../board/getComment', // 댓글 가져오기
+			LikeCheck: '../board/LikeCheck', // 좋아요수 체크
+			likedBoard : '../board/likedBoard', // 사용자가 좋아요 누른 보드id 가져오기
 
 		};
 		var table;
@@ -27,9 +31,15 @@ angular.module('myApp').controller('boardCtrl', [
 		
 		$scope.replyTargetId = null;  // 현재 열려 있는 대댓글 입력창의 댓글 ID
 		$scope.replyContent = {};     // 각 댓글 ID에 대한 입력 내용
+		$scope.boardtype = "전체";
+		$scope.boardText =""
+		$scope.commentCnt = 0; // 댓글수
+		$scope.showLiked= false; 
+		$scope.likedBoardList;
+		$scope.likeBtnLock = false;
 
 
-		//------------------- user 테이블 리스트 -------------------		
+		//------------------- board 테이블 리스트 -------------------		
 		$scope.board_table = function() {
 			table = el.find('#board_table').DataTable({
 				order: [[1, 'asc']],
@@ -41,21 +51,36 @@ angular.module('myApp').controller('boardCtrl', [
 				processing: true,
 				serverSide: false, // 
 				stateSave: true,
-				autoWidth: true,
-				scrollX: true,
+				autoWidth: false,
+				scrollX: false,
 				scrollY: "500px",
-				pageLength: 10,
+				pageLength: 13,
 				lengthMenu: [5, 10, 20, 50, 100],
-				colReorder: {
-					enable: true,
-					realtime: true
-				},
 				ajax: {
 					url: gAction.list,
 					type: "POST",
+					data: function(param) {
+/*						param.text_filter = el.find('#text_filter').val();
+						param.field_filter = el.find('#field_filter').val();
+*/						
+						param.boardType = $scope.boardtype;
+						param.boardText = $scope.boardtext;
+						if ($scope.showOnlyLiked) {
+							param.userId = $rootScope.userInfo.user_id;
+							param.likeOnly = true;
+							param.likedBoardList = JSON.stringify($scope.likedBoardList)
+						}else{
+							if (!$rootScope.userInfo || !$rootScope.userInfo.user_id) {
+							    console.warn("User 정보 없음. 테이블 초기화 중단.");
+							    return false;
+							}
+							param.userId = $rootScope.userInfo.user_id;
+							param.likeOnly = false;							
+						}
+					},
 					dataSrc: function(json) {
-						console.log("## DataTable: ", niCvUt.resDataResultNum(json, "data", table));
-						return niCvUt.resDataResultNum(json, "data", table);
+						console.log("## DataTable: ", jsUt.resultNum(json, "data", table));
+						return jsUt.resultNum(json, "data", table);
 					},
 				},
 				columns: [
@@ -65,27 +90,47 @@ angular.module('myApp').controller('boardCtrl', [
 					{ data: 'BOARD_USER_ID', name: "BOARD_USER_ID" },
 					{ data: 'BOARD_MK_DT', name: "BOARD_MK_DT" },
 					{ data: 'BOARD_STATUS', name: "BOARD_STATUS" },
-					{ data: 'BOARD_LIKE_CNT', name: "BOARD_LIKE_CNT" }
+					{ data: 'BOARD_LIKE_CNT', name: "BOARD_LIKE_CNT" },
+					{ data: 'BOARD_VIEW_CNT', name: "BOARD_VIEW_CNT" }
 				],
 				columnDefs: [
-					{ targets: [0], width: '5%', class: 'text-center', visible: true, sortable: false, searchable: false },
-					{ targets: [1], width: '10%', class: 'text-center', visible: true, sortable: false, searchable: false },
-					{
-						targets: [2], width: '40%', class: 'text-left', render: function(data, type, row) {
-							return '<a href="javascript:;" id="' + row._id + '"ng-click="board_view($event, \'upd\')">' + row.BOARD_TITLE + '</a>';
+					{ targets: [0], width: '5%', class: 'textCenter', visible: true, searchable: false },
+					{ targets: [1], width: '10%', class: 'textCenter',render: function(data, type, row) {
+						    if (type === 'sort' || type === 'type') {
+      							return data;
+    						}
+						    let fireIcon = row.BOARD_VIEW_CNT >= 10 ? '🔥 ' : '';
+    						return fireIcon + data;
 						}
 					},
-					{ targets: [3], width: '10%', class: 'text-left', visible: true, sortable: false, searchable: false },
+					{
+						targets: [2], width: '50%', class: 'textLeft', render: function(data, type, row) {
+							let title = row.BOARD_TITLE || '';
+							let commentCount = row.COMMENT_COUNT || 0;
+							let commentHtml = commentCount > 0 ? ` <span style="background-color:#e9f5ff; color:#007bff; padding:2px 6px; border-radius:10px; font-size:0.8em;">  ${commentCount}</span>`: '';
+							
+							return `<a href="javascript:;" id="${row._id}" ng-click="board_view($event, 'upd')">${title}</a>${commentHtml}`;
+						}
+					},
+					{ targets: [3], width: '10%', class: 'textLeft', visible: true, searchable: false },
 
-					{ targets: [4], width: '10%', class: 'text-left', visible: true, sortable: false, searchable: false },
+					{
+						targets: [4], width: '10%', class: 'textLeft', render: function(data, type, row) {
+							let date = row.BOARD_MK_DT.split('+')[0];
 
-					{ targets: [5], width: '10%', class: 'text-left', visible: true, sortable: false, searchable: false },
+							return date;
+						}
+					},
 
-					{ targets: [6], width: '10%', class: 'text-left', visible: true, sortable: false, searchable: false },
+					{ targets: [5], width: '10%', class: 'textLeft', visible: true, searchable: false },
+					
+					{ targets: [6], width: '5%', class: 'textLeft', visible: true, searchable: false },
+					
+					{ targets: [7], width: '5%', class: 'textLeft', visible: true, searchable: false },
 
 				],
 				pagingType: "full_numbers",
-				dom: 'z<"dt-toolbar" <"pull-left">> t <"dt-toolbar-footer" <"pull-right"p>>',
+				dom: 'z<"dt-toolbar"> t <"dt-toolbar-footer d-flex justify-content-center"p>',
 				language: {
 					zeroRecords: "데이터가 없습니다",
 					paginate: { first: "◀◀", last: "▶▶", next: "▶", previous: "◀" }
@@ -93,6 +138,14 @@ angular.module('myApp').controller('boardCtrl', [
 				createdRow: function(row, data) {
 					$compile(row)($scope);
 				},
+				initComplete: function() {
+				  setTimeout(function() {
+				    table.columns.adjust().draw();
+				  }, 200);  // 렌더링 이후 컬럼 재계산
+				},
+				drawCallback: function() {
+				  //table.columns.adjust();
+				}
 			});
 
 			table.columns.adjust();
@@ -116,24 +169,36 @@ angular.module('myApp').controller('boardCtrl', [
 			el.find('#data_edit').hide();
 			el.find('#data_view').hide();
 			el.find('#data_list').show();
+			
 		};
 		//------------------- 입력값 초기화 -------------------				
 		$scope.pop_init = function() {
 			$scope.boardData = {}
+			$scope.replyTargetId = null;  // 현재 열려 있는 대댓글 입력창의 댓글 ID
+			$scope.replyContent = {};     // 각 댓글 ID에 대한 입력 내용
+			$scope.boardtype = "전체";
+			$scope.boardText =""
 		};
 		//------------------- 등록 -------------------		
 		$scope.board_save = function() {
-			var param = $scope.boardData
+			let type = $scope.boardData.BOARD_TYPE
+			let title = $scope.boardData.BOARD_TITLE;
+			let content = $scope.boardData.BOARD_CONTENT;
 			
+			if(!type){ alert("항목을 입력해주세요"); return; }
+			if(!title){ alert("제목을 입력해주세요"); return; }
+			if(!content){ alert("내용을 입력해주세요"); return;
+			}
+			var param =  $scope.boardData
+
 			if($scope.mode =="ins"){
 				param.mode = "ins"
 			}else{
 				param.mode = "upd"
 			}
-			
+			param.userId = $rootScope.userInfo.user_id
 			console.log("param : ",param)
 			if (confirm('저장하시겠습니까?')) {
-				//niUt.startLoading('.panel-body');
 				$http.post(sAction.save, param, $rootScope.http_config).then(function(rs) {
 					if (rs.data.sOk == 'ok') {
 						$scope.board_close();
@@ -152,7 +217,6 @@ angular.module('myApp').controller('boardCtrl', [
 		};
 //------------------- 보드 view -------------------
 			$scope.board_view = function(e,type) {
-				console.log("## board_detail type : ",type)
 				$scope.mode = type
 				
 				el.find('#data_list').hide();
@@ -160,23 +224,41 @@ angular.module('myApp').controller('boardCtrl', [
 				el.find('#data_edit').hide();
 
 				$scope.pop_init();
-				
-				var param = { "_id": e.target.id};
-				$http.post(gAction.row, param, $rootScope.http_config).then(function(rs) {
-					var row = niCvUt.resDataResultOne(rs, "row");
+				var id = e.target.id
+				var param = { "_id": id};
+				$http.post(gAction.row, param, $rootScope.http_config).then(async function(rs) {
+					var row = jsUt.resultOne(rs, "row");
 					if (row.BOARD_CONTENT) {
-				        row.BOARD_CONTENT = row.BOARD_CONTENT.replace(/\\n/g, '\n');
+				        row.BOARD_CONTENT = jsUt.unescapeBoardContent(row.BOARD_CONTENT);
 				    }
 					if (row) {
+						console.log("@ row : ",row)
 						$scope.boardData = row
+						$scope.boardData.BOARD_MK_DT = $scope.boardData.BOARD_MK_DT.split('+')[0];
 						el.find('#_id').val(row._id)
-						$scope.comment_loard(); //댓글정보 가져오기 
+						
+						$scope.comment_loard(); //  댓글정보 가져오기 
+						
+						$scope.updateViewCnt(id) // 조회수 올리기 
+						
+						$scope.checkLike(); // 좋아요 체크
+						
 					}
 					if (rs.data.sError)
 						alert(rs.data.sError);
 				}, function(rs) {});
 
-			};		
+			};	
+
+//------------------- 조회수 Up  -------------------			
+			$scope.updateViewCnt = function(id) {
+				var param = { "_id": id};
+				
+				$http.post(sAction.cnt, param, $rootScope.http_config).then(function(rs) {
+					//아래 로직확인 추가 해야함
+				}, function(rs) {});
+
+			};
 //------------------- 수정 -------------------
 			$scope.board_edit = function(e,type) {
 				console.log("@@@@ board_edit type : ",type)
@@ -215,16 +297,16 @@ angular.module('myApp').controller('boardCtrl', [
 		$scope.comment_save = function() {
 				var param ={
 					comment : $scope.commentData,
-					_id : el.find('#_id').val()
+					_id : el.find('#_id').val(),
+					userId : $rootScope.userInfo.user_id,
 				}
-				console.log("@@@ param : ",param)
 				$http.post(sAction.comment,param, $rootScope.http_config).then(function(rs) {
 						if (rs.data.sOk == 'ok') {
 							alert("등록되었습니다.");
 							$scope.commentData = ""
 							setTimeout(function () {
 								$scope.comment_loard();
-							}, 100);
+							}, 200);
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
@@ -237,19 +319,21 @@ angular.module('myApp').controller('boardCtrl', [
 		
 //------------------- 댓글 불러오기 -------------------
 		$scope.comment_loard = function() {
-			console.log("@@@ $scope.comment_loard @@@@")
 			var param ={
 				_id : el.find('#_id').val()
 			}
 			$http.post(gAction.comment,param, $rootScope.http_config).then(function(rs) {
-				var comentData = niCvUt.resDataResult(rs,"row")
+				var comentData = jsUt.result(rs,"row")
 				if (rs.data.sOk == 'ok') {
+					$scope.commentCnt = comentData.length
 					$scope.commentList = [];
 					var commentMap = {};
 					comentData.forEach(function(item) {
 						if (item.COMMENT_CONTENT && typeof item.COMMENT_CONTENT === 'string') {
-					        item.COMMENT_CONTENT = item.COMMENT_CONTENT.replace(/\\n/g, '\n');
+							item.COMMENT_CONTENT  = jsUt.unescapeBoardContent(item.COMMENT_CONTENT);
+					        //item.COMMENT_CONTENT = item.COMMENT_CONTENT.replace(/\\n/g, '\n');
 					    }
+					    item.COMMENT_MK_DT = item.COMMENT_MK_DT.split('+')[0];
 					    item.CHILD_COMENTS = []; // 대댓글 배열 초기화
 					    commentMap[item.COMMENT_ID] = item;
 					});
@@ -264,6 +348,7 @@ angular.module('myApp').controller('boardCtrl', [
 					        }
 					    }
 					});
+					console.log("@ $scope.commentList : ",$scope.commentList)
 				}
 				if (rs.data.sError)
 					alert(rs.data.sError);
@@ -292,7 +377,8 @@ angular.module('myApp').controller('boardCtrl', [
 			var param = {
 			  comment: content,
 			  parentId: parentId,
-			  _id: el.find('#_id').val()  // 해당 게시물 ID
+			  _id: el.find('#_id').val(),  // 해당 게시물 ID
+			  userId : $rootScope.userInfo.user_id,
 			};
 		  	$http.post(sAction.childcomment, param, $rootScope.http_config).then(function(rs) {
 				console.log("rs : ",rs)
@@ -302,27 +388,133 @@ angular.module('myApp').controller('boardCtrl', [
 			      	$scope.replyContent[parentId] = "";
       				setTimeout(function () {
 						$scope.comment_loard();
-					}, 100);
+					}, 200);
 			      
 			    } else if (rs.data.sError) {
 			      alert(rs.data.sError);
 			    }
 		  	});
-		  
-		  
+		};
+//------------------- 검색 -------------------		
+		$scope.search_btn = function(parentId) {
+			$scope.load_data();
+		};
+
+//------------------- 좋아요 중복 체크  -------------------		
+		$scope.checkLike = async function() {
+			var param = {
+				_id : el.find('#_id').val(),
+				userId : $rootScope.userInfo.user_id,
+			};
+
+			$http.post(gAction.LikeCheck, param, $rootScope.http_config).then(function(rs) {
+					if (rs.data.cnt == 0) {
+						$('#likeBtn').removeClass('btn-primary').addClass('btn-default');
+					} else {
+						$('#likeBtn').removeClass('btn-default').addClass('btn-primary');
+					}
+		  	});	
+
+		};	
+//------------------- 좋아요 버튼  -------------------		
+		$scope.likeBoard = async function() {
+			if ($scope.likeBtnLock) return;  // 중복 방지
+			$scope.likeBtnLock = true;
+			try {
+				var param = {
+					_id: el.find('#_id').val(),
+					userId: $rootScope.userInfo.user_id
+				};
+				$http.post(gAction.LikeCheck, param, $rootScope.http_config).then(function(rs) {
+					if (rs.data) {
+						if (rs.data.cnt == 0) {
+							param.type = "up";
+							$scope.likeBoardPrc(param);
+							$('#likeBtn').removeClass('btn-default').addClass('btn-primary');
+							$scope.boardData.BOARD_LIKE_CNT = ($scope.boardData.BOARD_LIKE_CNT || 0) + 1; // 값 증가  
+							
+							// 종아요 버튼 누를시 하트 에니메이션
+							const effect = document.getElementById('likeEffect');
+							effect.classList.remove('active');
+							void effect.offsetWidth; // reflow for restart
+							effect.classList.add('active');
+							// 애니메이션 끝나면 자동 제거
+							effect.addEventListener('animationend', function handler() {
+							  effect.classList.remove('active');
+							  effect.removeEventListener('animationend', handler); // 한 번만 실행되게
+							});
+						} else {
+							Swal.fire({
+							  title: '좋아요를 취소할까요?',
+							  text: "취소 후 좋아요를 다시 누를수 있습니다.",
+							  icon: 'warning',
+							  showCancelButton: true,
+							  confirmButtonText: '네',
+							  cancelButtonText: '아니오',
+							    customClass: {
+							    popup: 'my-swal-popup',
+							    title: 'my-swal-title',
+							    confirmButton: 'my-swal-confirm',
+							    cancelButton: 'my-swal-cancel'
+							    }
+							}).then((result) => {
+							  if (result.isConfirmed) {
+								param.type = "down";
+								$scope.likeBoardPrc(param);
+								$('#likeBtn').removeClass('btn-primary').addClass('btn-default');
+								$scope.boardData.BOARD_LIKE_CNT = Math.max(0, $scope.boardData.BOARD_LIKE_CNT - 1); // 값 감소
+
+							  }
+							});
+						}
+					}
+			  	});	
+			} catch (error) {
+				console.error("좋아요 처리 중 에러:", error);
+			}finally {
+				$scope.likeBtnLock = false;
+			}
+		};
+
+//------------------- 좋아요 처리 함수  -------------------		
+		$scope.likeBoardPrc = function(param) {
+		  	$http.post(sAction.updateLike, param, $rootScope.http_config).then(function(rs) {
+				//console.log("rs : ",rs)
+				//$scope.$applyAsync()
+				
+		  	});			
+		};
+//------------------- 좋아요 글 보기 버튼  -------------------		
+		$scope.showLikeBoard = function() {
+		    $scope.showLiked = !$scope.showLiked;
+		    $scope.filterBoardData();
+		};
+
+		$scope.filterBoardData = function() {
+			$scope.showOnlyLiked = !$scope.showOnlyLiked;
+			let param ={
+				userId: $rootScope.userInfo.user_id
+			}
+			$http.post(gAction.likedBoard, param, $rootScope.http_config).then(function(rs) {
+				$scope.likedBoardList = rs.data.data._source.USER_LIKE_BOARD // 사용자  좋아요 리스트 셋팅
+		  	});	
+			$scope.load_data(); // DataTable 리로드
 		};
 
 
 
-
-
-
-
-
-
-
-
-
+/*		document.getElementById('likeBtn').addEventListener('click', function (e) {
+		  const burst = document.getElementById('likeEffect');
+		  const x = e.clientX;
+		  const y = e.clientY;
+		
+		  burst.style.left = `${x}px`;
+		  burst.style.top = `${y}px`;
+		  burst.classList.remove('like-burst'); // reset
+		  void burst.offsetWidth; // reflow to restart animation
+		  burst.classList.add('like-burst');
+		});
+*/
 
 
 
@@ -337,9 +529,19 @@ angular.module('myApp').controller('boardCtrl', [
 			        } else {
 			            console.warn("❗ table is undefined");
 			        }
-			    }, 1000);
+			    }, 500);
 			};
-
+			
+// 키 입력 이벤트			
+			document.addEventListener('keydown', function(event) {
+				//ESC 이벤트
+		        if (event.key === 'Escape') {
+		            $scope.$apply(function() {
+		                $scope.board_close();
+		                $scope.load_data();
+		            });
+		        }
+		    });
 
 
 

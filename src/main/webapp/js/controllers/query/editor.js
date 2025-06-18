@@ -5,15 +5,15 @@ angular.module('myApp').controller('editorCtrl', [
 
 			$scope.tabs = [
 					{key:"search.editor.elastic", href:"/query/editor/elastic", value:"Elastic", id:"elastic"},
-					{key:"search.editor.trino", href:"/query/editor/trino", value:"Trino", id:"trino"}
+					{key:"search.editor.mySql", href:"/query/editor/mySql", value:"mySql", id:"mySql"}
 			];
 			$scope.tabs.forEach((tab) =>{
 				if(window.location.href.includes('elastic')){
 					if(tab.id === 'elastic'){
 						tab.isSelected = "selected";
 					}
-				}else if(window.location.href.includes('trino')){
-					if(tab.id === 'trino'){
+				}else if(window.location.href.includes('mySql')){
+					if(tab.id === 'mySql'){
 						tab.isSelected = "selected";
 					}				
 				}else{

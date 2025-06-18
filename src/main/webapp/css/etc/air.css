@@ -1,0 +1,130 @@
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+.ui-slider .ui-slider-handle {
+	z-index: 5 !important;
+}
+
+/* 하이라이트  */
+@keyframes strokeAir {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #337ab7; } 
+  50%  { stroke: #2E6DA4; }  
+  75%  { stroke: #265A88; }  
+  100% { stroke: #1E4566; } 
+}
+.strokeAir {
+  stroke-width: 4;
+  animation: strokeAir 3s infinite linear;
+}
+@keyframes strokePm10 {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #FF7012; }
+  50%  { stroke: #E46000; }
+  75%  { stroke: #CC5300; }
+  100% { stroke: #B34600; }
+}
+.strokePm10 {
+  stroke-width: 4;
+  animation: strokePm10 3s infinite linear;
+}
+@keyframes strokePm25 {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #1DDB16; }
+  50%  { stroke: #1AC015; }
+  75%  { stroke: #159F12; }
+  100% { stroke: #117F0F; }
+}
+.strokePm25 {
+  stroke-width: 4;
+  animation: strokePm25 3s infinite linear;
+}
+@keyframes strokeO3 {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #00D8FF; }
+  50%  { stroke: #00BEE0; }
+  75%  { stroke: #00A2BF; }
+  100% { stroke: #0088A3; }
+}
+.strokeO3 {
+  stroke-width: 4;
+  animation: strokeO3 3s infinite linear;
+}
+@keyframes strokeSuccess {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #0054FF; }
+  50%  { stroke: #004ADE; }
+  75%  { stroke: #003EBB; }
+  100% { stroke: #003399; }
+}
+
+.strokeSuccess {
+  stroke-width: 4;
+  animation: strokeSuccess 3s infinite linear;
+}
+@keyframes strokeError {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #FF0000; }
+  50%  { stroke: #D60000; }
+  75%  { stroke: #B30000; }
+  100% { stroke: #990000; }
+}
+
+.strokeError {
+  stroke-width: 4;
+  animation: strokeError 3s infinite linear;
+}
+
+@keyframes strokeRegister {
+  0%   { stroke: #FFFFFF; }
+  25%  { stroke: #FFE400; }
+  50%  { stroke: #E6CD00; }
+  75%  { stroke: #CCB700; }
+  100% { stroke: #B3A100; }
+}
+
+.strokeRegister {
+  stroke-width: 4;
+  animation: strokeRegister 3s infinite linear;
+}
+
+/* Fade and Dark*/
+@keyframes fade-and-darken {
+  0% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 0.5;
+    filter: brightness(0);
+  }
+}
+
+.fade-and-darken {
+  animation: fade-and-darken 3s forwards;
+}
+
+
+/* 엣지*/
+ @keyframes dashAnimation {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.edge-highlight {
+  stroke-width: 4px; 
+  stroke-dasharray: 5 5;
+  animation: dashAnimation 2s linear infinite;
+} 
+
+@keyframes dash {
+    to {
+        background-position: 100% 0%, 0% 100%, 0% 0%, 100% 100%;
+    }
+}
+

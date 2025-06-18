@@ -15,31 +15,7 @@ import com.example.controller.util.EsRest;
 public class QueryService {
 
 	private static String index = "leo_query";
-	
-	// ex)
-	public JSONObject testSearch(HashMap<String, Object> param) throws Exception {
-		//System.out.println("@@@ getSirList");
-		EsRest es = new EsRest();
-		String index = "test_index";
-		
-		JSONObject response = new JSONObject();
-		JSONObject query = new JSONObject();
-		JSONObject body = new JSONObject();
-		JSONObject paramObj = new JSONObject();
-		
-		body.put("sir", paramObj);
-		
 
-
-		try {
-			query.put("query", new JSONObject());
-			response = es.searchByBody(index,  new JSONObject());
-		}catch (Exception e) {
-			System.out.println("[e] : "+e);
-		}
-		return response; 
-	}
-	
 	public String setQuery(HashMap<String, Object> param) throws Exception {
 		EsRest es = new EsRest();
 		JSONObject docData = new JSONObject();
@@ -81,7 +57,6 @@ public class QueryService {
 	}
 	
 	public JSONObject getListQuery() throws Exception {
-		//System.out.println("@@@ getSirList");
 		EsRest es = new EsRest();
 		JSONObject response = new JSONObject();
 		StringBuilder query = new StringBuilder();
@@ -102,7 +77,6 @@ public class QueryService {
 	}
 
 	public JSONObject getRowQuery(String id) throws Exception {
-		//System.out.println("@@@ getSirList");
 		EsRest es = new EsRest();
 		JSONObject response = new JSONObject();
 		String _id =id;

@@ -1,0 +1,39 @@
+.block {
+	display: block;
+}
+.inline{
+	display:inline;
+}
+.inline-block{
+	display:inline-block;
+}
+.necessary{color:#C90000;padding-top:4px;}
+.text-fade {
+	color: #a2a2a2!important;
+}
+.textCenter {
+	text-align: center;
+}
+.textLeft {
+	text-align: left;
+}
+input[type=checkbox]{
+	vertical-align: middle;
+}
+.textarea {
+	overflow:scroll ;
+	resize: none;
+	overflow-x:hidden;
+}
+.fileName{
+	font-weight: 500;border: none;outline: none;max-width: 300px;width: auto !important; text-overflow:ellipsis;background:none;
+}
+.fileSize{
+	font-weight: 500;border: none;outline: none;width:70px;color: #707070;font-size: 12px;background:none;
+}
+
+.form-control {
+	padding: 0 !important; 
+	height: 24px !important;
+	font-size: 12px !important;
+}

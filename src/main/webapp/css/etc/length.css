@@ -1,0 +1,35 @@
+.width40 {width: 40px;}
+.width50 {width: 50px;}
+.width60 {width: 60px;}
+.width70 {width: 70px;}
+.width80 {width: 80px;}
+.width90 {width: 90px;}
+.width100 {width: 100px;}
+.width110 {width: 110px;}
+.width120 {width: 120px;}
+.width100p {width: 100%;}
+
+.height15 {height: 15px;}
+.height25 {height: 25px;}
+.height35 {height: 35px;}
+.height45 {height: 45px;}
+.height55 {height: 55px;}
+
+.m10{margin: 10px;}
+.m12{margin: 10px;}
+.m14{margin: 10px;}
+.mT20{margin-top:20px;}
+.mL5 {margin-left: 5px;}
+.mL10 {margin-left: 10px;}
+.mR5 {margin-right: 5px;}
+.mR10{margin-right: 10px;}
+
+.p10{padding: 10px}
+.p12{padding: 12px}
+.p14{padding: 14px}
+
+.pL20 {padding-left: 20px}
+
+.floatL {float:left;}
+.floatR {float:right;}
+

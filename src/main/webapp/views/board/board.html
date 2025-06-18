@@ -2,15 +2,15 @@
 	<div class="panel panel-default">
 		<div class="panel-heading clearfix">
 			<h3 class="panel-title pull-left">
-				<i class="glyphicon glyphicon-list-alt mrgR5"></i> 게시판 목록
+				<i class="glyphicon glyphicon-list-alt mR5"></i> 게시판 목록
 			</h3>
 		</div>
 		<div class="panel-body">
 			<!-- data_list -->
 			<div id="data_list">
 				<table id="board_table"
-					class="table table-bordered table-hover text-center"
-					cellspacing="0" width="100%">
+					class="table table-bordered table-striped"
+					cellspacing="0" width="100%" >
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -19,35 +19,42 @@
 							<th>작성자</th>
 							<th>작성일</th>
 							<th>상태</th>
+							<th>좋아요</th>
 							<th>조회수</th>
 						</tr>
 					</thead>
 				</table>
-				<!-- 🔽 검색 필터 정중앙 배치 -->
-				<div class="text-center mrgT15 mrgB15">
-					<div class="form-inline">
-						<div class="form-group mrgR10">
-							<label for="search_category">카테고리</label> <select
-								class="form-control input-sm" id="search_category">
-								<option value="">전체</option>
-								<option value="공지">공지</option>
-								<option value="자유">자유</option>
-							</select>
-						</div>
-						<div class="form-group mrgR10">
-							<label for="search_keyword">검색어</label> <input type="text"
-								class="form-control input-sm" id="search_keyword"
-								placeholder="제목, 내용 검색">
-						</div>
-						<button class="btn btn-default btn-sm" id="btn_search">
-							<i class="glyphicon glyphicon-search"></i> 검색
-						</button>
-						<button class="btn btn-primary btn-sm pull-right"
-							ng-click="board_add()">
-							<i class="fa fa-plus"></i> 글쓰기
-						</button>
+				<div class="textCenter mT20">
+					<div class="form-inline d-flex justify-content-center align-items-center flex-wrap" style="gap: 10px;">
+					    <div class=" d-flex align-items-center" style="gap: 10px;">
+					    	<label for="search_category" class="mR5">카테고리</label>
+					      		<select class="form-control input-sm" ng-model="boardtype">
+							        <option value="전체">전체</option>
+							        <option value="공지">공지</option>
+							        <option value="일반">일반</option>
+							        <option value="자유">자유</option>
+							      </select>
+					
+					      	<label for="search_keyword" class="mL10">검색어</label>
+					      	<input type="text" class="form-control input-sm" ng-model="boardtext" placeholder="제목, 내용 검색">
+					
+						    <button class="btn btn-default btn-sm mL10" ng-click="search_btn()">
+						    	<i class="glyphicon glyphicon-search"></i> 검색
+						    </button>
+					    </div>
+					    <div class="form-group d-flex align-items-center floatR" style="gap: 10px;">
+					    	<button class="btn btn-sm width120" ng-class="showLikedOnly ? 'btn-secondary' : 'btn-primary'" ng-click="showLikeBoard()">
+					        	<i class="fa" ng-class="showLiked ? 'fa-list' : 'fa-heart'"></i>
+					        	{{ showLiked ? '전체 글 보기' : '좋아요 글 보기' }}
+					      	</button>
+					
+					    	<button class="btn btn-primary btn-sm" ng-click="board_add()">
+					        	<i class="fa fa-plus"></i> 글쓰기
+					      	</button>
+					    </div>
 					</div>
 				</div>
+
 			</div>
 <!-- data_view -->
 			<div id="data_view" class="hide">
@@ -61,19 +68,19 @@
 									[<span ng-bind="boardData.BOARD_TYPE"></span>] 
 									<span ng-bind="boardData.BOARD_TITLE"></span>
 								</div>
-								<div class="text-muted" style="font-size: 13px; margin-top: 3px;">
+								<div class="text-fade" style="font-size: 13px; margin-top: 3px;">
 									<span ng-bind="boardData.BOARD_USER_ID"></span>
 									&nbsp;&nbsp;|&nbsp;&nbsp; 
 									<span ng-bind="boardData.BOARD_MK_DT"></span>
 								</div>
 							</div>
-							<div class="text-muted" style="font-size: 13px; white-space: nowrap;">
+							<div class="text-fade" style="font-size: 13px; white-space: nowrap;">
 								조회 <span ng-bind="boardData.BOARD_VIEW_CNT"></span>
 								&nbsp;|&nbsp; 
 								추천 <span ng-bind="boardData.BOARD_LIKE_CNT"></span>
 								&nbsp;|&nbsp;
 								<button class="btn btn-default btn-xs">
-									댓글 <span ng-bind="commentCount"></span>
+									댓글({{commentCnt}})
 								</button>
 							</div>
 						</div>
@@ -81,15 +88,21 @@
 						     ng-bind="boardData.BOARD_CONTENT"
 						     style="padding: 20px 0; font-size: 15px; line-height: 1.6; white-space: pre-line; min-height: 300px; word-break: break-word; overflow-wrap: break-word;">
 						</div>
-
+						<!-- 좋아요 버튼 영역 -->
+						<div style="text-align: center; margin: 20px 0;">
+						    <button id="likeBtn" class="btn btn-sm" ng-click="likeBoard()" ng-disabled="likeBtnLock">
+						        👍 좋아요 <span ng-bind="boardData.BOARD_LIKE_CNT"></span>
+						    </button>
+						    <span id="likeEffect" class="like-burst">💖</span>
+						</div>
 					</div>
-					<div class="mrgT20"></div>
+					<div class="mT20"></div>
 <!-- 댓글 영역 -->
-					<div class="panel panel-default mrgT20 maxWd90" style="margin: auto">
+					<div class="panel panel-default mT20 maxWd90" style="margin: auto">
 						<!-- 🔷 댓글 헤더 -->
 						<div class="panel-heading clearfix">
 							<h4 class="panel-title pull-left">
-								<i class="fa fa-comments mrgR5"></i> 댓글 <span id="commentCount">(0)</span>
+								<i class="fa fa-comments mR5"></i> 댓글 <span id="commentCount">({{commentCnt}})</span>
 							</h4>
 						</div>
 						<div class="panel-body" id="commentList">
@@ -98,15 +111,12 @@
 								<div style="display: flex; justify-content: space-between; align-items: center;">
 								    <div style="font-weight: bold;">
 											{{ comment.COMMENT_USER_ID }}
-									    <span class="text-muted" style="font-size: 12px; margin-left: 10px;">
+									    <span class="text-fade" style="font-size: 12px; margin-left: 10px;">
 									    	{{ comment.COMMENT_MK_DT }}
 									    </span>
 								    </div>
 								    <div style="font-size: 12px; color: #999;">
 								    	<a href="javascript:;" ng-click="replyComment(comment)" style="margin-right: 10px;">댓글 달기</a>
-									    <span style="cursor: pointer;" ng-click="likeComment(comment)">
-									    	♥ {{ comment.COMMENT_LIKE_CNT || 0 }}
-									    </span>
 								    </div>
 							  	</div>
 							
@@ -125,36 +135,30 @@
 									</div>
 								</div>
 								<!-- 대댓글(있을 때만) -->
-<div ng-repeat="child in comment.CHILD_COMENTS"
-     class="reply-item"
-     style="margin-left: 40px; padding: 10px; background-color: #f9f9f9; border: 1px solid #eee; border-radius: 6px; margin-top: 10px;">
-     
-  <div>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div style="font-size: 13px; font-weight: bold; color: #666;">
-        <!-- 아이콘 추가 -->
-        <span style="margin-right: 5px; color: #aaa;">↳</span>
-        {{ child.COMMENT_USER_ID }}
-        <span class="text-muted" style="font-size: 11px; margin-left: 10px;">
-          {{ child.COMMENT_MK_DT }}
-        </span>
-      </div>
-      <div style="font-size: 11px; color: #999;">
-        <span style="cursor: pointer;" ng-click="likeComment(child)">
-          ♥ {{ child.COMMENT_LIKE_CNT || 0 }}
-        </span>
-      </div>
-    </div>
+								<div ng-repeat="child in comment.CHILD_COMENTS" class="reply-item"
+								     style="margin-left: 40px; padding: 10px; background-color: #f9f9f9; 
+								     border: 1px solid #eee; border-radius: 6px; margin-top: 10px;">
+									<div>
+									    <div style="display: flex; justify-content: space-between; align-items: center;">
+									    	<div style="font-size: 13px; font-weight: bold; color: #666;">
+										        <!-- 아이콘 추가 -->
+										        <span style="margin-right: 5px; color: #aaa;">↳</span>
+										        {{ child.COMMENT_USER_ID }}
+										        <span class="text-fade" style="font-size: 11px; margin-left: 10px;">
+										          {{ child.COMMENT_MK_DT }}
+										        </span>
+										    </div>
 
-    <div style="margin-top: 5px; font-size: 13px; white-space: pre-line;">
-      {{ child.COMMENT_CONTENT }}
-    </div>
-  </div>
-</div>
+									    </div>
+									    <div style="margin-top: 5px; font-size: 13px; white-space: pre-line;">
+									      {{ child.COMMENT_CONTENT }}
+									    </div>
+									</div>
+								</div>
 
 							</div>
 							<!-- 댓글 없을 때 -->
-							<div ng-if="!commentList.length" class="text-center text-muted" style="padding: 20px;">
+							<div ng-if="!commentList.length" class="textCenter text-fade" style="padding: 20px;">
 								등록된 댓글이 없습니다.
 							</div>
 						</div>
@@ -180,14 +184,20 @@
 						</div>
 					</div>
 					<!-- 🔽 버튼 영역 -->
-					<div class="text-center mrgT20">
-						<div class="fr">
+					<div class="textCenter mT20">
+						<div class="floatR">
+							<button type="button" ng-click="board_delete()" id="btn_delete"
+								class="btn btn-primary width120 fwb">
+								<i class="fa fa-trash" />삭제
+							</button>
 							<button type="button" ng-click="board_edit()"
-								class="btn btn-primary wd120 fwb">
+								class="btn btn-primary width120 fwb"
+								ng-if="boardData.BOARD_USER_ID === userInfo.user_id"
+								>
 								<i class="fa fa-check" />수정
 							</button>
 							<button type="button" ng-click="board_close()"
-								class="btn btn-bu wd120 fwb">
+								class="btn btn-primary width120 fwb">
 								<i class="fa fa-times" />닫기
 							</button>
 						</div>
@@ -197,12 +207,12 @@
 <!-- data_edit -->
 			<div id="data_edit" class="hide">
 				<div class="panel-body">
-					<table class="table table-bordered text-center"
+					<table class="table table-bordered textCenter"
 						style="border-top: 1px solid #ddd;">
 						<tbody>
 							<input type="hidden" id="_id">
 							<tr>
-								<th class="text-center" style="width: 15%;">카테고리</th>
+								<th class="textCenter" style="width: 15%;">카테고리</th>
 								<td><select class="form-control input-sm"
 									ng-model="boardData.BOARD_TYPE">
 										<option value="">선택하세요</option>
@@ -212,35 +222,30 @@
 								</select></td>
 							</tr>
 							<tr>
-								<th class="text-center">제목</th>
+								<th class="textCenter">제목</th>
 								<td><input type="text" class="form-control input-sm"
 									ng-model="boardData.BOARD_TITLE" placeholder="제목 입력"></td>
 							</tr>
 							<tr>
-								<th class="text-center">내용</th>
-								<td><textarea class="form-control input-sm"
-										style="resize: none" rows="10"
+								<th class="textCenter">내용</th>
+								<td>
+									<textarea class="form-control input-sm"
+										style="resize: none; height: 124px !important" rows="10"
 										ng-model="boardData.BOARD_CONTENT" placeholder="내용 입력">
 									</textarea></td>
 							</tr>
 						</tbody>
 					</table>
-					<div class="mrgT20"></div>
+					<div class="mT20"></div>
 					<!-- 🔽 버튼 영역 -->
-					<div class="text-center mrgT20">
-						<div class="fl">
-							<button type="button" ng-click="board_delete()" id="btn_delete"
-								class="btn btn-primary wd120 fwb">
-								<i class="fa fa-trash" />삭제
-							</button>
-						</div>
-						<div class="fr">
+					<div class="textCenter mT20">
+						<div class="floatR">
 							<button type="button" ng-click="board_save()"
-								class="btn btn-primary wd120 fwb">
+								class="btn btn-primary width120 fwb">
 								<i class="fa fa-check" />저장
 							</button>
 							<button type="button" ng-click="board_close()"
-								class="btn btn-bu wd120 fwb">
+								class="btn btn-primary width120 fwb">
 								<i class="fa fa-times" />닫기
 							</button>
 						</div>
@@ -250,3 +255,26 @@
 		</div>
 	</div>
 </section>
+<style>
+
+
+
+
+/* 좋아요버튼 이벤트 관련  css */
+.like-burst {
+  position: absolute;
+  font-size: 24px;
+  animation: pop 0.6s ease-out;
+  pointer-events: none;
+  opacity: 0;
+}
+.like-burst.active {
+  animation: popHeart 0.6s ease-out;
+}
+
+@keyframes popHeart {
+  0%   { transform: translateX(-50%) scale(0.6); opacity: 1; }
+  50%  { transform: translateX(-50%) scale(1.5); opacity: 0.8; }
+  100% { transform: translateX(-50%) scale(2); opacity: 0; }
+}
+</style>

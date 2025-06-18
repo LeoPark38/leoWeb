@@ -1,0 +1,45 @@
+<section style="height: 100%;">
+	<div class="panel panel-default" style="height: 100%;">
+	    <div ng-controller="tableCtrl" style="height: 100%;">
+	    	<div style="display: flex; flex-direction: column; height: 100%;">
+		        <!-- 상단 헤더 -->
+		        <div>
+		        	<div class="widget-header">
+		        		<span>📈[이상 기후] {{ widgetData.TITLE }}</span>
+		        		<button ng-click="removeWidget(widgetData.I)" class="btn btn-danger btn-sm x-btn floatR">X</button>
+		        	</div>
+		        				<div id="data_list">
+				<table id="board_table"
+					class="table table-bordered table-striped"
+					cellspacing="0" width="100%" >
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>시도</th>
+							<th>대기환경지수</th>
+							<th>대기환경등급</th>
+							<th>미세먼지 농도</th>
+							<th>미세먼지 등급</th>
+							<th>초미세먼지 농도</th>
+							<th>초미세먼지 등급</th>
+							<th>오존 농도</th>
+							<th>오존 등급</th>
+							<th>측정 시각</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		        </div>
+	    	</div>
+	    </div>
+	</div>
+</section>
+
+<style>
+#board_table_wrapper .dataTables_scrollHeadInner {
+  width: 100% !important;
+}
+#board_table thead {
+  width: 100% !important;
+}
+</style>
