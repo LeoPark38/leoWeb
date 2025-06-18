@@ -71,7 +71,7 @@ angular.module('myApp').controller('boardCtrl', [
 							param.likedBoardList = JSON.stringify($scope.likedBoardList)
 						}else{
 							if (!$rootScope.userInfo || !$rootScope.userInfo.user_id) {
-							    console.warn("User 정보 없음. 테이블 초기화 중단.");
+							    console.warn("User 정보 없음. 테이블 초기화 중단.ss");
 							    return false;
 							}
 							param.userId = $rootScope.userInfo.user_id;
