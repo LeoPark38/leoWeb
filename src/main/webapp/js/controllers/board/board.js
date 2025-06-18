@@ -2,6 +2,7 @@ angular.module('myApp').controller('boardCtrl', [
 	'$scope', '$element', '$rootScope', '$http', '$compile', '$filter', '$timeout',
 	function($scope, $element, $rootScope, $http, $compile, $filter, $timeout) {
 		console.log("## board.js ##")
+		console.log("## work Action 테스트중! ##")
 		var el = $($element);
 		var sAction = {
 			save: '../board/saveBoard',
