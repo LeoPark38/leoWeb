@@ -164,7 +164,12 @@ angular.module('myApp').controller('UserCtrl', [
 			$scope.pop_init = function() {
 				idChecked = false;
 				el.find("form")[1].reset();
-				niValiUt.clearForm('#data_edit');
+				$('#data_edit').find('input:text').val('');
+				$('#data_edit').find('input[type=file]').val('');
+				$('#data_edit').find('textarea').val('');
+				$('#data_edit').find('select').val('');
+				$('#data_edit').find('input[type=hidden]').val('');
+				$('#data_edit').find('input:checked').prop('checked', false);
 				el.find('#USER_PW').attr('placeholder', "영문+숫자+특수문자 포함 최소 8글자");
 			};			
 //------------------- id 중복체크 -------------------		
