@@ -1,60 +1,53 @@
 <section id="main-content" class="animated fadeIn">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading" style="	margin-bottom: 5px">
 			<h3 class="panel-title">
 				<i class="fab fas fa-bezier-curve mR10"></i>AIR 관리
 			</h3>
 		</div>
-		<div class="panel-bodys" style="height:40px; padding: 5px 5px 10px 0px !important; background-color: #f9f9f9; border: 1px solid #ddd; margin-top: 5px;">
-			<div class="floatR">
-				<button ng-click="airEtcMange()" class="btn btn-sm btn-primary mL5 width40" data-toggle="tooltip" title="air 관리" >
-					<i class="fa fa-cog" aria-hidden="true"></i>
-				</button>		
+		<div class="airTool">
+			<div class="floatR">	
 				<button ng-click="airDataDetailOpen()" class="btn btn-sm btn-primary mL5 width40" data-toggle="tooltip" title="추가" >
 					<i class="fa fa-plus" aria-hidden="true"></i>
 				</button>			
 			</div>		
 		</div>
 		<div class="panel-body" style="display: flex; padding: 5px 0px 15px 0px !important">
-			<div style="border: 1px solid #ddd; background-color: #fff;">		
-				<div class="base_box" style="background-color:#f9f9f9; border-bottom: 1px solid #dfe3e8 !important;">
-					<div style="display: flex; height: 28px;" ></div>
+			<div class="b1-ddd">		
+				<div class="base_box bb1-ddd" style="background-color:#f9f9f9;">
+					<div></div>
 				</div>
 				<div class="file-tree p14" id="" >
 				    <div id="fileTree"></div>
 				</div>
 			</div>	
- <!-- panning / selction swich -->	
-			<button type="button" ng-click="dragSwitch()" class="memo-box btn btn-sm btn-primary floatL width40 colorG" style="z-index:9;">
-				<img id="dragImg" src="../../../sas/icon/soar/click01.png" alt="Icon" style="width: 24px; height: 24px;">
+ <!-- swich -->	
+			<button type="button" ng-click="switch()" class="btn btn-sm btn-primary floatL width40 swich_box " style="z-index:5;">
+				<img id="switchImg" src="../icon/main/click01.png" alt="Icon" style="width: 24px; height: 24px;">
 			</button>
-<!-- 그래프 / 툴바  div -->
+<!-- 그래프 div -->
 			<div class="mainAirDiv" >
 				<div id="toolbar" style="display: flex;">			
-					<div style="vertical-align: top; display: inline-block; padding-left: 8px; font-size: 14px;">
-						<div class="tool" id="isUseDiv" style="cursor: unset;width: 22px; height: 23px;background-color: #8C8C8C; position: unset; margin-left: 0; padding-top: 2px;" data-toggle="tooltip" title="상태">
-						</div>
-					</div>
-					<div >
-						<span id="airDataTile" ng-click="openDetail()" class="" style="font-weight: bold; cursor:pointer; border: 0px; background-color: #f9f9f9; display: inline-block;"></span>					
+					<div class="tool" id="airIsUse" data-toggle="tooltip" title="사용"></div>
+					<div style="margin-top: 2px">
+						<span id="airDataTile" ng-click="openDetail()"></span>					
 					</div>
 				</div>
-				<div id="toolbarDetail" style="width:1518px" >
+				<div id="dataDetail" style="width:1518px" >
 					<div class="p14" >
 						<table class="table" style="border:1px solid #e1e1e1;">
 							<colgroup>
-									<col width="25%"> <!-- 1 -->
-									<col width="15%">
-									<col width="15%">
+									<col width="30%">
 									<col width="10%">
-									<col width="15%"> <!-- 5 -->
+									<col width="15%">
+									<col width="30%">
 									<col width="10%">
 									<col width="15%">
 							</colgroup>
 							<tbody>
 								<tr>
 									<th colspan="1">사용여부</th>
-									<td id="use_chk_tr" colspan="6">
+									<td colspan="5">
 										<div class="custom-radio-group floatL">
 											<div class="custom-radio">
 												<input type="radio" name="isUse" id="isUseYes" value="true" checked><label
@@ -71,43 +64,42 @@
 								</tr>
 								<tr ng-show="state == 'ins'">
 									<th colspan="1">AIR 명</th>
-									<td colspan="6"><input id="x6_name" style="width:100%"></input></td>								
+									<td colspan="5"><input id="x6_name" style="width:100%"></input></td>								
 								</tr>
 								<tr ng-show="state == 'ins'">
 									<th colspan="1">타입</th>
-									<th colspan="6">
+									<td colspan="5">
 										<select class="form-control" id="x6_type" ng-model="x6_type">
 										<option value="airData" >대기질</option>
 										<option value="rainData">강수</option>
 										<option value="temperData">기온</option>
 										<option value="etc" >etc</option>
 										</select>			
-									</th>				
+									</td>				
 								</tr>
 								<tr ng-show="state != 'ins'">
 									<th colspan="1">생성일</th>
 									<td colspan="2"><span id="x6_mk_dt" ></span></td>		
 									<th colspan="1">수정일</th>
 									<td colspan="2"><span id="x6_upd_dt" ></span></td>
-									<td colspan="1"></td>
 								</tr>
 								<tr>
-									<th>설명</th>
-									<td colspan="6">
+									<th colspan="1">설명</th>
+									<td colspan="5">
 										<textarea class="form-control" id="x6_desc" name="editor" style="resize: none ; height: 150px;"></textarea>
 									</td>
 								</tr>	
 							</tbody>
 						</table> 
 						<div class="panel-footer textCenter" style="background-color: #fff; border-top :0px !important">
-							<button type="button" ng-click="savePopAdd()" class="btn btn-primary width90 colorG" >
-								<i class="fa fa-plus"></i>저장
+							<button type="button" ng-click="savePopAdd()" class="btn btn-primary width90 " >
+								<i class="fa fa-check pR10"></i>저장
 							</button> 
-							<button type="button" ng-click="deletePopAdd()" class="btn btn-primary width90 colorG" ng-show="state != 'ins'">
-								<i class="fa fa-times"></i>삭제
+							<button ng-show="state != 'ins'" type="button" ng-click="deletePopAdd()" class="btn btn-primary width90 " >
+								<i class="fa fa-trash pR10"></i>삭제
 							</button>
-							<button type="button" ng-click="toolbarDetailClose()" class="btn btn-primary width90 colorG" >
-								<i class="fa fa-times"></i>닫기
+							<button type="button" ng-click="dataDetailClose()" class="btn btn-primary width90 " >
+								<i class="fa fa-times pR10"></i>닫기
 							</button>
 						</div>
 					</div>
@@ -116,36 +108,44 @@
 			</div>
 
 <!-- node 옵션 div -->
-			<div id="optionDiv" style="display: none; border: 1px solid #ddd;" class="base ">
-				<!-- node option div -->
+			<div id="optionDiv" class="base b1-ddd" style="display: none;">
 				<div id="nodeOptionDiv" >
 					<div class="base_box">
 						<div class="op_box floatL" >⛏️옵션 설정</div>
 						<div class="custom-checkbox floatR " style="margin: 7px 10px 0px 0px">
-							<input id="moreOption" type="checkbox"> 
-							<label for="moreOption" style="font-weight: 400; color: white">
+							<input id="extraOption" type="checkbox"> 
+							<div for="extraOption" style="margin-bottom: 5px; color: white">
 								고급 옵션 
-							</label>
+							</div>
 						</div>
 					</div>
-					<div class="p14" style="padding: 10px !important">
-						<table class="air_table">
+					<div class="p14">
+						<table class="air_table GF">
 							<colgroup>
 								<col width="15%">
 								<col width="85%">
 							</colgroup>
 							<tbody>
-								<tr id="nodeLabel">
-									<th>01.명칭</th>
+								<tr>
+									<th>air_type</th>
+									<td>
+										<select class="form-control" id="air_type" ng-model="air_type">
+												<option value="air" >air</option>
+												<option value="rain">rain</option>
+												<option value="etc" >etc</option>
+										</select>
+	 								</td>
+								</tr>
+								<tr>
+									<th>명칭</th>
 									<td><input type="input" id="label" ></td>
 								</tr>
-								<tr id="">
-									<th>02.색상</th>
+								<tr>
+									<th>색상</th>
 									<td><input type="color" id="nodeColor"></td>
 								</tr>
-								<tr id="nodeFontFamily">
-									<th>03.폰트 종류</th>
-									<!-- <td><input type="input" id="family"></td> -->
+								<tr>
+									<th>폰트 종류</th>
 									<td>
 										<select class="form-control" id="fontFamily"
 												ng-model="fontFamily">
@@ -159,60 +159,60 @@
 											</select>
 	 								</td>
 								</tr>
-								<tr id="nodeFont">
-									<th>04.폰트 크기</th>
+								<tr>
+									<th>폰트 크기</th>
 									<td><input type="input" id="font"></td>
 								</tr>
-								<tr id="nodeFontColor">
-									<th>05.폰트 색상</th>
+								<tr>
+									<th>폰트 색상</th>
 									<td><input type="color" id="fontColor"></td>
 								</tr>
-								<tr id="nodeStrokWidth">
-									<th>06.테두리 넓이</th>
+								<tr>
+									<th>테두리 넓이</th>
 									<td><input type="input" id="strokeWidth"></td>
 								</tr>
-								<tr id="nodeStrokeColor">
-									<th>07.테두리 색상</th>
+								<tr>
+									<th>테두리 색상</th>
 									<td><input type="color" id="strokeColor"></td>
 								</tr>
 								<tr id="nodeMemo">
-									<th>08.메모</th>
+									<th>메모</th>
 									<td><textarea class="form-control" id="node_content" name="editor" style="resize: none"></textarea></td>
 								</tr>
-								<tr id="tr_opa" style="display: none;">
-									<th>09.opacity</th>
+								<tr id="data_opacity" style="display: none;">
+									<th>opacity</th>
 									<td>
 										<input type="range" min="0" max="1" step="0.05" id="opacity" 
 											ng-model="opacityValue" ng-change="changeOpacity()"> 
 										<span id="opacityValue" style="z-index: -1000;"></span>
 									</td>
 								</tr>
-								<tr id="tr_blur" style="display: none;">
-									<th>10.blur</th>
+								<tr id="data_blur" style="display: none;">
+									<th>blur</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="blur"
 											ng-model="blurValue" ng-change="changeBlur()"> 
 										<span id="blurValue" style="z-index: -1000;"></span>
 									</td>
 								</tr>
-								<tr id="tr_dx" style="display: none;">
-									<th>11.dx</th>
+								<tr id="data_dx" style="display: none;">
+									<th>dx</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="dx"
 											ng-model="dxValue" ng-change="changeDx()"> 
 										<span id="dxValue" style="z-index: -1000;"></span>
 									</td>
 								</tr>
-								<tr id="tr_dy" style="display: none;">
-									<th>12.dy</th>
+								<tr id="data_dy" style="display: none;">
+									<th>dy</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="dy"
 										ng-model="dyValue" ng-change="changeDy()"> 
 										<span id="dyValue" style="z-index: -1000;"></span>
 									</td>
 								</tr>
-								<tr id="tr_index" style="display: none;">
-									<th>13.z-index</th>
+								<tr id="data_index" style="display: none;">
+									<th>z-index</th>
 									<td>
 										<input type="input" id="zIndex">
 									</td>
@@ -221,49 +221,14 @@
 						</table>
 					</div>
 				</div>
-				<!-- node data div -->
-				<div id="nodeDataDiv" >
-					<div class="base_box">
-						<div class="op_box floatL" >⛏️데이터 설정</div>
-					</div>
-					<div class="p14" style="padding: 10px !important">
-						<table class="table_bor fontG">
-							<colgroup>
-								<col width="15%">
-								<col width="85%">
-							</colgroup>
-							<tbody>
-								<tr id="">
-									<th>01.d_type</th>
-									<td>
-										<select class="form-control" id="d_type" ng-model="d_type">
-												<option value="elastic" >elastic</option>
-												<option value="mySql">mySql</option>
-												<option value="etc" >etc</option>
-										</select>
-	 								</td>
-								</tr>
-								<tr id="">
-									<th>03.d_index_nm</th>
-									<td><input type="input" id="d_index_nm" ></td>
-								</tr>
-								<tr id="">
-									<th>05.d_query</th>
-									<td><input type="input" id="d_query" ></td>
-								</tr>
-
-							</tbody>
-						</table>
-					</div>
-				</div>
 				<div class="panel-footer col-sm-12 textCenter"style="background-color: #fff;">
-					<button type="submit" ng-click="deleteNode()" class="btn btn-primary width90 colorG" id="del_btn">
+					<button type="submit" ng-click="deleteNode()" class="btn btn-primary width75 " id="del_btn">
 						<i class="fa fa-trash" />삭제
 					</button>
-					<button type="submit" ng-click="saveOption()" class="btn btn-primary width90 colorG" >
+					<button type="submit" ng-click="saveOption()" class="btn btn-primary width75 " >
 						<i class="fa fa-check" />저장
 					</button>
-					<button type="button" ng-click="closeOption()" class="btn btn-primary width90 colorG" >
+					<button type="button" ng-click="closeOption()" class="btn btn-primary width75 " >
 						<i class="fa fa-times" />닫기
 					</button>
 				</div>
@@ -275,7 +240,7 @@
 					<div class="op_box floatL" >⛏️설정</div>
 				</div>
 				<div class="p14" style="padding: 10px !important">
-					<table class="table_bor fontG">
+					<table class="table_bor GF">
 						<colgroup>
 							<col width="15%">
 							<col width="85%">
@@ -321,13 +286,13 @@
 				</div>
 				<div class="panel-footer col-sm-12 textCenter "
 					style="background-color: #fff;">
-					<button type="submit" ng-click="deleteEdge()" class="btn btn-primary width90 colorG" id="del_btn">
+					<button type="submit" ng-click="deleteEdge()" class="btn btn-primary width90 " id="del_btn">
 						<i class="fa fa-trash" />삭제
 					</button>
-					<button type="submit" ng-click="saveEdgeOption()" class="btn btn-primary width90 colorG" >
+					<button type="submit" ng-click="saveEdgeOption()" class="btn btn-primary width90 " >
 						<i class="fa fa-check" />저장
 					</button>
-					<button type="button" ng-click="closeEdgeOption()" class="btn btn-primary width90 colorG" >
+					<button type="button" ng-click="closeEdgeOption()" class="btn btn-primary width90 " >
 						<i class="fa fa-times" />닫기
 					</button>
 				</div>
@@ -340,6 +305,27 @@
 	</div>
 </section>
 <style>
+#airDataTile{
+	font-weight: 800; 
+	cursor:pointer; 
+	border: 0px; 
+	background-color: #f9f9f9; 
+	display: inline-block;
+}
+#airIsUse{
+	cursor: unset;
+	width: 22px; 
+	height: 23px;
+	background-color: #5D5D5D; 
+	position: unset; 
+	padding-top: 6px;
+	margin: 5px 0px 0px 5px;
+}
+.airTool{
+	height:40px; 
+	padding-top: 5px !important; 
+
+}
 .op_box{
 	padding:8px 0 5px 5px; 
 	font-size:13px; 
@@ -478,13 +464,10 @@
 
 
 
-.fontG th{
-	color: #565656;
+.GF th{
+	color: #454a51;
 }
-.colorG{
-	background-color: #d3daed; 
-	color: #565656;
-}
+
 #opacityValue, #blurValue, #dxValue, #dyValue {
 	width: 30px;
 	height: 24px;
@@ -633,7 +616,7 @@ border: 1px solid #ddd !important;
     transform: translateX(25px);
 }
 /* 툴바 상세보기 관련 */
-#toolbarDetail {
+#dataDetail {
     height: 436px; 
     background-color: white; 
     border-top:  1px solid #ddd;
@@ -648,18 +631,5 @@ border: 1px solid #ddd !important;
     transition:opacity 0.5s ease; */
 }
 
-.toolbarTable{
-	font-size:0.875em	
-}
 
-.memo-box {
-	position: absolute;
-	background-color: white;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 5px;
-	z-index: 99;
-    top: 196px;
-    left: 509px;
-}
 </style>

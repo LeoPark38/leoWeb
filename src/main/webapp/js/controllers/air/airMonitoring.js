@@ -707,39 +707,6 @@ angular.module('myApp').controller('airMonitoringCtrl', [
 		)		
 
 
-/*		var firstNode = function(x,y){
-			// 40, 40
-			// -440,-280
-			const path = graph.addNode({
-				shape: 'custom-rect',
-				id: "first",
-				x: x,
-				y: y,
-				width: 80,
-				height: 70,
-				attrs: {
-			    	body: {
-				      	fill: '#454a51',
-				        stroke: "#FFBB00",
-				        strokeWidth: 2,
-						rx:10,
-						ry:10
-				    },
-					text: {
-						fontSize: 14,
-						fill: "#FFFFFF",
-						text:"Air",
-						fontFamily: "Arial",
-						fontWeight:800
-					}
-				  },
-				  data:{
-					d_type:""
-				  }
-			})	
-		}
-	firstNode(44,36);*/
-
 				// 저장된 그래프 데이터 불러오기
 		var setX6Data = function(rs) {
 			var setData = [];
@@ -838,7 +805,6 @@ angular.module('myApp').controller('airMonitoringCtrl', [
 			let allofNode=[]; // node id들의 배열
 			for(let a in getNodes){
 				allofNode.push(getNodes[a].id)
-				//console.log("@ data : ",getNodes[a].store.data.data.d_type);
 			}
 			for(let i in allofNode){
 				nodeFade(allofNode[i])
@@ -871,8 +837,8 @@ angular.module('myApp').controller('airMonitoringCtrl', [
 
 			// 3. 타입 필터링 및 순서 정렬
 			let checkOrder = allNodes
-			  .map(node => node.getData().airType)     // 각 노드의 d_type 추출
-			  .filter(type => validTypes.includes(type));      // 유효한 타입만 남김
+			  .map(node => node.getData().airType)
+			  .filter(type => validTypes.includes(type)); 
 
 			let flowState = {
 			  pm10: getFlowLine($scope.airData.pm10Grade, $scope.airData.pm10Flag),

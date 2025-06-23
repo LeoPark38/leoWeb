@@ -32,7 +32,7 @@ angular.module('myApp').controller('airManageCtrl', [
 		$scope.isPanningMode = false; // panning <--> selection 옵션 스위칭	
 
 		//data div 관련 변수
-		$scope.d_type = "mySql"
+		$scope.air_type = "air"
 
 		$scope.isDisabled = true; // airSelect박스 disabled 처리
 
@@ -571,8 +571,8 @@ angular.module('myApp').controller('airManageCtrl', [
 			collapsable: true, // All 그룹 펼치기  
 			groups: [
 				{
-					title: '연결 노드',
-					name: 'group8',
+					title: 'AIR 노드',
+					name: 'group01',
 					graphHeight: 380,  // 그룹 캔버스 높이
 					layoutOptions: {
 						columns: 1,
@@ -583,9 +583,9 @@ angular.module('myApp').controller('airManageCtrl', [
 					collapsed: true
 				},
 				{
-					title: '기타 노드',
-					name: 'group3',
-					graphHeight: 90,  // 그룹 캔버스 높이
+					title: 'etc 노드',
+					name: 'group02',
+					graphHeight: 320,  // 그룹 캔버스 높이
 					layoutOptions: {
 						rowHeight: 70, // 스탠스 각 행의 높이
 					},
@@ -612,50 +612,21 @@ angular.module('myApp').controller('airManageCtrl', [
 			.then((response) => response.json())
 			.then((data) => {
 				//Stencil 에 label 추가
-				const textArray = []
-				const firewallArray = []
-				const dataManageArray = []
-				const cloudArray = []
-				const dnsArray = []
+				const imageArray = []
 				const indexArray = []
 				data.forEach((item, index) => {
-					if (item.type == "textNode") { // 그룹추가
-						textArray.push(graph.createNode(item))
-					}
-					//------------------------- 하위는 테스트용 이미지 추가 ----------------------------------- 
-					if (item.type == "firewall") { // 그룹추가
-						firewallArray.push(graph.createNode(item))
-					}
-					if (item.type == "dataManage") { // 그룹추가
-						dataManageArray.push(graph.createNode(item))
-					}
-					if (item.type == "cloud") { // 그룹추가
-						cloudArray.push(graph.createNode(item))
-					}
-					if (item.type == "dns") { // 그룹추가
-						dnsArray.push(graph.createNode(item))
-					}
+
 					if (item.type == "indexType") {
 						indexArray.push(graph.createNode(item))
 					}
+					if (item.type == "image") {
+						imageArray.push(graph.createNode(item))
+					}
 				});
-				/*	---> 사용안함 혹시 모르니 그냥 주석처리
-					//Stencil 에 image 추가
-					const imageNodes = data.filter(item => item.type === "image").map((item) =>
-						graph.createNode({
-							shape: 'custom-image',
-							label: item.label,
-							attrs: {
-								image: {
-									'xlink:href': item.image,
-								},
-							},
-						}),
-					)
-				*/
+
 				// 스탠실에 등록
-				stencil.load(indexArray, 'group8')
-				stencil.load(textArray, 'group3')
+				stencil.load(indexArray, 'group01')
+				stencil.load(imageArray, 'group02')
 			});
 
 		function preWork() {
@@ -696,7 +667,7 @@ angular.module('myApp').controller('airManageCtrl', [
 					}
 				},
 				data: {
-					d_type: "air"
+					air_type: "air"
 				}
 			})
 		}
@@ -707,26 +678,26 @@ angular.module('myApp').controller('airManageCtrl', [
 
 		function openTheDetail(state) {
 			// upd -> 접힘	ins -> 펼침	del -> 접힘
-			const toolbarDetail = $("#toolbarDetail");
+			const dataDetail = $("#dataDetail");
 			if (state == "ins") {
-				toolbarDetail.slideDown(500);  // 펼침
+				dataDetail.slideDown(500);  // 펼침
 			} else if (state == "upd") {
-				toolbarDetail.slideUp(500);  // 접힘
+				dataDetail.slideUp(500);  // 접힘
 			} else if (state == "del") {
-				toolbarDetail.slideUp(500);  // 접힘
+				dataDetail.slideUp(500);  // 접힘
 			} else if (state == "close") {
-				toolbarDetail.slideUp(500);  // 접힘
+				dataDetail.slideUp(500);  // 접힘
 			}
 
 
 		}
 		function openTogle() {
-			const toolbarDetail = $("#toolbarDetail");
+			const dataDetail = $("#dataDetail");
 
-			if (toolbarDetail.is(":visible")) {
-				toolbarDetail.slideUp(500);  // 접힘
+			if (dataDetail.is(":visible")) {
+				dataDetail.slideUp(500);  // 접힘
 			} else {
-				toolbarDetail.slideDown(500);  // 펼침
+				dataDetail.slideDown(500);  // 펼침
 			}
 		}
 
@@ -752,7 +723,7 @@ angular.module('myApp').controller('airManageCtrl', [
 
 		}
 		// 닫기 버튼
-		$scope.toolbarDetailClose = function() {
+		$scope.dataDetailClose = function() {
 			//상세보기 닫기
 			openTogle()
 
@@ -793,7 +764,7 @@ angular.module('myApp').controller('airManageCtrl', [
 			el.find("#x6_name").val(""); //이름 초기화
 			$scope.x6_type = 'airData'// 타읿 셀렉트 초기화
 			el.find("#x6_desc").val(""); // 설명 초기화
-			el.find('#isUseDiv').css('background-color', '#8C8C8C');// 상테값 초기화
+			el.find('#airIsUse').css('background-color', '#5D5D5D');// 상테값 초기화
 			el.find('#airDataTile').html("")
 			// 그래프 초기화
 			if (type == "all") {
@@ -881,26 +852,18 @@ angular.module('myApp').controller('airManageCtrl', [
 						// 기입된 정보 초기회
 						reset();
 
-						// title 셋팅
-						/*							if ($scope.state == "del") {
-														$scope.airtitle = ""
-														el.find('#airDataTile').html("")
-														el.find('#airtitle').html("")
-													} else {
-														$scope.airtitle = title
-													}*/
 						// saved node 초기화
 						savedNode = []
 
 						if (selectedUse == "true") {
-							el.find('#isUseDiv').css('background-color', '#337ab7');
+							el.find('#airIsUse').css('background-color', '#337ab7');
 						} else {
-							el.find('#isUseDiv').css('background-color', '#e82828');
+							el.find('#airIsUse').css('background-color', '#e82828');
 						}
 
 						//삭제시 완료 alert
 						if ($scope.state == "del") {
-							el.find('#isUseDiv').css('background-color', '#8C8C8C');
+							el.find('#airIsUse').css('background-color', '#5D5D5D');
 							// 그래프 초기화
 							$scope.cell = [];
 							graph.resetCells($scope.cell);
@@ -981,9 +944,9 @@ angular.module('myApp').controller('airManageCtrl', [
 
 					//  toolbar에 상태 색상 설정
 					if (isUse == "true") {
-						el.find('#isUseDiv').css('background-color', '#337ab7');
+						el.find('#airIsUse').css('background-color', '#337ab7');
 					} else {
-						el.find('#isUseDiv').css('background-color', '#e82828');
+						el.find('#airIsUse').css('background-color', '#e82828');
 					}
 
 					savedData(x6_structure);
@@ -1178,10 +1141,10 @@ angular.module('myApp').controller('airManageCtrl', [
 
 
 		// panning <--> selection
-		$scope.dragSwitch = function() {
-			console.log("--- dragSwitch --- ")
+		$scope.switch = function() {
+			console.log("--- switch --- ")
 			$scope.isPanningMode = !$scope.isPanningMode; // panning <--> selection 스위칭 true false 값
-			var img = document.getElementById("dragImg");
+			var img = document.getElementById("switchImg");
 
 			if ($scope.isPanningMode) {
 				console.log("@@ $scope.isPanningMode if : ", $scope.isPanningMode)
@@ -1190,7 +1153,7 @@ angular.module('myApp').controller('airManageCtrl', [
 				// selection 비활성화
 				selection.options.enabled = false
 				// hand 이미지로 변경
-				img.src = "../icon/soar/hand.png";
+				img.src = "../icon/main/hand.png";
 			} else {
 				console.log("@@ $scope.isPanningMode else : ", $scope.isPanningMode)
 				// panning 비활성화
@@ -1198,7 +1161,7 @@ angular.module('myApp').controller('airManageCtrl', [
 				// selection 활성화
 				selection.options.enabled = true
 				// click 이미지로 변경
-				img.src = "../icon/soar/click01.png";
+				img.src = "../icon/main/click01.png";
 			}
 
 
@@ -1245,9 +1208,7 @@ angular.module('myApp').controller('airManageCtrl', [
 						var outPutType = document.getElementById("outPutType").value*/
 
 			// node_data 관련 
-			var d_type = document.getElementById("d_type").value;
-			var d_index_nm = document.getElementById("d_index_nm").value;
-			var d_query = document.getElementById("d_query").value;
+			var air_type = document.getElementById("air_type").value;
 
 			let nodeData = node.getData() || {};
 			node.setData(nodeData)
@@ -1326,26 +1287,17 @@ angular.module('myApp').controller('airManageCtrl', [
 				node.attr('image/xlink:href', "")
 			}
 			//-------------------------------------------------------------------------- nodeData 관련		
-			nodeData.d_type = d_type
-			nodeData.d_index_nm = d_index_nm
-			nodeData.d_query = d_query
+			nodeData.air_type = air_type
+
 
 			//-------------------------------------------------------------------------- 팝업 관련			
-			/*			//data_type 설정
-						nodeData.data_type = dataType
-						//data_query 설정
-						nodeData.data_query = dataQuery
-						//data_query 설정   적용여부 0:No(미적용) 1:Yes(적용)
-						nodeData.apply = apply
-						// outputType 설정
-						nodeData.out_put_type = outPutType*/
 
 			// Data 추가					
 			node.setData(nodeData);
 			console.log("@@ saved node : ", node)
 
 			// check 해제  ---> 추후에 옵션 닫기함수불러올예정 
-			$('#moreOption').prop('checked', false);
+			$('#extraOption').prop('checked', false);
 			$scope.advancedOption = false;
 			$('#optionDiv').hide()
 
@@ -1365,15 +1317,9 @@ angular.module('myApp').controller('airManageCtrl', [
 
 		// 옵션 닫기
 		$scope.closeOption = function() {
-			// 고급 옵션 check 해제
-			$('#moreOption').prop('checked', false);
+			$('#extraOption').prop('checked', false);
 			$scope.advancedOption = false;
 
-			// 라벨 분리 옵션 check 해제
-			//$('#testCheck').prop('checked', false);
-
-
-			//tab 원위치
 			$('#optionDiv').hide()
 		}
 
@@ -1565,20 +1511,20 @@ angular.module('myApp').controller('airManageCtrl', [
 		//-----------------------------------------------------------------------------------------------------------------	
 
 		// 고읍옵션 사용여부
-		$('#moreOption').change(function() {
+		$('#extraOption').change(function() {
 			$scope.advancedOption = this.checked
 			if (this.checked) {
-				$('#tr_opa').show()
-				$('#tr_blur').show()
-				$('#tr_dx').show()
-				$('#tr_dy').show()
-				$('#tr_index').show()
+				$('#data_opacity').show()
+				$('#data_blur').show()
+				$('#data_dx').show()
+				$('#data_dy').show()
+				$('#data_index').show()
 			} else {
-				$('#tr_opa').hide()
-				$('#tr_blur').hide()
-				$('#tr_dx').hide()
-				$('#tr_dy').hide()
-				$('#tr_index').hide()
+				$('#data_opacity').hide()
+				$('#data_blur').hide()
+				$('#data_dx').hide()
+				$('#data_dy').hide()
+				$('#data_index').hide()
 			}
 		})
 		// 검증식
@@ -1797,20 +1743,22 @@ angular.module('myApp').controller('airManageCtrl', [
 			//console.log("@@ zIndex : ",node.getZIndex())
 			//console.log("[",node.getZIndex(),"] : ",node)
 
-			// 장비명,장비IP,메모는 수집장비에만 보이게끔.
-			const nodeMemo = document.getElementById("nodeMemo");
-			if (node.store.data.shape == "custom-rect" || node.store.data.shape == "group-node" || node.store.data.shape == "path") {
-				nodeMemo.style.display = 'none'
-			} else {
-				nodeMemo.style.display = ''
-			}
 
-			if (node.store.data.shape == "syslog-rect" || node.store.data.shape == "custom-rect" || node.store.data.shape == "group-node" || node.store.data.shape == "path" || node.store.data.shape == "air-node") {
+			
 
+console.log("node.store.data.shape : ", node.store.data.shape)
+			if ( node.store.data.shape == "custom-rect" || node.store.data.shape == "air-node") {
+				const nodeMemo = document.getElementById("nodeMemo");
+				if(node.store.data.shape == "air-node"){	
+					nodeMemo.style.display = ''
+				}else{
+					nodeMemo.style.display = 'none'
+				}
+				
 				$scope.thisNode = node
 				$scope.thisView = view
 				// 노드 클릭후 다음 노드 바로 클릭시 고급옵션 해제를 위해 
-				$('#moreOption').prop('checked', false);
+				$('#extraOption').prop('checked', false);
 				$scope.advancedOption = false;
 
 				let data = node.getData();
@@ -1840,7 +1788,6 @@ angular.module('myApp').controller('airManageCtrl', [
 				var bodyColor = document.getElementById("nodeColor") // colorpicker
 				var opacity = document.getElementById("opacity")
 				var color = node.attr('body/fill')
-
 				if (color.includes('#')) { // hex값일때
 					bodyColor.value = node.attr('body/fill')
 					$('#opacityValue').text("1")
@@ -1918,26 +1865,21 @@ angular.module('myApp').controller('airManageCtrl', [
 				var z_index = document.getElementById("zIndex")
 				z_index.value = node.getZIndex();
 
-				//              node 데이터
-				var d_type = document.getElementById("d_type");
-				d_type.value = data.d_type != undefined ? data.d_type : ""
-				var d_index_nm = document.getElementById("d_index_nm");
-				d_index_nm.value = data.d_index_nm != undefined ? data.d_index_nm : ""
-				var d_query = document.getElementById("d_query");
-				d_query.value = data.d_query != undefined ? data.d_query : ""
+				var air_type = document.getElementById("air_type");
+				air_type.value = data.air_type != undefined ? data.air_type : ""
 
 				if ($scope.advancedOption) {
-					$('#tr_opa').show()
-					$('#tr_blur').show()
-					$('#tr_dx').show()
-					$('#tr_dy').show()
-					$('#tr_index').show()
+					$('#data_opacity').show()
+					$('#data_blur').show()
+					$('#data_dx').show()
+					$('#data_dy').show()
+					$('#data_index').show()
 				} else {
-					$('#tr_opa').hide()
-					$('#tr_blur').hide()
-					$('#tr_dx').hide()
-					$('#tr_dy').hide()
-					$('#tr_index').hide()
+					$('#data_opacity').hide()
+					$('#data_blur').hide()
+					$('#data_dx').hide()
+					$('#data_dy').hide()
+					$('#data_index').hide()
 				}
 
 				$('#optionDiv').show()
@@ -1947,11 +1889,6 @@ angular.module('myApp').controller('airManageCtrl', [
 		//-------------------------------------------  Node 키보드 Action  ------------------------------------------------------		
 		graph.bindKey(['meta+s', 'ctrl+s'], () => {
 			$scope.saveG()
-			return false
-		})
-		// panning <--> selecting 변경
-		graph.bindKey(['meta+q', 'ctrl+q'], () => {
-			$scope.dragSwitch();
 			return false
 		})
 		// 복사         
@@ -2006,34 +1943,7 @@ angular.module('myApp').controller('airManageCtrl', [
 		// 삭제
 		graph.bindKey('delete', () => {
 			const cells = graph.getSelectedCells()
-			/*			if (cells.length) {
-							if (confirm('해당 노드를 삭제하시겠습니까?')) {
-								if (cells[0].id.length > 35) {
-									graph.removeCells(cells)
-									alert("삭제되었습니다.");
-								}else{
-									alert("해당 노드는 삭제 할 수 없습니다.");
-								}
-							}
-			
-						}*/
 			graph.removeCells(cells)
-		})
-
-		// 확대
-		graph.bindKey(['shift+=', 'meta+1'], () => {
-			const zoom = graph.zoom()
-			if (zoom < 1.5) {
-				graph.zoom(0.1)
-			}
-		})
-
-		// 축소
-		graph.bindKey(['shift+-', 'meta+2'], () => {
-			const zoom = graph.zoom()
-			if (zoom > 0.5) {
-				graph.zoom(-0.1)
-			}
 		})
 
 		// 키보드 좌측 
@@ -2046,7 +1956,6 @@ angular.module('myApp').controller('airManageCtrl', [
 				}
 			});
 		});
-
 		// 키보드 우측 
 		graph.bindKey(['right'], () => {
 			const selectedCells = graph.getSelectedCells();
@@ -2079,133 +1988,18 @@ angular.module('myApp').controller('airManageCtrl', [
 				}
 			});
 		});
-		//-------------------------------------------  windowSize  ------------------------------------------------------
-		// grid 관련
-		/*		function firstWindow(){
-					var windowHeight = $(window).height();
-					el.find("#stencil").height(windowHeight-200);
-				}
-				firstWindow()
-				$(window).bind('resize', function() {
-					el.find("#stencil").height(resizeScroll());
-						
-				})
-				function resizeScroll() {
-					var windowHeight = $(window).height();
-					return windowHeight - 200;
-				}*/
-		// toolbarDetail 관련
+
+		// dataDetail 관련
 		window.addEventListener('resize', function() {
 			// 형제 요소의 너비 가져오기
 			const siblingWidth = document.getElementById('toolbar').offsetWidth;
 
 			// absolute-box 요소의 너비를 형제 요소와 맞추기
-			document.getElementById('toolbarDetail').style.width = siblingWidth + 'px';
+			document.getElementById('dataDetail').style.width = siblingWidth + 'px';
 		});
 
 		// 초기 로드 시 너비 설정
 		window.dispatchEvent(new Event('resize'));
-
-		// 달력관련 함수
-		function judgeType(sel, type, opt, term) {
-			if (type == "date") {
-				el.find('#' + sel).datetimepicker("destroy");
-				if (opt != 'range') {
-					el.find('#' + sel).datetimepicker({
-						mask: '9999-19-39 29:59:59',
-						format: 'Y-m-d H:i:s',
-						step: 5,
-						onShow: function(ct) { }
-					});
-					var dt_start = new Date();
-					el.find('#' + sel).val($filter('date')(dt_start, 'yyyy-MM-dd HH:mm:59'));
-				} else {
-					el.find('#' + sel).datetimepicker({
-						mask: '9999-19-39 29:59:59',
-						format: 'Y-m-d H:i:s',
-						step: 5,
-						onShow: function(ct) {
-							changeDate(this, 0, '#' + sel, '#' + sel + '_range');
-						},
-						onSelectDate: function() {
-							changeDate(this, 0, '#' + sel, '#' + sel + '_range');
-						}
-					});
-					el.find('#' + sel + '_range').datetimepicker({
-						mask: '9999-19-39 29:59:59',
-						format: 'Y-m-d H:i:s',
-						step: 5,
-						onShow: function(ct) {
-							changeDate(this, 1, '#' + sel, '#' + sel + '_range');
-						},
-						onSelectDate: function() {
-							changeDate(this, 1, '#' + sel, '#' + sel + '_range');
-						}
-					});
-
-					var today = new Date();
-					el.find('#' + sel).val($filter('date')(today, 'yyyy-MM-dd HH:mm:59'));
-					el.find('#' + sel + '_range').val($filter('date')(today, 'yyyy-MM-dd HH:mm:59'));
-				}
-			}
-		};
-
-		// 날짜 변경
-		var changeDate = function(that, mode, start, end, isGrp) {
-			var dt = new Date();
-			var s_date = el.find(start).val().split(' ')[0].replace(/-/g, '/');
-			var e_date = el.find(end).val().split(' ')[0].replace(/-/g, '/');
-			var s_time = el.find(start).val().split(' ')[1].substring(0, 5);
-			var now = $filter('date')(dt, 'yyyy/MM/dd HH:mm:ss');
-			var now_day = now.split(' ')[0];
-			var now_time = now.split(' ')[1];
-
-			if (mode == 1) {
-				if (s_date != now_day) {
-					if (s_date != e_date) {
-						that.setOptions({ minTime: '00:00', maxTime: '24:00' });
-					} else {
-						that.setOptions({ minTime: s_time, maxTime: '24:00' });
-					}
-				}
-				if (e_date == now_day) {
-					if (s_date != e_date) {
-						that.setOptions({ minTime: '00:00', maxTime: '24:00' });
-					} else {
-						that.setOptions({ minTime: s_time, maxTime: '24:00' });
-					}
-				}
-				that.setOptions({ minDate: s_date, maxDate: now_day });
-			} else {
-				if (s_date != now_day) {
-					now_time = '24:00';
-				}
-				if (s_date != e_date) {
-					now_time = '24:00';
-				}
-				that.setOptions({ maxDate: now_day, maxTime: now_time });
-			}
-		};
-
-		// 모달창열기
-		function openModal(id, w, h, top, css) {
-			console.log("## openModal")
-			// 모달창 관련 옵션
-			el.find('#' + id).width(w);
-			el.find('#' + id).height(h);
-			el.find('#' + id).css('margin-left', -(w / 2));
-			el.find('#' + id + ' .panel-body').css(css)//--> css 는 {} 로
-			// el.find('#setSavePeriodModal .panel-body').height(200);
-			el.find('#' + id).css('top', top);
-			el.find('#' + id).css('border', "solid");
-			el.find('#' + id).css('z-index', 10);
-			el.find('#' + id).reveal({
-				animation: 'none',
-				closeonbackgroundclick: true
-			});
-		}
-
-
 
 
 

@@ -296,5 +296,66 @@
 		"data":{
 			"airType":"Register"
 		}
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/cloud.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/cloud2.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/dust.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/hot.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/rain.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/sunny.png"
+	},
+	{
+		"type": "image",
+		"shape": "image",
+		"label": "",
+		"width": 76, 
+		"height": 56,
+		"imageUrl": "../icon/winter.png"
 	}
+	
+	
+	
+	
+	
 ]

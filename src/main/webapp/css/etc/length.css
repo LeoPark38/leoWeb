@@ -2,6 +2,7 @@
 .width50 {width: 50px;}
 .width60 {width: 60px;}
 .width70 {width: 70px;}
+.width75 {width: 75px;}
 .width80 {width: 80px;}
 .width90 {width: 90px;}
 .width100 {width: 100px;}
@@ -28,6 +29,7 @@
 .p12{padding: 12px}
 .p14{padding: 14px}
 
+.pR10 {padding-right: 10px}
 .pL20 {padding-left: 20px}
 
 .floatL {float:left;}
