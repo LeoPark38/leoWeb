@@ -179,7 +179,7 @@ angular.module('myApp').controller('UserCtrl', [
 					el.find('#USER_ID').focus();
 					return;
 				}
-				if (niValiUt.chkEngNumCharMin5('#USER_ID')) {
+				if (jsUt.idMatch('#USER_ID')) {
 					alert("영문, 숫자만 입력 가능합니다. 최소 5글자 최대 12글자");
 					el.find('#USER_ID').focus();
 					return;
@@ -220,12 +220,12 @@ angular.module('myApp').controller('UserCtrl', [
 				var is_use = $('#IS_USE').is(":checked");
 				var tel = $('#USER_TEL').val();
 
-				if (niValiUt.chkEngNumCharMin5('#USER_ID')) {
+				if (jsUt.idMatch('#USER_ID')) {
 					alert("영문, 숫자만 입력 가능합니다. 최소 6글자 최대 15글자");
 					el.find('#USER_ID').focus();
 					return;
 				}
-				if (niValiUt.chkEmpty('#USER_PW') && $scope.mode === 'ins') {
+				if (jsUt.checkEmpty('#USER_PW') && $scope.mode === 'ins') {
 					alert('비밀번호를 입력해주세요.');
 					el.find('#USER_PW').focus();
 					return;
@@ -235,20 +235,20 @@ angular.module('myApp').controller('UserCtrl', [
 					el.find('#USER_PW').focus();
 					return;
 				}
-				if (!niValiUt.chkEmpty('#USER_PW')) {
-					if (niValiUt.chkEngNumCharMin8('#USER_PW')) {
+				if (!jsUt.checkEmpty('#USER_PW')) {
+					if (jsUt.passMatch('#USER_PW')) {
 						alert('비밀번호는 영문,숫자,특수문자 포함 최소 5글자 최대 20글자 입니다.')
 						el.find('#USER_PW').focus();
 						return;
 					}
 				}
-				if (niValiUt.chkEmpty('#USER_NM')) {
-					alert("사용자명을 입력해주세요");
+				if (jsUt.checkEmpty('#USER_NM')) {
+					alert("사용자명을 입력해주세요");	
 					el.find('#USER_NM').focus();
 					return;
 				}
-				if (niValiUt.chkEngKorMin1('#USER_NM')) {
-					alert("한글, 영문만 입력해주세요");
+				if (jsUt.onlyKENum('#USER_NM')) {
+					alert("사용자명에는 한글,영문,숫자로만 최소 1글자 최대 10글자 입니다.");
 					el.find('#USER_NM').focus();
 					return;
 				}
@@ -258,7 +258,7 @@ angular.module('myApp').controller('UserCtrl', [
 					el.find('#USER_TEL1').focus();
 					return;
 				} else {
-					if (niValiUt.chkTel('#USER_TEL')) {
+					if (jsUt.checkPhone('#USER_TEL')) {
 						alert('전화번호가 올바르지 않습니다');
 						el.find('#USER_TEL1').focus();
 						return;

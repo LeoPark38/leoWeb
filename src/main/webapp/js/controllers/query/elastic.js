@@ -48,7 +48,7 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		var agges = Object.keys(aggs);
 		// 로컬호스트 쿼리 저장용
 		var createTable = function() {
-			if (!localStorageDb) {jsUt.delocalStorage('q_editor', { query_data: [] })}
+			if (!localStorageDb) {jsUt.deflocalStorage('q_editor', { query_data: [] })}
 		}
 		createTable();		
 		
@@ -338,7 +338,7 @@ var get_recent = function(rowid) {
 		editor.keyBinding.addKeyboardHandler({
   			handleKeyboard: function (data, hash, keyString, keyCode) {
 				let KEY_ENTER = 13;
-				let KEY_K = 75;
+				let KEY_P = 80;
 				let LINE_INDEX = 1;
 			    let editor = data.editor;
 			    let pos = editor.getCursorPosition();
@@ -351,8 +351,8 @@ var get_recent = function(rowid) {
 			      	return;
 			    }
 
-			    // Ctrl+K → 포맷 실행
-			    if (hash === 1 && keyCode === KEY_K) {
+			    // Ctrl+P → 포맷 실행
+			    if (hash === 1 && keyCode === KEY_P) {
 			      	try {
 			        	$scope.editorFormatting();
 			      	} catch (e) {

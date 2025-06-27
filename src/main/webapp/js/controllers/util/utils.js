@@ -8,6 +8,22 @@ var jsUt;
 	}
 }(function () {
 	return {
+		idMatch: function(val) {
+        	return !/^[a-z0-9]{5,12}$/.test($(val).val().trim());
+    	},
+    	onlyKENum: function(element) {
+        	return !/^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]{1,10}$/.test($(element).val().trim());
+    	},
+    	passMatch: function(element) {
+        	return !/^(?=.*[A-Za-z])(?=.*[!@#$%^*+=-])(?=.*\d).{5,20}$/.test($(element).val().trim());
+    	},
+    	checkEmpty: function(element) {
+        	const val = $(element).val();
+        	return !val || val.trim() === '';
+    	},
+    	checkPhone: function(element) {
+        	return !/^01[016789]-\d{3,4}-\d{4}$/.test($(element).val().trim());
+    	},
 		unescapeHtml: function(html){
 			const temp = document.createElement("textarea");
   			temp.innerHTML = html;
@@ -18,7 +34,7 @@ var jsUt;
 					.replace(/\\n/g, '\n')
 					.replace(/\\"/g, '"');
 		},
-		delocalStorage : function(key, value) {
+		deflocalStorage : function(key, value) {
 		    var rt = this.localStorage(key);
 		    if (!rt) {
 		      rt = this.localStorage(key, value);
