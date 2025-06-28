@@ -201,8 +201,6 @@ angular.module('myApp').controller('editorElasticCtrl', [
 		        } else {
 		            alert("처리 중 오류가 발생하였습니다. 다시 시도해주세요.");
 		        }
-		    }, function (rs) {
-		        $scope.$emit('pageRD', [location.href, rs.status]);
 		    });
 		}
 
@@ -516,8 +514,7 @@ var get_recent = function(rowid) {
 						return jsUt.result(json, "data");
 					},
 					error: function(xhr) {
-						if ("error" == xhr.statusText || xhr.readyState == 4)
-							$scope.$emit('pageRD', [location.href, xhr.status]);
+
 					}
 				},
 				pageLength: 4,
@@ -655,8 +652,6 @@ var get_recent = function(rowid) {
 				} else {
 					alert("삭제 중 오류가 발생하였습니다. 다시 시도해주세요");
 				}
-			}, function(rs) {
-				$scope.$emit('pageRD', [location.href, rs.status]);
 			});
 		}	    	
 

@@ -882,9 +882,7 @@ angular.module('myApp').controller('airManageCtrl', [
 
 					if (rs.data.sError)
 						alert(rs.data.sError);
-					if (rs.status == 500)
-						$scope.$emit('pageRD', [location.href, rs.status]);
-				}, function(rs) { });
+				});
 			} else {
 				console.log("??")
 				alert(alert_String)

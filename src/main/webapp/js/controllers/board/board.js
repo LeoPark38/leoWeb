@@ -207,10 +207,6 @@ angular.module('myApp').controller('boardCtrl', [
 					}
 					if (rs.data.sError)
 						alert(rs.data.sError);
-					if (rs.status == 440)
-						$scope.$emit('pageRD', [location.href, rs.status]);
-				}, function(rs) {
-					$scope.$emit('pageRD', [location.href, rs.status]);
 				});
 			}
 
@@ -284,10 +280,6 @@ angular.module('myApp').controller('boardCtrl', [
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
-						if (rs.status == 440)
-							$scope.$emit('pageRD', [location.href, rs.status]);
-					}, function(rs) {
-						$scope.$emit('pageRD', [location.href, rs.status]);
 					});
 					
 				}
@@ -309,10 +301,6 @@ angular.module('myApp').controller('boardCtrl', [
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
-						if (rs.status == 440)
-							$scope.$emit('pageRD', [location.href, rs.status]);
-					}, function(rs) {
-						$scope.$emit('pageRD', [location.href, rs.status]);
 					});
 		}
 //------------------- 댓글 삭제 -------------------	
@@ -367,10 +355,6 @@ angular.module('myApp').controller('boardCtrl', [
 				}
 				if (rs.data.sError)
 					alert(rs.data.sError);
-				if (rs.status == 440)
-					$scope.$emit('pageRD', [location.href, rs.status]);
-			}, function(rs) {
-				$scope.$emit('pageRD', [location.href, rs.status]);
 			});
 		}
 //------------------- 대댓글 작성란 -------------------

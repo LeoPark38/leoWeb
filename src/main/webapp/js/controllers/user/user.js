@@ -300,10 +300,6 @@ angular.module('myApp').controller('UserCtrl', [
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
-						if (rs.status == 440)
-							$scope.$emit('pageRD', [location.href, rs.status]);
-					}, function(rs) {
-						$scope.$emit('pageRD', [location.href, rs.status]);
 					});
 				}
 
@@ -326,10 +322,6 @@ angular.module('myApp').controller('UserCtrl', [
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
-						if (rs.status == 440)
-							$scope.$emit('pageRD', [location.href, rs.status]);
-					}, function(rs) {
-						$scope.$emit('pageRD', [location.href, rs.status]);
 					});
 					
 				}
