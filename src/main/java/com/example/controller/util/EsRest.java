@@ -410,6 +410,23 @@ public class EsRest {
 	        return toResJson(null);
 	    }
 	}
+
+	public JSONObject deleteByQuery(String index, StringBuilder sb) throws Exception {
+	    if (index == null || index.isEmpty() || sb == null || sb.length() == 0) {
+	        throw new IllegalArgumentException("index와 query는 필수입니다.");
+	    }else {
+		    RestClient rc = EsRest.getInstance();
+
+		    HttpEntity entity = new NStringEntity(sb.toString(), ContentType.APPLICATION_JSON);
+
+		    Request request = new Request("POST", "/" + index + "/_delete_by_query");
+		    request.setEntity(entity);
+		    request.setOptions(EsRest.COMMON_OPTIONS);
+
+
+		    return toResJson(rc.performRequest(request).getEntity().getContent());	    	
+	    }
+	}
 	
 	// #========================= bulk ==============================#		
 	public JSONObject updateBulk(StringBuilder bulkData) throws Exception {

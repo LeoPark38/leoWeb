@@ -680,5 +680,33 @@ public class BoardService {
         }
     }
   
+    // 댓글 삭제
+    public HashMap<String, Object> deleteComment(String id) throws Exception {
+    	EsRest esRest = new EsRest();
+    	HashMap<String, Object> map = new HashMap<>();
+    	 System.out.println("##@@ deleteComment ##@@");
+        try {
+        	//해당 댓글 삭제
+        	esRest.delete(comment_index, id);
+        	
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            sb.append("\"query\": {");
+            sb.append("\"match\": {");
+            sb.append(" \"COMMENT_PARENT_ID\": \"" + id + "\" ");
+            sb.append("}");
+            sb.append("}");
+            sb.append("}");
+        	System.out.println("sb : "+sb);
+        	//해당 댓글의 대댓글 삭제
+        	esRest.deleteByQuery(comment_index, sb);
+
+        	map.put("sOk", "ok");
+        } catch (Exception e) {
+            map.put("sError", "삭제에 실패하였습니다.");
+        }
+
+        return map;
+    }  
     
 }

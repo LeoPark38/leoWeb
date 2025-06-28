@@ -229,4 +229,25 @@ public class BoardCtl {
 	    
 	    return map;
 	}		
+	
+	/**
+	 * 댓글 삭제
+	 * @param HashMap<String, Object> @return HashMap<String, Object>
+	 */	
+	@RequestMapping(value = "/deleteComment")
+	public @ResponseBody HashMap<String, Object> deleteComment(@RequestBody HashMap<String, Object> param) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    System.out.println("#### deleteComment ####");
+	    try {
+	    	String id = (String) param.get("_id");
+	    	System.out.println("#### id #### : "+id);
+			map = boardService.deleteComment(id);
+			map.put("sOk", "ok");
+	    } catch (Exception e) {
+	        map.put("sError", "댓글 정보를 가져올 수 없습니다");
+	        System.out.println("sError" + e);
+	    }
+	    
+	    return map;
+	}
 }

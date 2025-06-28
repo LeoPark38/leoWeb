@@ -2,9 +2,6 @@ angular.module('myApp').controller('boardCtrl', [
 	'$scope', '$element', '$rootScope', '$http', '$compile', '$filter', '$timeout',
 	function($scope, $element, $rootScope, $http, $compile, $filter, $timeout) {
 		console.log("## board.js ##")
-		console.log("## work Action 테스트중! ##")
-		console.log("## work Action 테스트중! ##")
-		console.log("## work Action 테스트중! ##")
 		var el = $($element);
 		var sAction = {
 			save: '../board/saveBoard',
@@ -12,6 +9,7 @@ angular.module('myApp').controller('boardCtrl', [
 			childcomment : '../board/saveChildComment', // 대댓글 저장 
 			cnt : '../board/updateViewCnt',
 			updateLike : '../board/updateLike',
+			delecomment: '../board/deleteComment', // 댓글 삭제
 
 		};
 		var gAction = {
@@ -82,7 +80,6 @@ angular.module('myApp').controller('boardCtrl', [
 						}
 					},
 					dataSrc: function(json) {
-						console.log("## DataTable: ", jsUt.resultNum(json, "data", table));
 						return jsUt.resultNum(json, "data", table);
 					},
 				},
@@ -144,7 +141,7 @@ angular.module('myApp').controller('boardCtrl', [
 				initComplete: function() {
 				  setTimeout(function() {
 				    table.columns.adjust().draw();
-				  }, 200);  // 렌더링 이후 컬럼 재계산
+				  }, 500);  // 렌더링 이후 컬럼 재계산
 				},
 				drawCallback: function() {
 				  //table.columns.adjust();
@@ -235,7 +232,6 @@ angular.module('myApp').controller('boardCtrl', [
 				        row.BOARD_CONTENT = jsUt.unescapeBoardContent(row.BOARD_CONTENT);
 				    }
 					if (row) {
-						console.log("@ row : ",row)
 						$scope.boardData = row
 						$scope.boardData.BOARD_MK_DT = $scope.boardData.BOARD_MK_DT.split('+')[0];
 						el.find('#_id').val(row._id)
@@ -309,7 +305,7 @@ angular.module('myApp').controller('boardCtrl', [
 							$scope.commentData = ""
 							setTimeout(function () {
 								$scope.comment_loard();
-							}, 200);
+							}, 500);
 						}
 						if (rs.data.sError)
 							alert(rs.data.sError);
@@ -319,7 +315,24 @@ angular.module('myApp').controller('boardCtrl', [
 						$scope.$emit('pageRD', [location.href, rs.status]);
 					});
 		}
-		
+//------------------- 댓글 삭제 -------------------	
+		$scope.delete_save = function(v) {
+			if (confirm("삭제 하시겠습니까?")) {
+				var param ={
+					_id : v
+				}
+				$http.post(sAction.delecomment,param, $rootScope.http_config).then(function(rs) {
+					console.log("rs :  ",rs)
+					if (rs.data.sOk == 'ok') {
+						setTimeout(function () {
+							$scope.comment_loard();
+						}, 1000);
+					}
+					if (rs.data.sError) alert(rs.data.sError);
+				});
+			}
+
+		}
 //------------------- 댓글 불러오기 -------------------
 		$scope.comment_loard = function() {
 			var param ={
@@ -351,7 +364,6 @@ angular.module('myApp').controller('boardCtrl', [
 					        }
 					    }
 					});
-					console.log("@ $scope.commentList : ",$scope.commentList)
 				}
 				if (rs.data.sError)
 					alert(rs.data.sError);
@@ -384,14 +396,13 @@ angular.module('myApp').controller('boardCtrl', [
 			  userId : $rootScope.userInfo.user_id,
 			};
 		  	$http.post(sAction.childcomment, param, $rootScope.http_config).then(function(rs) {
-				console.log("rs : ",rs)
 			    if (rs.data.sOk === 'ok') {
 			    	alert("등록되었습니다.");
 			      	$scope.replyTargetId = null;
 			      	$scope.replyContent[parentId] = "";
       				setTimeout(function () {
 						$scope.comment_loard();
-					}, 200);
+					}, 500);
 			      
 			    } else if (rs.data.sError) {
 			      alert(rs.data.sError);
@@ -482,7 +493,6 @@ angular.module('myApp').controller('boardCtrl', [
 //------------------- 좋아요 처리 함수  -------------------		
 		$scope.likeBoardPrc = function(param) {
 		  	$http.post(sAction.updateLike, param, $rootScope.http_config).then(function(rs) {
-				//console.log("rs : ",rs)
 				//$scope.$applyAsync()
 				
 		  	});			
