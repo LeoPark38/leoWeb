@@ -127,24 +127,40 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<th>air_type</th>
+									<th>타입</th>
 									<td>
 										<select class="form-control" id="air_type" ng-model="air_type">
-												<option value="air" >air</option>
+												<option value="air" >air</option> 
 												<option value="rain">rain</option>
 												<option value="etc" >etc</option>
 										</select>
 	 								</td>
 								</tr>
 								<tr>
-									<th>명칭</th>
+									<th>제목</th>
 									<td><input type="input" id="label" ></td>
 								</tr>
 								<tr>
-									<th>색상</th>
+									<th>내부 색</th>
 									<td><input type="color" id="nodeColor"></td>
 								</tr>
 								<tr>
+									<th>외곽 너비</th>
+									<td><input type="input" id="strokeWidth"></td>
+								</tr>
+								<tr>
+									<th>외곽 색</th>
+									<td><input type="color" id="strokeColor"></td>
+								</tr>
+								<tr>
+									<th>글 크기</th>
+									<td><input type="input" id="font"></td>
+								</tr>
+								<tr>
+									<th>글 색</th>
+									<td><input type="color" id="fontColor"></td>
+								</tr>
+<!-- 								<tr>
 									<th>폰트 종류</th>
 									<td>
 										<select class="form-control" id="fontFamily"
@@ -158,29 +174,13 @@
 													<option value="Open Sans, sans-serif" style="font-family: Open Sans, sans-serif;">다목적(Versatile)</option>
 											</select>
 	 								</td>
-								</tr>
-								<tr>
-									<th>폰트 크기</th>
-									<td><input type="input" id="font"></td>
-								</tr>
-								<tr>
-									<th>폰트 색상</th>
-									<td><input type="color" id="fontColor"></td>
-								</tr>
-								<tr>
-									<th>테두리 넓이</th>
-									<td><input type="input" id="strokeWidth"></td>
-								</tr>
-								<tr>
-									<th>테두리 색상</th>
-									<td><input type="color" id="strokeColor"></td>
-								</tr>
+								</tr> -->
 								<tr id="nodeMemo">
 									<th>메모</th>
 									<td><textarea class="form-control" id="node_content" name="editor" style="resize: none"></textarea></td>
 								</tr>
 								<tr id="data_opacity" style="display: none;">
-									<th>opacity</th>
+									<th>투명도</th>
 									<td>
 										<input type="range" min="0" max="1" step="0.05" id="opacity" 
 											ng-model="opacityValue" ng-change="changeOpacity()"> 
@@ -188,7 +188,7 @@
 									</td>
 								</tr>
 								<tr id="data_blur" style="display: none;">
-									<th>blur</th>
+									<th>흐림도</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="blur"
 											ng-model="blurValue" ng-change="changeBlur()"> 
@@ -196,7 +196,7 @@
 									</td>
 								</tr>
 								<tr id="data_dx" style="display: none;">
-									<th>dx</th>
+									<th>x축 그림자</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="dx"
 											ng-model="dxValue" ng-change="changeDx()"> 
@@ -204,7 +204,7 @@
 									</td>
 								</tr>
 								<tr id="data_dy" style="display: none;">
-									<th>dy</th>
+									<th>y축 그림자</th>
 									<td>
 										<input type="range" min="0" max="20" step="1" id="dy"
 										ng-model="dyValue" ng-change="changeDy()"> 
@@ -247,7 +247,7 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th>00.flowLine</th> 
+								<th>방향 설정</th> 
 								<td>
 									<select class="form-control" id="flowLine" ng-model="flowLine">
 										<option value="NONE">NONE</option>
@@ -257,16 +257,15 @@
  								</td>
 							</tr>
 							<tr>
-								<th>1.테두리 넓이</th>
+								<th>너비</th>
 								<td><input type="input" id="strokeWidth_edge"></td>
 							</tr>
 							<tr>
-								<th>2.Marker 크기</th>
+								<th>끝 표시 크기</th>
 								<td><input type="input" id="targetWidth_edge"></td>
 							</tr>
 							<tr>
-								<th>3.Marker 종류</th>
-								<!-- <td><input type="input" id="family"></td> -->
+								<th>끝 표시 종류</th>
 								<td>
 									<select class="form-control" id="markerFamily"
 											ng-model="markerFamily">
@@ -277,10 +276,6 @@
 									</select>
  								</td>
 							</tr>
-	<!-- 						<tr>
-								<th>5.색상</th>
-								<td><input type="color" id="edgeColor"></td>
-							</tr> -->
 						</tbody> 
 					</table>
 				</div>

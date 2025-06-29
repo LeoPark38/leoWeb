@@ -25,6 +25,7 @@ public class LogInCtl {
 	
     @RequestMapping(value = "/login")
     public HashMap<String, Object> login(@RequestBody HashMap<String, Object> param, HttpSession session) throws Exception {
+        System.out.println("#### login ####");
     	HashMap<String, Object> rs = new HashMap<>();
         HashMap<String, Object> user_map = new HashMap();
         EsRest es = new EsRest();
@@ -47,7 +48,7 @@ public class LogInCtl {
         sb.append("}");
 
 		chk = es.count(user_index, null, sb);
-     
+		System.out.println("#### chk : "+chk);
 		if(chk == 1) {
 			// 체크한 id 정보 가져오기
 	        List<String> column_list = new ArrayList<>();
@@ -79,7 +80,7 @@ public class LogInCtl {
 	            user_map.put("user_like_board", data.get("USER_LIKE_BOARD"));
  
 	            session.setAttribute("userInfo", user_map);
-
+	            System.out.println("#### user_map : "+user_map);
 	            rs.put("sOk", "ok");
 	            rs.put("user_map", user_map);
 	            rs.put("redirectUrl", "/sas/views/board/board.html");
@@ -87,6 +88,7 @@ public class LogInCtl {
 	            throw new Exception("Elasticsearch 호출 오류", e);
 	        }
 		}else {
+			System.out.println("#### fale");
 			rs.put("sOk", "no");
 		}
 		return rs;

@@ -1738,11 +1738,6 @@ angular.module('myApp').controller('airManageCtrl', [
 		// 테스트를 위해ㅔ  임시 주석 
 		graph.on('node:dblclick', ({ node, view }) => {
 			console.log("[node:dblclick] : ", node)
-			//console.log("@@ zIndex : ",node.getZIndex())
-			//console.log("[",node.getZIndex(),"] : ",node)
-
-
-			
 
 console.log("node.store.data.shape : ", node.store.data.shape)
 			if ( node.store.data.shape == "custom-rect" || node.store.data.shape == "air-node") {
