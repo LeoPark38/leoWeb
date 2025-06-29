@@ -43,13 +43,16 @@
 			body: JSON.stringify(param)
 		})
 		.then(response => {
-			console.log("로그인 시도 : ",response.ok)
 			if (!response.ok) throw new Error('로그인 실패');
 			return response.json();
 		})
 		.then(data => {
-			console.log("로그인 성공 :", data);
-			location.href = "/sas/views/sas.html#!/board/board";
+			if(data.sOk == "ok"){
+				location.href = "/sas/views/sas.html#!/board/board";
+			}else{
+				alert("로그인 실패 \n아이디 또는 비밀번호를 확인해주세요");
+			}
+			
 			// 예시: location.href = "/main";
 		})
 		.catch(error => {
