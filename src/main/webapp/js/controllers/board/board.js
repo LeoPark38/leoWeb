@@ -328,6 +328,7 @@ angular.module('myApp').controller('boardCtrl', [
 			}
 			$http.post(gAction.comment,param, $rootScope.http_config).then(function(rs) {
 				var comentData = jsUt.result(rs,"row")
+				console.log("@ comentData : ",comentData)
 				if (rs.data.sOk == 'ok') {
 					$scope.commentCnt = comentData.length
 					$scope.commentList = [];

@@ -117,7 +117,10 @@
 								    </div>
 								    <div style="font-size: 12px; color: #999;">
 								    	<a href="javascript:;" ng-click="replyComment(comment)" style="margin-right: 10px;">댓글 달기</a>
-								    	<button ng-click="delete_save(comment.COMMENT_ID)" class="btn btn-danger btn-sm x-btn floatR">X</button>
+								    	<button 
+								    		ng-if="comment.COMMENT_USER_ID === userInfo.user_id"
+								    		ng-click="delete_save(comment.COMMENT_ID)" 
+								    		class="btn btn-danger btn-sm x-btn floatR">X</button>
 								    </div>
 							  	</div>
 							
@@ -188,6 +191,7 @@
 					<div class="textCenter mT20">
 						<div class="floatR">
 							<button type="button" ng-click="board_delete()" id="btn_delete"
+								ng-if="boardData.BOARD_USER_ID === userInfo.user_id"
 								class="btn btn-primary width120 fwb">
 								<i class="fa fa-trash" />삭제
 							</button>
@@ -258,7 +262,10 @@
 </section>
 <style>
 
-
+	.x-btn{
+		padding: 1px 5px !important;
+		font-size: 10px !important;
+	}
 
 
 /* 좋아요버튼 이벤트 관련  css */
