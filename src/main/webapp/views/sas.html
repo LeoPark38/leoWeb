@@ -3,18 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>AngularJS App</title>
-    <!-- plugin 로드 --> <!-- 굳이 플러그인으로 했어야했을까.. -->
-	
-	<script src="../plugin/ace/ace.js"></script>
-	<script src="../plugin/ace/ext-language_tools.js"></script>
-	<script src="../plugin/ace/ext-beautify.js"></script>
 
-	<script src="../plugin/jquery.js"></script>  
-	<script src="../plugin/jquery-ui.js"></script>  
-	<script src="../plugin/reveal.js"></script>  
-	<script src="../plugin/bootstrap.min.js"></script>  
-	<script src="../plugin/multiple-select/multiple-select.js"></script>  
-	
+<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>  
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<!-- 부트스트랩  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+<!-- 앵귤러 관련 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@uirouter/angularjs@1.0.29/release/angular-ui-router.min.js"></script>
+<!-- 데이터 테이블 -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<!-- Ace 에디터 -->
+	<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-min/ace.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-min/ext-language_tools.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.32.3/src-min/ext-beautify.js"></script>
+<!-- 그리드 -->
+	<script src="https://cdn.jsdelivr.net/npm/gridstack@9.4.0/dist/gridstack-all.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@9.4.0/dist/gridstack.min.css" />
+<!-- 폰트 -->	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome-animation@0.3.0/dist/font-awesome-animation.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- date -->
+	<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">	
+<!-- antV -->	
 	<script src="../plugin/antv/x6.js"></script> 
 	<script src="../plugin/antv/transform.js"></script> 
 	<script src="../plugin/antv/stencil.js"></script> 
@@ -24,57 +42,33 @@
 	<script src="../plugin/antv/history.js"></script> 
 	<script src="../plugin/antv/clipboard.js"></script> 
 	<script src="../plugin/antv/minimap.js"></script> 
-	
-	<script src="../plugin/gridstack/gridstack-all.js"></script> 
-	<link rel="stylesheet" href="../plugin/gridstack/gridstack.min.css">
+<!-- 기타 라이브러리 -->
+	<script src="https://unpkg.com/split.js/dist/split.min.js"></script> 	<!-- 스플릿 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>		<!-- alert -->
+	<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>	<!-- ecahrt -->
 
-	<!-- css 로드 -->
+
+<!-- 기타 css -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/sub.css"/>
-    
-    <!-- css 임시  -->
-   	<link rel="stylesheet" href="../css/etc/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/etc/components.css">
-	<link rel="stylesheet" href="../css/etc/datetimepicker.css">	
-	<link rel="stylesheet" href="../css/etc/ng-custom.css">
 	<link rel="stylesheet" href="../css/etc/antv.css">
 	<link rel="stylesheet" href="../css/etc/length.css">
 	<link rel="stylesheet" href="../css/etc/table.css">
 	<link rel="stylesheet" href="../css/etc/tab.css">
-<!-- 	<link rel="stylesheet" href="../css/etc/text.css"> -->
 	<link rel="stylesheet" href="../css/etc/etc.css">
 	<link rel="stylesheet" href="../css/etc/base.css">
- 	<link rel="stylesheet" href="../plugin/bootstrap-toggle/bootstrap-toggle.css"> 
 	<link rel="stylesheet" href="../css/etc/air.css">
-	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome.min.css">
-	<link rel="stylesheet" href="../plugin/font-awesome/font-awesome-animation.min.css">
-	<link rel="stylesheet" href="../plugin/font-awesome/flaticon.css">
-	<link rel="stylesheet" href="../plugin/animate/animate.css">
-	<link rel="stylesheet" href="../plugin/multiple-select/multiple-select.css">
+<!-- 	<link rel="stylesheet" href="../css/etc/ng-custom.css"> -->
+<!-- 	<link rel="stylesheet" href="../css/etc/text.css"> -->
 
-	<link rel="stylesheet" href="../plugin/waitMe/waitMe.min.css">
 
 	
-	<!-- dataTable 관련 -->
- 	<script src="../plugin/dataTables/jquery.dataTables.min.js"></script>
- 	<script src="../plugin/dataTables/fnPagingType.js"></script>
-	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.min.css">	
-	<link rel="stylesheet" href="../plugin/dataTables/jquery.treeTable.css">
-	<link rel="stylesheet" href="../plugin/dataTables/dataTables.colReorder.min.css">
-	<link rel="stylesheet" href="../plugin/dataTables/dataTables.rowReorder.css">
-	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.colResize.css">
-	<link rel="stylesheet" href="../plugin/dataTables/jquery.dataTables.colResize.css">
-		
-	<!-- js 로드 -->
-    <script src="../js/angular/angular.min.js"></script>
-    <script src="../js/angular/angular-animate.min.js"></script>
-    <script src="../js/angular/angular-cookies.min.js"></script>
-    <script src="../js/angular/angular-route.min.js"></script>
-    <script src="../js/angular/angular-ui-router.min.js"></script>
-
+	
+   
+    
+<!-- 페이지별 js 로드 -->
     <script src="../js/app.js"></script>
 	<script src="../js/controller.js"></script>
-<!-- 페이지별 js 로드 -->
     <script src="../js/controllers/test.js"></script>
 	<script src="../js/controllers/HomeController.js"></script>
 	<script src="../js/controllers/header.js"></script>
@@ -103,12 +97,7 @@
 	<script src="../js/controllers/stats/radar.js"></script>
 	<script src="../js/controllers/stats/table.js"></script>
 
-	<!-- 기타 라이브러리 -->
-	<script src="https://unpkg.com/split.js/dist/split.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-	<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
 	
 	
 </head>

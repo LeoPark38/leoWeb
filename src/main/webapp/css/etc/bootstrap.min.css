@@ -1,3 +1,4 @@
+
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -6784,7 +6785,6 @@ button.list-group-item-danger.active:hover {
     padding: 0 0 0 18px;
     font-size: 16px;
     color: inherit;
-    background: url("../img/bl.png") no-repeat 0px 1px;
 }
 
 .panel-title>.small,

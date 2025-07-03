@@ -104,7 +104,7 @@ angular.module('myApp').controller('boardCtrl', [
 						}
 					},
 					{
-						targets: [2], width: '50%', class: 'textLeft', render: function(data, type, row) {
+						targets: [2], width: '45%', class: 'textLeft', render: function(data, type, row) {
 							let title = row.BOARD_TITLE || '';
 							let commentCount = row.COMMENT_COUNT || 0;
 							let commentHtml = commentCount > 0 ? ` <span style="background-color:#e9f5ff; color:#007bff; padding:2px 6px; border-radius:10px; font-size:0.8em;">  ${commentCount}</span>`: '';
@@ -126,7 +126,7 @@ angular.module('myApp').controller('boardCtrl', [
 					
 					{ targets: [6], width: '5%', class: 'textLeft', visible: true, searchable: false },
 					
-					{ targets: [7], width: '5%', class: 'textLeft', visible: true, searchable: false },
+					{ targets: [7], width: '10%', class: 'textLeft', visible: true, searchable: false },
 
 				],
 				pagingType: "full_numbers",

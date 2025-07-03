@@ -5,7 +5,7 @@
 	color: #337ab7; 
 }
 table.dataTable tbody th, table.dataTable tbody td {
-	padding: 4px 8px;
+	padding: 8px;
 }
 
 .table td {
@@ -57,9 +57,6 @@ div.dt-toolbar{
 }
 table.dataTable thead .sorting{
     cursor: pointer;
-}
-table.dataTable thead .sorting {
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATAgMAAAAPPt5fAAAACVBMVEUAAADIyMjl5eVIBBP/AAAAAXRSTlMAQObYZgAAAClJREFUCNdjwAYEwGQKiGDsBJFsTA5AUoJhAqZaiDhEDVg9RC/MHEwAANsMA91AQfd/AAAAAElFTkSuQmCC) no-repeat center right;
 }
 div.dataTables_scrollBody table {
     border-top: 1px solid #b5baca;

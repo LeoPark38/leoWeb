@@ -1,4 +1,4 @@
-<section id="main-content" class="animated fadeIn">
+<section id="main-content" class="animate__animated animate__fadeIn">
 	<div class="panel panel-default">
 		<div class="panel-heading clearfix">
 			<h3 class="panel-title pull-left">
@@ -6,35 +6,35 @@
 			</h3>
 		</div>
 		<div class="panel-body">
-		<!-- <button class="btn btn-primary mrgB10" ng-click="saveLayout()">저장</button> -->
-	    <button ng-click="widgetMange()" class="btn btn-sm btn-primary">
-           <i class="fas fa-server"></i> 위젯 관리
-        </button>
-		<div id="widgetGrid" class="grid-stack"></div>
-		<div id="widgetModal" class="panel reveal-modal">
-			<div class="panel-heading">
-				<h2 class="modal_title">위젯 관리</h2>
+			<!-- <button class="btn btn-primary mrgB10" ng-click="saveLayout()">저장</button> -->
+		    <button ng-click="widgetMange()" class="btn btn-sm btn-primary">
+	           <i class="fas fa-server"></i> 위젯 관리
+	        </button>
+			<div id="widgetGrid" class="grid-stack"></div>
+			<div id="widgetModal" class="panel reveal-modal">
+				<div class="panel-heading">
+					<h2 class="modal_title">위젯 관리</h2>
+				</div>
+				<div class="" style="padding:10px"> 
+					<select id="widgetType">
+				    	<option value="barChart">Bar 차트</option>
+				      	<option value="lineChart">Line 차트</option>
+				      	<option value="pieChart">Pie 차트</option>
+				      	<option value="gageChart">Gage 차트</option>
+				      	<option value="radarChart">Radar 차트</option>
+				      	<option value="tableChart">데이터 테이블</option>
+				    </select>
+				    <input id="widgetTitle" placeholder="위젯 제목" />
+				</div>
+				<div>
+					<button type="submit" ng-click="widgetModal_close()"class="btn btn-primary floatR width90">
+						<i class="fa fa-times"></i>&nbsp;닫기
+					</button>
+					<button type="submit" ng-click="addWidget()"class="btn btn-primary floatR width90">
+						<i class="fa fa-times"></i>&nbsp;추가
+					</button>
+				</div>
 			</div>
-			<div class="" style="padding:10px"> 
-				<select id="widgetType">
-			    	<option value="barChart">Bar 차트</option>
-			      	<option value="lineChart">Line 차트</option>
-			      	<option value="pieChart">Pie 차트</option>
-			      	<option value="gageChart">Gage 차트</option>
-			      	<option value="radarChart">Radar 차트</option>
-			      	<option value="tableChart">데이터 테이블</option>
-			    </select>
-			    <input id="widgetTitle" placeholder="위젯 제목" />
-			</div>
-			<div>
-				<button type="submit" ng-click="widgetModal_close()"class="btn btn-primary floatR width90">
-					<i class="fa fa-times"></i>&nbsp;닫기
-				</button>
-				<button type="submit" ng-click="addWidget()"class="btn btn-primary floatR width90">
-					<i class="fa fa-times"></i>&nbsp;추가
-				</button>
-			</div>
-		</div>
 		</div>
 	</div>
 </section>

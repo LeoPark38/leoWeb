@@ -5,7 +5,7 @@
 			<h3 class="panel-title">Elastic</h3>	
 		</div>
 		<div class="panel-body" style="padding: 0px 15px 0px 30px;">
-			<div id="data_body" class="animated fadeIn">
+			<div id="data_body" class="animate__animated animate__fadeIn">
 		        <!-- 버튼 영역 -->
 		        <div class="mb-3 d-flex flex-wrap gap-2">
 		          <button ng-click="nodeStat()" class="btn btn-sm btn-primary">
@@ -23,7 +23,7 @@
 		        </div>
 				<div class="querySearch" style="display: inline-block; width: 98%;">
 					<div class="inline">
-						<select id="method_list" class="width120" ng-model="method_type">
+						<select id="method_list" class="width120" ng-model="method_type" style="margin-top: 4px;">
 							<option value="GET">GET</option>
 							<option value="POST">POST</option>
 							<option value="PUT">PUT</option>
@@ -31,7 +31,7 @@
 						</select>
 					</div>
 					<div class="inline">
-						<select id="recent_query" class="">
+						<select id="recent_query" class=""  style="margin-top: 4px;">
 							<option value="">최근 검색 쿼리</option>
 						</select>
 					</div>
@@ -55,7 +55,7 @@
 						<pre id="query_editor2" style="width: 100%; line-height: 15px;"></pre>
 					</div>
 				</div>
-				<div id="queryModal" class="panel reveal-modal">
+				<div id="queryModal" class="modal" style="display:none;">
 					<div class="panel-heading">
 						<h2 class="modal_title">쿼리 관리</h2>
 					</div>
@@ -67,9 +67,9 @@
 									<thead>
 										<tr class="bt1-ddd">
 											<th>METHOD</th>
-											<th>TITLE</th>
-											<th>USER_ID</th>
-											<th>MK_DATE</th>
+											<th>제목</th>
+											<th>사용자 ID</th>
+											<th>생성일</th>
 											<th>-</th>
 										</tr>
 									</thead>
@@ -77,7 +77,7 @@
 							</div>
 						</div>	
 					</div>
-					<div style="padding-right: 5px;">
+					<div style="padding: 5px 5px 0px 0px;">
 						<button type="submit" ng-click="queryModal_close()"
 							class="btn btn-primary floatR width90">
 							<i class="fa fa-times"></i>&nbsp;닫기
@@ -88,3 +88,19 @@
 		</div>
 	</div>
 </section>
+<style>
+#queryModal{
+    display: none;
+    width: 750px;
+    height: 430px;
+    top: 196px;
+    border: solid;
+    position: fixed;
+    z-index: 1050;
+    background-color: rgb(255, 255, 255);
+}
+#queryModal .panel-heading {
+	border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+}
+</style>

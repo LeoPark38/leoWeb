@@ -228,45 +228,36 @@ angular.module('myApp').controller('editorElasticCtrl', [
 			jsUt.localStorage('q_editor', localStorageDb)
 
 		}
-// 최근 검색 쿼리
-var get_recent_query = function() {
-    const $select = el.find("#recent_query");
-    $select.html("");
-    $select.append('<option value="">최근 검색 쿼리</option>');
-
-    const result = jsUt.localStorage("q_editor").query_data || [];
-
-    // 가장 최근 것이 위로 오도록 역순 반복
-    for (let i = result.length - 1; i >= 0; i--) {
-        const item = result[i];
-        $select.append(
-            `<option value="${i}">(${item.mk_dt}) ${item.index}</option>`
-        );
-    }
-
-    // multipleSelect 초기화 (반복문 밖!)
-    $select.multipleSelect({
-        filter: true,
-        single: true,
-        selectAll: false,
-        width: '35%',
-        onClick: function(v) {
-            if (v.value !== "") get_recent(v.value);
-        }
-    });
-}
-
-var get_recent = function(rowid) {
-    const rows = jsUt.localStorage("q_editor").query_data || [];
-    const item = rows[rowid];
-    if (!item) return;
-
-    const q_title = item.title;
-    const q_index = item.index;
-    const q_content = item.content;
-
-    editor.setValue(q_title + "\n" + q_index + "\n" + q_content, 1);
-}
+// 최근 검색 쿼리		
+		var get_recent_query = function () {
+		    const recent_query_box = el.find("#recent_query");
+		    recent_query_box.html("");
+		    recent_query_box.append('<option value="">최근 검색 쿼리</option>');
+		
+		    const result = jsUt.localStorage("q_editor").query_data || [];
+		
+		    for (let i = result.length - 1; i >= 0; i--) {
+		    	const item = result[i];
+		        recent_query_box.append(
+		            `<option value="${i}">(${item.mk_dt}) ${item.index}</option>`
+		        );
+		    }
+		    recent_query_box.off("change").on("change", function () {
+		        const val = $(this).val();
+		        if (val !== "") get_recent(val);
+		    });
+		}
+		var get_recent = function(rowid) {
+		    const rows = jsUt.localStorage("q_editor").query_data || [];
+		    const item = rows[rowid];
+		    if (!item) return;
+		
+		    const q_title = item.title;
+		    const q_index = item.index;
+		    const q_content = item.content;
+		
+		    editor.setValue(q_title + "\n" + q_index + "\n" + q_content, 1);
+		}
 		get_recent_query()
 
 // 인덱스명 배열 셋팅
@@ -417,8 +408,6 @@ var get_recent = function(rowid) {
 			readOnly: true,
 			tabSize: 2
 		});
-		el.find("#method_list").multipleSelect({filter: false, single: true, selectAll: false, width: '100px', onClick: function(v) {}});
-		
 		angular.element(el).ready(function() {
 			editor.setValue("## 2번째줄에 인덱스,  3번째줄에 쿼리를 입력해주세요. ( \"ctrl+ spaceBar\"로 자동완성 )\n", 1);
 			$(window).trigger("resize");
@@ -456,55 +445,62 @@ var get_recent = function(rowid) {
 				editor.setValue("## " + q_title + "\n" + q_index + "\n" + q_content, 1);
 				$scope.btnSearch()
 			}
-		}		
-// 저장된 쿼리 모달	열기 버튼
-		$scope.queryMange = function(){
-			let css ={
-				'paddingTop': '10px',
-				'paddingRight': '10px',
-				'paddingBottom': '10px',
-				'paddingLeft': '10px'
-			}
-			$scope._id = "" // 아이디 초기화
-			$scope.detail={}; //row 초기화
-			openModal('queryModal',css);
-			// 쿼리테이블 만들기
-			queryTable()
-		}	
-// 저장된 쿼리 모달	닫기 버튼		
-		$scope.queryModal_close = function(){
-			el.find('#queryModal').trigger('reveal:close');	
-		}	
-				
-		function openModal(id,css){
-			// 모달창 관련 옵션
-			el.find('#'+id).width(750);
-			el.find('#'+id).height(425);
-			el.find('#'+id).css('margin-left', -(650 / 2));
-			el.find('#'+id+' .panel-body').css(css)//--> css 는 {} 로
-			el.find('#'+id).css('top', 196);
-			el.find('#'+id).css('border', "solid");
-			el.find('#'+id).css('z-index', 10);
-			el.find('#'+id).reveal({
-				animation: 'none',
-				closeonbackgroundclick: true
-			});	
 		}
+// 모달 열기
+		$scope.queryMange = function () {
+			$scope._id = "";
+			$scope.detail = {};
+			openModal('queryModal');
+			queryTable();
+		};
+// 모달 닫기
+		$scope.queryModal_close = function () {
+			$('#queryModal').css('display', 'none');     // 모달 숨기기
+			$('.modal-backdrop.in').remove();  
+		};
+// 모달 열기 프로세스
+		function openModal(id) {
+			$('#queryModal').css('display', 'block'); 
+			const queryModal = el.find('#' + id);
+			const modalWidth = 750;
+			const windowWidth = window.innerWidth;
+			const left = (windowWidth - modalWidth) / 2;
+			
+			//$('#queryModal').css('margin-left', left + 'px');
+			queryModal.css({
+				marginLeft : left+'px'
+			})
+			queryModal.modal({
+				fadeDuration: 0,
+				backdrop: false,
+			});
+			// background 추가
+			const $backdrop = $('<div class="modal-backdrop in"></div>').css({
+				zIndex: 1040,
+			  	position: 'fixed',
+			  	top: 0, left: 0, right: 0, bottom: 0,
+			  	backgroundColor: 'rgba(0, 0, 0, 1)'
+			});
+			$backdrop.insertBefore(queryModal);
+		}
+		$(document).on('click', '.modal-backdrop.in', function () {
+			$scope.queryModal_close();
+		});
 // 저장된 쿼리 테이블		
 		function queryTable() {
 			query_table = el.find("#query_table").DataTable({
 				order: [[2, 'desc']],
-				// orderFixed: { post: [0, 'asc'] },
 				retrieve: true,
 				jQueryUI: false,
-				autoWidth: true,
 				lengthChange: false,
 				deferRender: true,
 				paging: true,
 				processing: true,
 				serverSide: false,
+				autoWidth: true,
+				scrollY: "225px",
 				searching: false, // 검색 비활성화
-				info: false,
+				pageLength: 4,
 				ajax: {
 					url: gAction.list,
 					type: "POST",
@@ -514,17 +510,13 @@ var get_recent = function(rowid) {
 						return jsUt.result(json, "data");
 					},
 					error: function(xhr) {
-
 					}
 				},
-				pageLength: 4,
-				pagingType: "custom_simple_numbers",
-				scrollY: "225px",
+				pagingType: "full_numbers",
 				dom: 'z<"dt-toolbar"> t <"dt-toolbar-footer d-flex justify-content-center"p>',
 				language: {
 					zeroRecords: "데이터가 없습니다",
-					lengthMenu: "<div class='pull-right'>_MENU_</div >",
-					paginate: { first: "First", last: "Last", next: ">", previous: "<" }
+					paginate: { first: "◀◀", last: "▶▶", next: "▶", previous: "◀" }
 				},
 				columnDefs: [ 
 					{ 
@@ -595,7 +587,12 @@ var get_recent = function(rowid) {
 				],
 				createdRow: function(row, data) {
 					$compile(row)($scope);
-				}
+				},
+				initComplete: function() {
+				  if (query_table && query_table.columns) {
+				    setTimeout(() => query_table.columns.adjust().draw(), 500);
+				  }
+				},
 			});
 			query_table.columns.adjust();
 		}
